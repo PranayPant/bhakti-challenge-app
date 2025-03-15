@@ -11,20 +11,21 @@ import { ReactNode } from "react";
 export interface FlipCardProps {
   isFlipped: SharedValue<boolean>;
   cardStyle: object;
+  cardContainerStyle?: object;
   direction?: "x" | "y";
   duration?: number;
   RegularContent: ReactNode;
   FlippedContent: ReactNode;
 }
 
-export const FlipCard: React.FC<FlipCardProps> = ({
+export const FlipCard = ({
   isFlipped,
   cardStyle,
   direction = "y",
   duration = 500,
   RegularContent,
   FlippedContent,
-}) => {
+}: FlipCardProps) => {
   const isDirectionX = direction === "x";
 
   const regularCardAnimatedStyle = useAnimatedStyle(() => {

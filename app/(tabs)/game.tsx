@@ -2,85 +2,131 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  View,
   Pressable,
   Text,
+  Dimensions,
 } from "react-native";
 import { useEffect, useState } from "react";
 
+import {
+  useAnimatedReaction,
+  useSharedValue,
+  runOnJS,
+} from "react-native-reanimated";
 import { Audio } from "expo-av";
 
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { FlipCard } from "@/components/FlipCard";
-import { useSharedValue } from "react-native-reanimated";
+import { Trivia } from "@/constants/Trivia";
 
-const Question = () => {
-    return <Text>Question</Text>;
+const Question = ({ trivia }: { trivia: number }) => {
+  return <Text>{Trivia[trivia].question}</Text>;
 };
 
-const Answer = () => {
-    return <Text>Answer</Text>;
+const Answer = ({ trivia }: { trivia: number }) => {
+  return <Text>{Trivia[trivia].correctAnswer}</Text>;
 };
 
 export default function GameScreen() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+
   const isFlipped = useSharedValue(false);
+
+  const [flippedState, setFlippedState] = useState(false);
+
+  useAnimatedReaction(
+    () => isFlipped.value,
+    (value: boolean) => {
+      runOnJS(setFlippedState)(value);
+    },
+    [isFlipped]
+  );
 
   const handlePress = () => {
     isFlipped.value = !isFlipped.value;
-    playSound();
+    playFlipSound();
   };
 
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const handleNext = () => {
+    setCurrentQuestion((prev) => (prev + 1) % Trivia.length);
+    isFlipped.value = false;
+    playSwipeSound();
+  };
+  const [flipSound, setFlipSound] = useState<Audio.Sound | null>(null);
+  const [nextSound, setNextSound] = useState<Audio.Sound | null>(null);
 
-  async function playSound() {
+  async function playFlipSound() {
     const { sound } = await Audio.Sound.createAsync(
       require("@/assets/sounds/card-flip.mp3")
     );
-    setSound(sound);
-    await sound.playAsync();
+    setFlipSound(sound);
+    await sound.setStatusAsync({ shouldPlay: true, rate: 1.5 });
+  }
+
+  async function playSwipeSound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require("@/assets/sounds/swipe.mp3")
+    );
+    setNextSound(sound);
+    await sound.setStatusAsync({ shouldPlay: true, rate: 0.65 });
   }
 
   useEffect(() => {
-    return sound
-      ? () => {
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
+    return () => {
+      flipSound?.unloadAsync();
+      nextSound?.unloadAsync();
+    };
+  }, [flipSound, nextSound]);
+
+useEffect(() => {
+    return () => {
+        flipSound?.unloadAsync();
+        nextSound?.unloadAsync();
+    };
+}, [flipSound, nextSound]);
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
+    <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Image
           source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
+          style={[styles.reactLogo]}
         />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <SafeAreaView style={styles.container}>
-          <FlipCard
-            isFlipped={isFlipped}
-            cardStyle={styles.flipCard}
-            FlippedContent={<Question />}
-            RegularContent={<Answer />}
-          />
-          <View style={styles.buttonContainer}>
-            <Pressable style={styles.toggleButton} onPress={handlePress}>
-              <Text style={styles.toggleButtonText}>Toggle card</Text>
-            </Pressable>
-          </View>
-        </SafeAreaView>
-      </ThemedView>
-    </ParallaxScrollView>
+      </SafeAreaView>
+      <SafeAreaView
+        style={{
+          flex: 4,
+          backgroundColor: "lightgreen",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <FlipCard
+          key="flip-card"
+          isFlipped={isFlipped}
+          cardStyle={styles.flipCard}
+          FlippedContent={<Answer trivia={currentQuestion} />}
+          RegularContent={<Question trivia={currentQuestion} />}
+        />
+      </SafeAreaView>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          backgroundColor: "lightpink",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Pressable style={styles.toggleButton} onPress={handlePress}>
+          <Text style={styles.toggleButtonText}>
+            {flippedState ? "Back to Question" : "Check Answer"}
+          </Text>
+        </Pressable>
+        <Pressable style={styles.toggleButton} onPress={handleNext}>
+          <Text style={styles.toggleButtonText}>Next</Text>
+        </Pressable>
+      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 
@@ -90,44 +136,41 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
   reactLogo: {
-    height: 178,
-    width: 290,
     bottom: 0,
     left: 0,
     position: "absolute",
   },
   container: {
-    flex: 1,
-    height: 300,
+    flex: 4,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "lightgreen",
   },
   buttonContainer: {
-    marginTop: 16,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "skyblue",
   },
   toggleButton: {
     backgroundColor: "#b58df1",
     padding: 12,
     borderRadius: 48,
+    maxWidth: 150,
+    minWidth: 100,
+    margin: 16,
   },
   toggleButtonText: {
     color: "#fff",
     textAlign: "center",
   },
   flipCard: {
-    width: 170,
-    height: 200,
     backfaceVisibility: "hidden",
-    borderRadius: 8,
+    width: 300,
+    height: 300,
+    backgroundColor: "white",
+    borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f1f1f1",
   },
 });
