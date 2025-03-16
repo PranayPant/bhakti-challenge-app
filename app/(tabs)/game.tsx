@@ -8,10 +8,13 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
-import {
+import Animated, {
   useAnimatedReaction,
   useSharedValue,
   runOnJS,
+  RollInLeft,
+  RollOutLeft,
+  RollInRight,
 } from "react-native-reanimated";
 import { Audio } from "expo-av";
 
@@ -77,12 +80,12 @@ export default function GameScreen() {
     };
   }, [flipSound, nextSound]);
 
-useEffect(() => {
+  useEffect(() => {
     return () => {
-        flipSound?.unloadAsync();
-        nextSound?.unloadAsync();
+      flipSound?.unloadAsync();
+      nextSound?.unloadAsync();
     };
-}, [flipSound, nextSound]);
+  }, [flipSound, nextSound]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -100,13 +103,18 @@ useEffect(() => {
           alignItems: "center",
         }}
       >
-        <FlipCard
-          key="flip-card"
-          isFlipped={isFlipped}
-          cardStyle={styles.flipCard}
-          FlippedContent={<Answer trivia={currentQuestion} />}
-          RegularContent={<Question trivia={currentQuestion} />}
-        />
+        <Animated.View
+          key={currentQuestion}
+          entering={RollInRight}
+          exiting={RollOutLeft}
+        >
+          <FlipCard
+            isFlipped={isFlipped}
+            cardStyle={styles.flipCard}
+            FlippedContent={<Answer trivia={currentQuestion} />}
+            RegularContent={<Question trivia={currentQuestion} />}
+          />
+        </Animated.View>
       </SafeAreaView>
       <SafeAreaView
         style={{
