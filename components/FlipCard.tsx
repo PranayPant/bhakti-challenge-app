@@ -34,7 +34,7 @@ export const FlipCard = ({
   index,
   currentIndex,
   handleNext,
-  cardStyles
+  cardStyles,
 }: FlipCardProps) => {
   const isFlipDirectionX = direction === "x";
 
@@ -174,8 +174,8 @@ export const FlipCard = ({
       <View style={[flipCardStyles.container, cardStyles]}>
         <Animated.View
           style={[
-            flipCardStyles.flipCard,
-            flipCardStyles.regularCard,
+            index === currentIndex ? flipCardStyles.flipCard : {},
+            index === currentIndex ? flipCardStyles.regularCard : {},
             regularCardAnimatedStyle,
             animatedSwipeStyle,
           ]}
@@ -184,8 +184,8 @@ export const FlipCard = ({
         </Animated.View>
         <Animated.View
           style={[
-            flipCardStyles.flipCard,
-            flipCardStyles.flippedCard,
+            index === currentIndex ? flipCardStyles.flipCard : {},
+            index === currentIndex ? flipCardStyles.flippedCard : {},
             flippedCardAnimatedStyle,
             animatedSwipeStyle,
           ]}

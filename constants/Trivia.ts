@@ -1,3 +1,5 @@
+import { ScrollListItem } from "@/components/ScrollableCards/ScrollableCard";
+
 export interface TriviaCard {
   id: number;
   question: string;
@@ -65,5 +67,29 @@ export const Trivia: TriviaCard[] = [
     question: "What is the capital of Australia?",
     options: ["Madrid", "Rome", "Canberra", "Lisbon"],
     correctAnswer: "Canberra",
+  },
+];
+
+export const ScrollableItems: Partial<ScrollListItem>[] = [
+  {
+    imageSource: require("@/assets/images/image_01.png"),
+  },
+  {
+    imageSource: require("@/assets/images/image_02.jpg"),
+  },
+  {
+    imageSource: require("@/assets/images/image_03.jpg"),
+  },
+  {
+    imageSource: require("@/assets/images/image_04.jpg"),
+  },
+  {
+    imageSource: require("@/assets/images/image_02.jpg"),
+  },
+  {
+    imageSource: require("@/assets/images/image_03.jpg"),
+  },
+  {
+    imageSource: require("@/assets/images/image_04.jpg"),
   },
 ];

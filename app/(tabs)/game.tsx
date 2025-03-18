@@ -128,9 +128,7 @@ export default function GameScreen() {
                 handleNext={handleNext}
                 cardStyles={{
                   zIndex: triviaDeck.length - index,
-                  backgroundColor: index === currentIndex ? "lightblue" : "white",
                   boxShadow: "0 0 16px rgba(0, 0, 0, 0.1)",
-                  width: index === currentIndex ? 100 : 250,
                 }}
               />
             );
