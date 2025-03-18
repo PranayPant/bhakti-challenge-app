@@ -1,3 +1,4 @@
+import { Asset } from "expo-asset";
 import { ScrollListItem } from "@/components/ScrollableCards/ScrollableCard";
 
 export interface TriviaCard {
@@ -72,24 +73,24 @@ export const Trivia: TriviaCard[] = [
 
 export const ScrollableItems: Partial<ScrollListItem>[] = [
   {
-    imageSource: require("@/assets/images/image_01.png"),
+    asset: Asset.loadAsync(require("@/assets/images/image_01.png")),
   },
   {
-    imageSource: require("@/assets/images/image_02.jpg"),
+    asset: require("@/assets/images/image_02.jpg"),
   },
   {
-    imageSource: require("@/assets/images/image_03.jpg"),
+    asset: require("@/assets/images/image_03.jpg"),
   },
   {
-    imageSource: require("@/assets/images/image_04.jpg"),
+    asset: require("@/assets/images/image_04.jpg"),
   },
   {
-    imageSource: require("@/assets/images/image_02.jpg"),
+    asset: require("@/assets/images/image_02.jpg"),
   },
   {
-    imageSource: require("@/assets/images/image_03.jpg"),
+    asset: require("@/assets/images/image_03.jpg"),
   },
   {
-    imageSource: require("@/assets/images/image_04.jpg"),
+    asset: require("@/assets/images/image_04.jpg"),
   },
 ];

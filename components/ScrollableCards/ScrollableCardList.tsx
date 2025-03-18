@@ -44,13 +44,13 @@ export const ScrollableCardList = ({ items }: ScrollList) => {
             width: ScrollableCardWidth * items.length + ListPadding,
           }}
         >
-          {items.map((items, index) => {
+          {items.map((item, index) => {
             return (
               <ScrollableCard
                 index={index}
                 key={index}
                 scrollOffset={scrollOffset}
-                imageSource={items.imageSource ?? {}}
+                asset={item.asset}
               />
             );
           })}

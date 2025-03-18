@@ -12,12 +12,11 @@ import { ReactNode } from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 export interface FlipCardProps {
-  isFlipped: SharedValue<boolean>;
   RegularContent: ReactNode;
   FlippedContent: ReactNode;
   index: number;
   currentIndex: number;
-  handleNext: VoidFunction;
+  handleNext?: VoidFunction;
   direction?: "x" | "y";
   duration?: number;
   maxVisibleItems?: number;
@@ -25,7 +24,6 @@ export interface FlipCardProps {
 }
 
 export const FlipCard = ({
-  isFlipped,
   direction = "y",
   duration = 500,
   maxVisibleItems = 3,
@@ -38,6 +36,7 @@ export const FlipCard = ({
 }: FlipCardProps) => {
   const isFlipDirectionX = direction === "x";
 
+  const isFlipped = useSharedValue(false);
   const animatedValue = useSharedValue(0);
   const translateX = useSharedValue(0);
   const swipeDirection = useSharedValue(0);
@@ -91,7 +90,9 @@ export const FlipCard = ({
             width * swipeDirection.value,
             {},
             () => {
-              runOnJS(handleNext)();
+              if (handleNext) {
+                runOnJS(handleNext)();
+              }
             }
           );
           animatedValue.value = withTiming(currentIndex + 1);
@@ -167,45 +168,42 @@ export const FlipCard = ({
     };
   });
 
-  const gestures = Gesture.Exclusive(panGesture, tapGesture);
+  const gestures = Gesture.Exclusive(tapGesture);
 
   return (
-    <GestureDetector gesture={gestures}>
-      <View style={[flipCardStyles.container, cardStyles]}>
-        <Animated.View
-          style={[
-            index === currentIndex ? flipCardStyles.flipCard : {},
-            index === currentIndex ? flipCardStyles.regularCard : {},
-            regularCardAnimatedStyle,
-            animatedSwipeStyle,
-          ]}
-        >
-          {RegularContent}
-        </Animated.View>
-        <Animated.View
-          style={[
-            index === currentIndex ? flipCardStyles.flipCard : {},
-            index === currentIndex ? flipCardStyles.flippedCard : {},
-            flippedCardAnimatedStyle,
-            animatedSwipeStyle,
-          ]}
-        >
-          {FlippedContent}
-        </Animated.View>
-      </View>
-    </GestureDetector>
+    // <GestureDetector gesture={gestures}>
+    <View style={[flipCardStyles.container, cardStyles]}>
+      <Animated.View
+        style={[
+          index === currentIndex ? flipCardStyles.flipCard : {},
+          index === currentIndex ? flipCardStyles.regularCard : {},
+          regularCardAnimatedStyle,
+        ]}
+      >
+        {RegularContent}
+      </Animated.View>
+      <Animated.View
+        style={[
+          index === currentIndex ? flipCardStyles.flipCard : {},
+          index === currentIndex ? flipCardStyles.flippedCard : {},
+          flippedCardAnimatedStyle,
+        ]}
+      >
+        {FlippedContent}
+      </Animated.View>
+    </View>
+    // </GestureDetector>
   );
 };
 
 const flipCardStyles = StyleSheet.create({
   container: {
     flex: 1,
-    position: "absolute",
-    top: "50%",
-    left: "0%",
-    transform: [{ translateX: -150 }, { translateY: -150 }],
-    borderRadius: 28,
-    // backgroundColor: "lightblue",
+    // position: "absolute",
+    // top: "50%",
+    // left: "0%",
+    // transform: [{ translateX: -150 }, { translateY: -150 }],
+    // borderRadius: 28,
   },
   flipCard: {
     backfaceVisibility: "hidden",
