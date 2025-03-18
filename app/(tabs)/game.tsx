@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   Pressable,
   Text,
+  View,
   Dimensions,
 } from "react-native";
 import { useEffect, useState } from "react";
@@ -15,51 +16,63 @@ import Animated, {
   RollInLeft,
   RollOutLeft,
   RollInRight,
+  useAnimatedStyle,
+  interpolate,
+  Extrapolation,
 } from "react-native-reanimated";
+
 import { Audio } from "expo-av";
 
 import { FlipCard } from "@/components/FlipCard";
-import { Trivia } from "@/constants/Trivia";
+import { Trivia, type TriviaCard } from "@/constants/Trivia";
 
-const Question = ({ trivia }: { trivia: number }) => {
-  return <Text>{Trivia[trivia].question}</Text>;
+const Question = ({ trivia }: { trivia: TriviaCard }) => {
+  return <Text>{trivia.question}</Text>;
 };
 
-const Answer = ({ trivia }: { trivia: number }) => {
-  return <Text>{Trivia[trivia].correctAnswer}</Text>;
+const Answer = ({ trivia }: { trivia: TriviaCard }) => {
+  return <Text>{trivia.correctAnswer}</Text>;
 };
+
+const DECK_SIZE_DISPLAY = 3;
 
 export default function GameScreen() {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-
   const isFlipped = useSharedValue(false);
 
+  const [currentIndex, setCurrentIndex] = useState(() => 0);
+  const [flipSound, setFlipSound] = useState<Audio.Sound | null>(null);
+  const [nextSound, setNextSound] = useState<Audio.Sound | null>(null);
   const [flippedState, setFlippedState] = useState(false);
+  const [triviaDeck, setTriviaDeck] = useState<TriviaCard[]>(() => Trivia);
 
   useAnimatedReaction(
     () => isFlipped.value,
     (value: boolean) => {
       runOnJS(setFlippedState)(value);
+      runOnJS(playFlipSound)();
     },
     [isFlipped]
   );
 
-  const handlePress = () => {
+  const handleFlip = () => {
     isFlipped.value = !isFlipped.value;
-    playFlipSound();
   };
 
   const handleNext = () => {
-    setCurrentQuestion((prev) => (prev + 1) % Trivia.length);
+    setCurrentIndex((prev) => (prev + 1) % Trivia.length);
+    setTriviaDeck((prev) => {
+      const nextIndex = (currentIndex + DECK_SIZE_DISPLAY) % Trivia.length;
+      const nextCard = Trivia[nextIndex];
+      const currentCard = Trivia[currentIndex];
+      return [currentCard, ...prev.slice(1), nextCard];
+    });
     isFlipped.value = false;
     playSwipeSound();
   };
-  const [flipSound, setFlipSound] = useState<Audio.Sound | null>(null);
-  const [nextSound, setNextSound] = useState<Audio.Sound | null>(null);
 
   async function playFlipSound() {
     const { sound } = await Audio.Sound.createAsync(
-      require("@/assets/sounds/card-flip.mp3")
+      require("@/assets/sounds/swipe.mp3")
     );
     setFlipSound(sound);
     await sound.setStatusAsync({ shouldPlay: true, rate: 1.5 });
@@ -72,13 +85,6 @@ export default function GameScreen() {
     setNextSound(sound);
     await sound.setStatusAsync({ shouldPlay: true, rate: 0.65 });
   }
-
-  useEffect(() => {
-    return () => {
-      flipSound?.unloadAsync();
-      nextSound?.unloadAsync();
-    };
-  }, [flipSound, nextSound]);
 
   useEffect(() => {
     return () => {
@@ -103,18 +109,33 @@ export default function GameScreen() {
           alignItems: "center",
         }}
       >
-        <Animated.View
-          key={currentQuestion}
-          entering={RollInRight}
-          exiting={RollOutLeft}
-        >
-          <FlipCard
-            isFlipped={isFlipped}
-            cardStyle={styles.flipCard}
-            FlippedContent={<Answer trivia={currentQuestion} />}
-            RegularContent={<Question trivia={currentQuestion} />}
-          />
-        </Animated.View>
+        <View>
+          {triviaDeck.map((card, index) => {
+            if (
+              index > currentIndex + DECK_SIZE_DISPLAY ||
+              index < currentIndex
+            ) {
+              return null;
+            }
+            return (
+              <FlipCard
+                key={card.id}
+                isFlipped={isFlipped}
+                FlippedContent={<Answer trivia={card} />}
+                RegularContent={<Question trivia={card} />}
+                index={currentIndex}
+                currentIndex={currentIndex}
+                handleNext={handleNext}
+                cardStyles={{
+                  zIndex: triviaDeck.length - index,
+                  backgroundColor: index === currentIndex ? "lightblue" : "white",
+                  boxShadow: "0 0 16px rgba(0, 0, 0, 0.1)",
+                  width: index === currentIndex ? 100 : 250,
+                }}
+              />
+            );
+          })}
+        </View>
       </SafeAreaView>
       <SafeAreaView
         style={{
@@ -125,7 +146,7 @@ export default function GameScreen() {
           alignItems: "center",
         }}
       >
-        <Pressable style={styles.toggleButton} onPress={handlePress}>
+        <Pressable style={styles.toggleButton} onPress={handleFlip}>
           <Text style={styles.toggleButtonText}>
             {flippedState ? "Back to Question" : "Check Answer"}
           </Text>
@@ -172,12 +193,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
-  flipCard: {
-    backfaceVisibility: "hidden",
-    width: 300,
-    height: 300,
-    backgroundColor: "white",
-    borderRadius: 16,
+  flipCardContainer: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
