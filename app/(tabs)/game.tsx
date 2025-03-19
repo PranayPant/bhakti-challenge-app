@@ -27,14 +27,25 @@ import { FlipCard } from "@/components/FlipCard";
 import { Trivia, type TriviaCard } from "@/constants/Trivia";
 
 const Question = ({ trivia }: { trivia: TriviaCard }) => {
-  return <Text>{trivia.question}</Text>;
+  return (
+    <View style={{ flex: 1, backgroundColor: "lightblue", width: "100%" }}>
+      <Image
+        style={{
+          width: '100%',
+          height: '100%',
+          borderRadius: 28,
+          resizeMode: 'cover',
+        }}
+        source={require("@/assets/images/image_01.png")}
+      />
+      <Text>{trivia.question}</Text>
+    </View>
+  );
 };
 
 const Answer = ({ trivia }: { trivia: TriviaCard }) => {
   return <Text>{trivia.correctAnswer}</Text>;
 };
-
-const DECK_SIZE_DISPLAY = 3;
 
 export default function GameScreen() {
   const isFlipped = useSharedValue(false);
@@ -43,7 +54,6 @@ export default function GameScreen() {
   const [flipSound, setFlipSound] = useState<Audio.Sound | null>(null);
   const [nextSound, setNextSound] = useState<Audio.Sound | null>(null);
   const [flippedState, setFlippedState] = useState(false);
-  const [triviaDeck, setTriviaDeck] = useState<TriviaCard[]>(() => Trivia);
 
   useAnimatedReaction(
     () => isFlipped.value,
@@ -60,12 +70,6 @@ export default function GameScreen() {
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % Trivia.length);
-    setTriviaDeck((prev) => {
-      const nextIndex = (currentIndex + DECK_SIZE_DISPLAY) % Trivia.length;
-      const nextCard = Trivia[nextIndex];
-      const currentCard = Trivia[currentIndex];
-      return [currentCard, ...prev.slice(1), nextCard];
-    });
     isFlipped.value = false;
     playSwipeSound();
   };
@@ -110,29 +114,21 @@ export default function GameScreen() {
         }}
       >
         <View>
-          {triviaDeck.map((card, index) => {
-            if (
-              index > currentIndex + DECK_SIZE_DISPLAY ||
-              index < currentIndex
-            ) {
-              return null;
-            }
-            return (
-              <FlipCard
-                key={card.id}
-                isFlipped={isFlipped}
-                FlippedContent={<Answer trivia={card} />}
-                RegularContent={<Question trivia={card} />}
-                index={currentIndex}
-                currentIndex={currentIndex}
-                handleNext={handleNext}
-                cardStyles={{
-                  zIndex: triviaDeck.length - index,
-                  boxShadow: "0 0 16px rgba(0, 0, 0, 0.1)",
-                }}
-              />
-            );
-          })}
+          <FlipCard
+            FlippedContent={<Answer trivia={Trivia[currentIndex]} />}
+            RegularContent={<Question trivia={Trivia[currentIndex]} />}
+            index={currentIndex}
+            currentIndex={currentIndex}
+            handleNext={handleNext}
+            cardStyles={{
+              boxShadow: "0 0 16px rgba(0, 0, 0, 0.1)",
+              position: "absolute",
+              top: "50%",
+              left: "0%",
+              transform: [{ translateX: -150 }, { translateY: -150 }],
+              borderRadius: 28,
+            }}
+          />
         </View>
       </SafeAreaView>
       <SafeAreaView
