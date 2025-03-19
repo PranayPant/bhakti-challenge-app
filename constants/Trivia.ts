@@ -70,27 +70,3 @@ export const Trivia: TriviaCard[] = [
     correctAnswer: "Canberra",
   },
 ];
-
-export const ScrollableItems: Partial<ScrollListItem>[] = [
-  {
-    asset: Asset.loadAsync(require("@/assets/images/image_01.png")),
-  },
-  {
-    asset: require("@/assets/images/image_02.jpg"),
-  },
-  {
-    asset: require("@/assets/images/image_03.jpg"),
-  },
-  {
-    asset: require("@/assets/images/image_04.jpg"),
-  },
-  {
-    asset: require("@/assets/images/image_02.jpg"),
-  },
-  {
-    asset: require("@/assets/images/image_03.jpg"),
-  },
-  {
-    asset: require("@/assets/images/image_04.jpg"),
-  },
-];

@@ -67,14 +67,6 @@ export const FlipCard = ({
     await sound.setStatusAsync({ shouldPlay: true, rate: 1.5 });
   }
 
-  useAnimatedReaction(
-    () => isFlipped.value,
-    (value: boolean) => {
-      runOnJS(playFlipSound)();
-    },
-    [isFlipped]
-  );
-
   const tapGesture = Gesture.Tap()
     .onBegin((event) => {
       //pressed.value = true;
@@ -83,6 +75,7 @@ export const FlipCard = ({
     .onEnd((event) => {
       isFlipped.value = !isFlipped.value;
       console.log("End Tap", currentIndex, index);
+      runOnJS(playFlipSound)();
     });
 
   return (

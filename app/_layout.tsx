@@ -4,6 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+import { Asset } from "expo-asset";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -21,6 +22,15 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
+  Asset.loadAsync([
+    require("@/assets/images/image_01.png"),
+    require("@/assets/images/image_02.jpg"),
+    require("@/assets/images/image_03.jpg"),
+    require("@/assets/images/image_04.jpg"),
+    require("@/assets/images/image_02.jpg"),
+    require("@/assets/images/image_03.jpg"),
+    require("@/assets/images/image_04.jpg"),
+  ]);
 
   useEffect(() => {
     if (loaded) {

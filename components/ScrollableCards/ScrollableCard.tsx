@@ -84,35 +84,72 @@ export const ScrollableCard = ({
       >
         <>
           {asset && (
-            <FlipCard
-              index={index}
-              currentIndex={activeIndex.value}
-              RegularContent={
-                <Image
-                  source={{
-                    uri: asset.uri,
-                  }}
-                  style={{
-                    flex: 1,
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: 25,
-                  }}
-                />
-              }
-              FlippedContent={
-                <Image
-                  source={{
-                    uri: asset.uri,
-                  }}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: 25,
-                  }}
-                />
-              }
-            />
+            <View
+              style={{
+                flex: 1,
+                width: "100%",
+                height: "100%",
+                borderRadius: 25,
+                backgroundColor: "#fff",
+                shadowColor: "#000",
+              }}
+            >
+              <FlipCard
+                index={index}
+                currentIndex={activeIndex.value}
+                RegularContent={
+                  <Image
+                    source={{
+                      uri: asset.uri,
+                    }}
+                    style={{
+                      flex: 1,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 25,
+                    }}
+                  />
+                  // <View
+                  //   style={{
+                  //     flex: 1,
+                  //     width: "100%",
+                  //     height: "100%",
+                  //     backgroundColor: "#fff",
+                  //     borderRadius: 25,
+                  //     justifyContent: "center",
+                  //     alignItems: "center",
+                  //   }}
+                  // >
+                  //   <Text>Front {index}</Text>
+                  // </View>
+                }
+                FlippedContent={
+                  <Image
+                    source={{
+                      uri: asset.uri,
+                    }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 25,
+                    }}
+                  />
+                  // <View
+                  //   style={{
+                  //     flex: 1,
+                  //     justifyContent: "center",
+                  //     alignItems: "center",
+                  //     width: "100%",
+                  //     height: "100%",
+                  //     backgroundColor: "#b58df1",
+                  //     borderRadius: 25,
+                  //   }}
+                  // >
+                  //   <Text>Back {index}</Text>
+                  // </View>
+                }
+              />
+            </View>
           )}
         </>
       </View>
