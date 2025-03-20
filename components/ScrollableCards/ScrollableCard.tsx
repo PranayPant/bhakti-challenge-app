@@ -6,19 +6,20 @@ import {
   View,
   StyleSheet,
   Image,
+  TextInput,
+  ViewStyle,
+  TextInputProps,
 } from "react-native";
-import type { SharedValue } from "react-native-reanimated";
+import type { DerivedValue, SharedValue } from "react-native-reanimated";
 import Animated, {
   Extrapolation,
   interpolate,
-  useAnimatedReaction,
+  useAnimatedProps,
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
-  withTiming,
 } from "react-native-reanimated";
 import { FlipCard } from "../FlipCard";
-import { useDebugValue } from "react";
+import { Trivia } from "@/constants/Trivia";
 
 export const WindowWidth = Dimensions.get("window").width;
 export const ScrollableCardWidth = WindowWidth * 0.8;
@@ -37,6 +38,9 @@ export const ScrollableCard = ({
 }: ScrollListItem) => {
   const activeIndex = useDerivedValue(() => {
     return scrollOffset.value / ScrollableCardWidth;
+  });
+  const cardNumber = useDerivedValue(() => {
+    return Math.round(scrollOffset.value / ScrollableCardWidth);
   });
   const rContainerStyle = useAnimatedStyle(() => {
     const paddingLeft = (WindowWidth - ScrollableCardWidth) / 4;
@@ -121,16 +125,15 @@ export const ScrollableCard = ({
                         position: "absolute",
                       }}
                     >
-                      <Text
+                      <AnimatedText
                         style={{
                           backgroundColor: "white",
                           padding: 8,
                           color: "black",
                           borderRadius: 8,
                         }}
-                      >
-                        Front
-                      </Text>
+                        text={cardNumber}
+                      />
                     </View>
                   </>
                 }
@@ -167,3 +170,24 @@ export const ScrollableCard = ({
     </Animated.View>
   );
 };
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+Animated.addWhitelistedNativeProps({ text: true });
+
+function AnimatedText({
+  text,
+  ...props
+}: { text: DerivedValue<number> } & TextInputProps) {
+  const animatedProps = useAnimatedProps(() => ({
+    text: Trivia[text.value].question,
+    defaultValue: `${text.value}`,
+  }));
+  return (
+    <AnimatedTextInput
+      editable={false}
+      {...props}
+      value={`${text.value}`}
+      animatedProps={animatedProps}
+    />
+  );
+}
