@@ -98,30 +98,41 @@ export const ScrollableCard = ({
                 index={index}
                 currentIndex={activeIndex.value}
                 RegularContent={
-                  <Image
-                    source={{
-                      uri: asset.uri,
-                    }}
-                    style={{
-                      flex: 1,
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: 25,
-                    }}
-                  />
-                  // <View
-                  //   style={{
-                  //     flex: 1,
-                  //     width: "100%",
-                  //     height: "100%",
-                  //     backgroundColor: "#fff",
-                  //     borderRadius: 25,
-                  //     justifyContent: "center",
-                  //     alignItems: "center",
-                  //   }}
-                  // >
-                  //   <Text>Front {index}</Text>
-                  // </View>
+                  <>
+                    <Image
+                      source={{
+                        uri: asset.uri,
+                      }}
+                      style={{
+                        flex: 1,
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 25,
+                      }}
+                    />
+                    <View
+                      style={{
+                        flex: 1,
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 25,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        position: "absolute",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          backgroundColor: "white",
+                          padding: 8,
+                          color: "black",
+                          borderRadius: 8,
+                        }}
+                      >
+                        Front
+                      </Text>
+                    </View>
+                  </>
                 }
                 FlippedContent={
                   <Image
@@ -156,20 +167,3 @@ export const ScrollableCard = ({
     </Animated.View>
   );
 };
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    marginTop: 16,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  toggleButton: {
-    backgroundColor: "#b58df1",
-    padding: 12,
-    borderRadius: 48,
-  },
-  toggleButtonText: {
-    color: "#fff",
-    textAlign: "center",
-  },
-});

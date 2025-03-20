@@ -83,8 +83,8 @@ export const FlipCard = ({
       <View style={[styles.container, cardStyles]}>
         <Animated.View
           style={[
-            index === currentIndex ? styles.flipCard : {},
-            index === currentIndex ? styles.regularCard : {},
+            styles.flipCard,
+            styles.regularCard,
             regularCardAnimatedStyle,
           ]}
         >
@@ -92,8 +92,8 @@ export const FlipCard = ({
         </Animated.View>
         <Animated.View
           style={[
-            index === currentIndex ? styles.flipCard : {},
-            index === currentIndex ? styles.flippedCard : {},
+            styles.flipCard,
+            styles.flippedCard,
             flippedCardAnimatedStyle,
           ]}
         >
