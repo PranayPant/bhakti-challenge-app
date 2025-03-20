@@ -3,7 +3,7 @@ import { ScrollableCardList } from "@/components/ScrollableCards/ScrollableCardL
 import { useMemo } from "react";
 
 export default function ScrollScreen() {
-  const [assets] = useAssets([
+const [assets] = useAssets([
     require("@/assets/images/image_01.png"),
     require("@/assets/images/image_02.jpg"),
     require("@/assets/images/image_03.jpg"),
@@ -11,7 +11,20 @@ export default function ScrollScreen() {
     require("@/assets/images/image_02.jpg"),
     require("@/assets/images/image_03.jpg"),
     require("@/assets/images/image_04.jpg"),
-  ]);
+    require("@/assets/images/image_01.png"),
+    require("@/assets/images/image_02.jpg"),
+    require("@/assets/images/image_03.jpg"),
+    require("@/assets/images/image_04.jpg"),
+    require("@/assets/images/image_02.jpg"),
+    require("@/assets/images/image_03.jpg"),
+    require("@/assets/images/image_04.jpg"),
+    require("@/assets/images/image_01.png"),
+    require("@/assets/images/image_02.jpg"),
+    require("@/assets/images/image_03.jpg"),
+    require("@/assets/images/image_04.jpg"),
+    require("@/assets/images/image_02.jpg"),
+    require("@/assets/images/image_03.jpg"),
+]);
   const items = useMemo(
     () =>
       assets?.map((item, index) => ({

@@ -65,10 +65,10 @@ export const ScrollableCard = ({
         {
           translateX: scrollOffset.value + translateX,
         },
-        { scale },
+        { scale }, // can cause blurry images and text,
       ],
     };
-  }, []);
+  });
 
   return (
     <Animated.View
@@ -134,6 +134,16 @@ export const ScrollableCard = ({
                         }}
                       >
                         {Trivia[index].question}
+                      </Text>
+                      <Text
+                        style={{
+                          backgroundColor: "white",
+                          padding: 8,
+                          color: "black",
+                          borderRadius: 8,
+                        }}
+                      >
+                        {index}
                       </Text>
                     </View>
                   </>
