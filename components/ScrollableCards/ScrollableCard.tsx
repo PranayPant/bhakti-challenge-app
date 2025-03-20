@@ -125,42 +125,55 @@ export const ScrollableCard = ({
                         position: "absolute",
                       }}
                     >
-                      <AnimatedText
+                      <Text
                         style={{
                           backgroundColor: "white",
                           padding: 8,
                           color: "black",
                           borderRadius: 8,
                         }}
-                        text={cardNumber}
-                      />
+                      >
+                        {Trivia[index].question}
+                      </Text>
                     </View>
                   </>
                 }
                 FlippedContent={
-                  <Image
-                    source={{
-                      uri: asset.uri,
-                    }}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: 25,
-                    }}
-                  />
-                  // <View
-                  //   style={{
-                  //     flex: 1,
-                  //     justifyContent: "center",
-                  //     alignItems: "center",
-                  //     width: "100%",
-                  //     height: "100%",
-                  //     backgroundColor: "#b58df1",
-                  //     borderRadius: 25,
-                  //   }}
-                  // >
-                  //   <Text>Back {index}</Text>
-                  // </View>
+                  <>
+                    <Image
+                      source={{
+                        uri: asset.uri,
+                      }}
+                      style={{
+                        flex: 1,
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 25,
+                      }}
+                    />
+                    <View
+                      style={{
+                        flex: 1,
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 25,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        position: "absolute",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          backgroundColor: "white",
+                          padding: 8,
+                          color: "black",
+                          borderRadius: 8,
+                        }}
+                      >
+                        {Trivia[index].correctAnswer}
+                      </Text>
+                    </View>
+                  </>
                 }
               />
             </View>
