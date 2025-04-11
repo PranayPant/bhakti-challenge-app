@@ -32,6 +32,8 @@ import { Card, Colors } from "./Card";
 
 const { height, width } = Dimensions.get("window");
 
+const DECK_SIZE = 3;
+
 interface CardContainerProps {
   color: string;
   priorities: SharedValue<number[]>;
@@ -89,17 +91,6 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
     }
   );
 
-  const prioritiesText = useDerivedValue(
-    () =>
-      `Index: ${index} ${
-        priority.value === 0
-          ? "Front"
-          : priority.value === 2
-          ? "Last"
-          : "Middle"
-      }`
-  );
-
   const panGesture = Gesture.Pan()
     .onBegin(({ absoluteX, translationY }) => {
       translateY.value = translationY;
@@ -113,7 +104,7 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
       rotation.value = translationY + BOTTOM_BUFFER;
     })
     .onEnd(({ translationY }) => {
-      if (Math.abs(Math.round(translationY)) < 150) {
+      if (Math.abs(Math.round(translationY)) < 100) {
         translateY.value = withTiming(
           0,
           {
@@ -217,37 +208,41 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
   );
 };
 
-export const CardStack = () => {
-  Animated.addWhitelistedNativeProps({ text: true });
-  const priorities = useSharedValue([0, 1, 2]);
+export interface CardStackProps {
+  size: number;
+}
 
-  const prioritiesText = useDerivedValue(
-    () => `Priorities [${priorities.value.join(",")}]`
+export const CardStack = ({ size }: CardStackProps) => {
+  const indices = Array.from({ length: size }, (_, i) => i);
+  const priorities = useSharedValue(indices);
+  const [displayIndices, setDisplayIndices] = useState(() => indices);
+
+  useAnimatedReaction(
+    () => priorities.value,
+    (current) => {
+      console.log("Priorities changed:", current);
+      runOnJS(setDisplayIndices)(current);
+      
+    }
   );
 
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
-        {/* 
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <AnimatedText text={prioritiesText} />
-          </View>
-        */}
-        <CardContainer
-          index={0}
-          priorities={priorities}
-          color={Colors.LIGHT_RED}
-        />
-        <CardContainer
-          index={1}
-          priorities={priorities}
-          color={Colors.LIGHT_GOLD}
-        />
-        <CardContainer
-          index={2}
-          priorities={priorities}
-          color={Colors.LIGHT_BLUE}
-        />
+        {displayIndices.slice(0, DECK_SIZE).map((index) => (
+          <CardContainer
+            key={index}
+            index={index}
+            priorities={priorities}
+            color={
+              index % 3 === 0
+                ? Colors.LIGHT_RED
+                : index === 1
+                  ? Colors.LIGHT_GOLD
+                  : Colors.LIGHT_BLUE
+            }
+          />
+        ))}
       </SafeAreaView>
     </GestureHandlerRootView>
   );
