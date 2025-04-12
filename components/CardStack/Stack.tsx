@@ -34,10 +34,13 @@ const { height, width } = Dimensions.get("window");
 
 const DECK_SIZE = 3;
 
+const randomSentences = ["0", "1", "2", "3", "4"];
+
 interface CardContainerProps {
   color: string;
   priorities: SharedValue<number[]>;
   index: number;
+  cardNumber: number;
 }
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
@@ -64,8 +67,12 @@ function AnimatedText({ text, ...props }: { text: DerivedValue<string> }) {
   );
 }
 
-const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
-  console.log("CardContainer", index);
+const CardContainer = ({
+  color,
+  priorities,
+  index,
+  cardNumber,
+}: CardContainerProps) => {
   const [isFront, setIsFront] = useState(() => false);
   const BOTTOM_BUFFER = 30;
   const isFlipped = useSharedValue(false);
@@ -89,7 +96,7 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
     () => priority.value,
     (current) => {
       runOnJS(setIsFront)(current === 0);
-      runOnJS(console.log)("Priority for card", index, 'is now', current);
+      // runOnJS(console.log)("Priority for card", index, 'is now', current);
     }
   );
 
@@ -154,20 +161,16 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
     height: 200,
     width: 325,
     backgroundColor: color,
-    bottom: withTiming(BOTTOM_BUFFER + 20 * (priority.value % DECK_SIZE) ),
+    bottom: withTiming(BOTTOM_BUFFER + 20 * priority.value),
     borderRadius: 8,
     zIndex: interpolate(priority.value, [0, 2], [20, 10]),
-    opacity: withTiming(priority.value > 2 ? 0 : 1, {
-      duration: 400,
-      easing: Easing.quad,
-    }),
     transform: [
       { translateY: translateY.value },
       {
         rotate: rotationValue.value,
       },
       {
-        scale: withTiming(interpolate(priority.value % DECK_SIZE, [0, 2], [1, 0.9]), {
+        scale: withTiming(interpolate(priority.value, [0, 2], [1, 0.9]), {
           duration: 400,
           easing: Easing.quad,
         }),
@@ -216,14 +219,47 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
                     zIndex: 99999,
                   }}
                 >
-                  {index}
+                  {randomSentences[cardNumber]}
                 </Text>
               </View>
             </Card>
           </>
         </GestureDetector>
       ) : (
-        <Card isFlipped={isFlipped} id={index} style={animatedStyle} />
+        <Card isFlipped={isFlipped} id={index} style={animatedStyle}>
+          <View>
+            {/* <AnimatedText text={prioritiesText} /> */}
+            <Pressable
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                backgroundColor: "lightskyblue",
+                padding: 8,
+                width: 100,
+                height: 40,
+                borderRadius: 8,
+              }}
+              onPress={handlePress}
+            >
+              <Text>Flip</Text>
+            </Pressable>
+            <Text
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                backgroundColor: "lightskyblue",
+                padding: 8,
+                width: 100,
+                height: 40,
+                borderRadius: 8,
+              }}
+            >
+              {randomSentences[cardNumber + 1]}
+            </Text>
+          </View>
+        </Card>
       )}
     </>
   );
@@ -234,26 +270,28 @@ export interface CardStackProps {
 }
 
 export const CardStack = ({ size }: CardStackProps) => {
-  const indices = Array.from({ length: size }, (_, i) => i);
+  const indices = Array.from({ length: DECK_SIZE }, (_, i) => i);
   const priorities = useSharedValue(indices);
   const [displayIndices, setDisplayIndices] = useState(() => indices);
+  const [frontCard, setFrontCard] = useState(() => -1);
 
   useAnimatedReaction(
     () => priorities.value,
     (current) => {
-      console.log("Priorities changed:", current);
       runOnJS(setDisplayIndices)(current);
+      runOnJS(setFrontCard)((prev) => prev + 1);
     }
   );
 
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
-        {displayIndices.map((index) => (
+        {displayIndices.map((index, i) => (
           <CardContainer
             key={index}
             index={index}
             priorities={priorities}
+            cardNumber={frontCard}
             color={
               index % 3 === 0
                 ? Colors.LIGHT_RED

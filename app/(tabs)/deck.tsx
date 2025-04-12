@@ -8,7 +8,7 @@ export default function Deck() {
         flex: 1,
       }}
     >
-      <CardStack size={10} />
+      <CardStack size={30} />
     </SafeAreaView>
   );
 }
