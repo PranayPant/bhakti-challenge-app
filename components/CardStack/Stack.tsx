@@ -89,6 +89,7 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
     () => priority.value,
     (current) => {
       runOnJS(setIsFront)(current === 0);
+      runOnJS(console.log)("Priority for card", index, 'is now', current);
     }
   );
 
@@ -153,7 +154,7 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
     height: 200,
     width: 325,
     backgroundColor: color,
-    bottom: withTiming(BOTTOM_BUFFER + 20 * priority.value),
+    bottom: withTiming(BOTTOM_BUFFER + 20 * (priority.value % DECK_SIZE) ),
     borderRadius: 8,
     zIndex: interpolate(priority.value, [0, 2], [20, 10]),
     opacity: withTiming(priority.value > 2 ? 0 : 1, {
@@ -166,7 +167,7 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
         rotate: rotationValue.value,
       },
       {
-        scale: withTiming(interpolate(priority.value, [0, 2], [1, 0.9]), {
+        scale: withTiming(interpolate(priority.value % DECK_SIZE, [0, 2], [1, 0.9]), {
           duration: 400,
           easing: Easing.quad,
         }),
