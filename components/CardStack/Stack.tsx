@@ -65,6 +65,7 @@ function AnimatedText({ text, ...props }: { text: DerivedValue<string> }) {
 }
 
 const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
+  console.log("CardContainer", index);
   const [isFront, setIsFront] = useState(() => false);
   const BOTTOM_BUFFER = 30;
   const isFlipped = useSharedValue(false);
@@ -229,7 +230,7 @@ export const CardStack = ({ size }: CardStackProps) => {
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
-        {displayIndices.slice(0, DECK_SIZE).map((index) => (
+        {displayIndices.map((index) => (
           <CardContainer
             key={index}
             index={index}

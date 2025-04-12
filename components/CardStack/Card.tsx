@@ -24,7 +24,7 @@ interface CardProps {
 
 export const Card = ({ id, style, isFlipped, children }: CardProps) => {
   const getColor = () => {
-    switch (id) {
+    switch (id % 3) {
       case 0:
         return Colors.DARK_BLUE;
       case 1:
