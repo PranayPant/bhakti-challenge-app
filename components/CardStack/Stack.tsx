@@ -156,6 +156,10 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
     bottom: withTiming(BOTTOM_BUFFER + 20 * priority.value),
     borderRadius: 8,
     zIndex: interpolate(priority.value, [0, 2], [20, 10]),
+    opacity: withTiming(priority.value > 2 ? 0 : 1, {
+      duration: 400,
+      easing: Easing.quad,
+    }),
     transform: [
       { translateY: translateY.value },
       {
@@ -223,7 +227,6 @@ export const CardStack = ({ size }: CardStackProps) => {
     (current) => {
       console.log("Priorities changed:", current);
       runOnJS(setDisplayIndices)(current);
-      
     }
   );
 
@@ -238,9 +241,9 @@ export const CardStack = ({ size }: CardStackProps) => {
             color={
               index % 3 === 0
                 ? Colors.LIGHT_RED
-                : index === 1
-                  ? Colors.LIGHT_GOLD
-                  : Colors.LIGHT_BLUE
+                : index % 3 === 1
+                ? Colors.LIGHT_GOLD
+                : Colors.LIGHT_BLUE
             }
           />
         ))}
