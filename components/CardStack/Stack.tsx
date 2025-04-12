@@ -202,6 +202,21 @@ const CardContainer = ({ color, priorities, index }: CardContainerProps) => {
                 >
                   <Text>Flip</Text>
                 </Pressable>
+                <Text
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    backgroundColor: "lightskyblue",
+                    padding: 8,
+                    width: 100,
+                    height: 40,
+                    borderRadius: 8,
+                    zIndex: 99999,
+                  }}
+                >
+                  {index}
+                </Text>
               </View>
             </Card>
           </>
