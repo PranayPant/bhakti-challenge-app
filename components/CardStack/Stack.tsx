@@ -7,6 +7,7 @@ import {
   Text,
   Button,
   Dimensions,
+  TextStyle,
 } from "react-native";
 import Animated, {
   useSharedValue,
@@ -40,13 +41,20 @@ interface CardContainerProps {
   color: string;
   priorities: SharedValue<number[]>;
   index: number;
-  cardNumber: number;
+  cardNumber: SharedValue<number>;
 }
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 Animated.addWhitelistedNativeProps({ text: true });
 
-function AnimatedText({ text, ...props }: { text: DerivedValue<string> }) {
+function AnimatedText({
+  text,
+  style,
+  ...props
+}: {
+  text: DerivedValue<string>;
+  style?: TextStyle;
+}) {
   const animatedProps = useAnimatedProps(() => ({
     text: text.value,
     defaultValue: text.value,
@@ -55,10 +63,10 @@ function AnimatedText({ text, ...props }: { text: DerivedValue<string> }) {
     <AnimatedTextInput
       editable={false}
       style={{
-        margin: 2,
         backgroundColor: "lightgreen",
         width: 200,
         zIndex: 900,
+        ...style,
       }}
       {...props}
       value={text.value}
@@ -91,6 +99,14 @@ const CardContainer = ({
   const priority = useDerivedValue(() =>
     priorities.value.findIndex((p) => p === index)
   );
+
+  const frontPriorityText = useDerivedValue(() => {
+    return `${cardNumber.value}`;
+  });
+
+  const nextPriorityText = useDerivedValue(() => {
+    return `${cardNumber.value + 1}`;
+  });
 
   useAnimatedReaction(
     () => priority.value,
@@ -184,29 +200,29 @@ const CardContainer = ({
 
   return (
     <>
-      {isFront ? (
-        <GestureDetector gesture={panGesture}>
-          <>
-            <Card isFlipped={isFlipped} id={index} style={animatedStyle}>
-              <View>
-                {/* <AnimatedText text={prioritiesText} /> */}
-                <Pressable
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    backgroundColor: "lightskyblue",
-                    padding: 8,
-                    width: 100,
-                    height: 40,
-                    borderRadius: 8,
-                    zIndex: 99999,
-                  }}
-                  onPress={handlePress}
-                >
-                  <Text>Flip</Text>
-                </Pressable>
-                <Text
+      <GestureDetector gesture={panGesture}>
+        <>
+          <Card isFlipped={isFlipped} id={index} style={animatedStyle}>
+            <View>
+              {/* <AnimatedText text={prioritiesText} /> */}
+              <Pressable
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  backgroundColor: "lightskyblue",
+                  padding: 8,
+                  width: 100,
+                  height: 40,
+                  borderRadius: 8,
+                  zIndex: 99999,
+                }}
+                onPress={handlePress}
+              >
+                <Text>Flip</Text>
+              </Pressable>
+              {isFront ? (
+                <AnimatedText
                   style={{
                     position: "absolute",
                     top: 0,
@@ -218,49 +234,28 @@ const CardContainer = ({
                     borderRadius: 8,
                     zIndex: 99999,
                   }}
-                >
-                  {randomSentences[cardNumber]}
-                </Text>
-              </View>
-            </Card>
-          </>
-        </GestureDetector>
-      ) : (
-        <Card isFlipped={isFlipped} id={index} style={animatedStyle}>
-          <View>
-            {/* <AnimatedText text={prioritiesText} /> */}
-            <Pressable
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                backgroundColor: "lightskyblue",
-                padding: 8,
-                width: 100,
-                height: 40,
-                borderRadius: 8,
-              }}
-              onPress={handlePress}
-            >
-              <Text>Flip</Text>
-            </Pressable>
-            <Text
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                backgroundColor: "lightskyblue",
-                padding: 8,
-                width: 100,
-                height: 40,
-                borderRadius: 8,
-              }}
-            >
-              {randomSentences[cardNumber + 1]}
-            </Text>
-          </View>
-        </Card>
-      )}
+                  text={frontPriorityText}
+                ></AnimatedText>
+              ) : (
+                <AnimatedText
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    backgroundColor: "lightskyblue",
+                    padding: 8,
+                    width: 100,
+                    height: 40,
+                    borderRadius: 8,
+                    zIndex: 99999,
+                  }}
+                  text={nextPriorityText}
+                ></AnimatedText>
+              )}
+            </View>
+          </Card>
+        </>
+      </GestureDetector>
     </>
   );
 };
@@ -273,13 +268,13 @@ export const CardStack = ({ size }: CardStackProps) => {
   const indices = Array.from({ length: DECK_SIZE }, (_, i) => i);
   const priorities = useSharedValue(indices);
   const [displayIndices, setDisplayIndices] = useState(() => indices);
-  const [frontCard, setFrontCard] = useState(() => -1);
+  const frontCard = useSharedValue(0);
 
   useAnimatedReaction(
     () => priorities.value,
     (current) => {
       runOnJS(setDisplayIndices)(current);
-      runOnJS(setFrontCard)((prev) => prev + 1);
+      frontCard.value += 1;
     }
   );
 
