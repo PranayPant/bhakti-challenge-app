@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import {
   View,
   SafeAreaView,
@@ -38,52 +38,21 @@ const DECK_SIZE = 3;
 const randomSentences = ["0", "1", "2", "3", "4"];
 
 interface CardContainerProps {
-  color: string;
-  priorities: SharedValue<number[]>;
   index: number;
-  cardNumber: SharedValue<number>;
-}
-
-const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
-Animated.addWhitelistedNativeProps({ text: true });
-
-function AnimatedText({
-  text,
-  style,
-  ...props
-}: {
-  text: DerivedValue<string>;
-  style?: TextStyle;
-}) {
-  const animatedProps = useAnimatedProps(() => ({
-    text: text.value,
-    defaultValue: text.value,
-  }));
-  return (
-    <AnimatedTextInput
-      editable={false}
-      style={{
-        backgroundColor: "lightgreen",
-        width: 200,
-        zIndex: 900,
-        ...style,
-      }}
-      {...props}
-      value={text.value}
-      animatedProps={animatedProps}
-    />
-  );
+  color: string;
+  frontDisplay: DerivedValue<string>;
+  priority: DerivedValue<number>;
+  updatePriorities: VoidFunction;
 }
 
 const CardContainer = ({
-  color,
-  priorities,
   index,
-  cardNumber,
+  color,
+  updatePriorities,
+  frontDisplay,
+  priority,
 }: CardContainerProps) => {
-  const [isFront, setIsFront] = useState(() => false);
   const BOTTOM_BUFFER = 30;
-  const isFlipped = useSharedValue(false);
   const translateY = useSharedValue(0);
   const rotation = useSharedValue(BOTTOM_BUFFER);
   const isRightFlick = useSharedValue(true);
@@ -96,28 +65,11 @@ const CardContainer = ({
       )}rad`
   );
 
-  const priority = useDerivedValue(() =>
-    priorities.value.findIndex((p) => p === index)
-  );
-
-  const frontPriorityText = useDerivedValue(() => {
-    return `${cardNumber.value}`;
-  });
-
-  const nextPriorityText = useDerivedValue(() => {
-    return `${cardNumber.value + 1}`;
-  });
-
-  useAnimatedReaction(
-    () => priority.value,
-    (current) => {
-      runOnJS(setIsFront)(current === 0);
-      // runOnJS(console.log)("Priority for card", index, 'is now', current);
-    }
-  );
-
   const panGesture = Gesture.Pan()
     .onBegin(({ absoluteX, translationY }) => {
+      if (priority.value > 0) {
+        return;
+      }
       translateY.value = translationY;
       rotation.value = translationY + BOTTOM_BUFFER;
       if (absoluteX < width / 2) {
@@ -125,10 +77,16 @@ const CardContainer = ({
       }
     })
     .onUpdate(({ translationY }) => {
+      if (priority.value > 0) {
+        return;
+      }
       translateY.value = translationY;
       rotation.value = translationY + BOTTOM_BUFFER;
     })
     .onEnd(({ translationY }) => {
+      if (priority.value > 0) {
+        return;
+      }
       if (Math.abs(Math.round(translationY)) < 100) {
         translateY.value = withTiming(
           0,
@@ -147,7 +105,7 @@ const CardContainer = ({
         return;
       }
 
-      priorities.value = [...priorities.value.slice(1), priorities.value[0]];
+      runOnJS(updatePriorities)();
 
       translateY.value = withTiming(
         0,
@@ -194,108 +152,94 @@ const CardContainer = ({
     ],
   }));
 
-  const handlePress = () => {
-    isFlipped.value = !isFlipped.value;
-  };
-
   return (
     <>
       <GestureDetector gesture={panGesture}>
-        <>
-          <Card isFlipped={isFlipped} id={index} style={animatedStyle}>
-            <View>
-              {/* <AnimatedText text={prioritiesText} /> */}
-              <Pressable
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  backgroundColor: "lightskyblue",
-                  padding: 8,
-                  width: 100,
-                  height: 40,
-                  borderRadius: 8,
-                  zIndex: 99999,
-                }}
-                onPress={handlePress}
-              >
-                <Text>Flip</Text>
-              </Pressable>
-              {isFront ? (
-                <AnimatedText
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    backgroundColor: "lightskyblue",
-                    padding: 8,
-                    width: 100,
-                    height: 40,
-                    borderRadius: 8,
-                    zIndex: 99999,
-                  }}
-                  text={frontPriorityText}
-                ></AnimatedText>
-              ) : (
-                <AnimatedText
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    backgroundColor: "lightskyblue",
-                    padding: 8,
-                    width: 100,
-                    height: 40,
-                    borderRadius: 8,
-                    zIndex: 99999,
-                  }}
-                  text={nextPriorityText}
-                ></AnimatedText>
-              )}
-            </View>
-          </Card>
-        </>
+        <Card
+          id={index}
+          frontDisplay={frontDisplay}
+          style={animatedStyle}
+        ></Card>
       </GestureDetector>
     </>
   );
 };
 
-export interface CardStackProps {
-  size: number;
-}
-
-export const CardStack = ({ size }: CardStackProps) => {
+export const CardStack = () => {
   const indices = Array.from({ length: DECK_SIZE }, (_, i) => i);
   const priorities = useSharedValue(indices);
-  const [displayIndices, setDisplayIndices] = useState(() => indices);
-  const frontCard = useSharedValue(0);
+  const firstCard = useSharedValue(0);
+  const secondCard = useSharedValue(1);
+  const thirdCard = useSharedValue(2);
+
+  const firstPriority = useDerivedValue(() => {
+    return priorities.value.findIndex((item) => item === 0);
+  });
+
+  const secondPriority = useDerivedValue(() => {
+    return priorities.value.findIndex((item) => item === 1);
+  });
+
+  const thirdPriority = useDerivedValue(() => {
+    return priorities.value.findIndex((item) => item === 2);
+  });
+
+  const firstCardText = useDerivedValue(() => {
+    return `${firstCard.value}`;
+  });
+
+  const secondCardText = useDerivedValue(() => {
+    return `${secondCard.value}`;
+  });
+
+  const thirdCardText = useDerivedValue(() => {
+    return `${thirdCard.value}`;
+  });
+
+  const updatePriorities = useCallback(() => {
+    const newPriorities = [...priorities.value.slice(1), priorities.value[0]];
+    priorities.value = newPriorities;
+  }, []);
 
   useAnimatedReaction(
     () => priorities.value,
-    (current) => {
-      runOnJS(setDisplayIndices)(current);
-      frontCard.value += 1;
+    (updatedPriorities) => {
+      console.log("Priorities changed", updatedPriorities);
+      if (updatedPriorities[0] === 0) {
+        console.log("Incrementing last card at the start of every iteration");
+        thirdCard.value = firstCard.value + DECK_SIZE - 1;
+      } else if (updatedPriorities[0] === DECK_SIZE - 1) {
+        console.log("Incrementing first two cards by DECK_SIZE");
+        firstCard.value = firstCard.value + DECK_SIZE;
+        secondCard.value = secondCard.value + DECK_SIZE;
+      }
     }
   );
 
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
-        {displayIndices.map((index, i) => (
-          <CardContainer
-            key={index}
-            index={index}
-            priorities={priorities}
-            cardNumber={frontCard}
-            color={
-              index % 3 === 0
-                ? Colors.LIGHT_RED
-                : index % 3 === 1
-                ? Colors.LIGHT_GOLD
-                : Colors.LIGHT_BLUE
-            }
-          />
-        ))}
+        <CardContainer
+          index={0}
+          updatePriorities={updatePriorities}
+          frontDisplay={firstCardText}
+          priority={firstPriority}
+          color={Colors.LIGHT_RED}
+        />
+        <CardContainer
+          index={1}
+          updatePriorities={updatePriorities}
+          frontDisplay={secondCardText}
+          priority={secondPriority}
+          color={Colors.LIGHT_GOLD}
+        />
+        <CardContainer
+          index={2}
+          updatePriorities={updatePriorities}
+          frontDisplay={thirdCardText}
+          priority={thirdPriority}
+          color={Colors.LIGHT_BLUE}
+        />
       </SafeAreaView>
     </GestureHandlerRootView>
   );
