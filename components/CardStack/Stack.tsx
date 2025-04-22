@@ -130,24 +130,21 @@ const CardContainer = ({
       );
     });
 
+  console.log("CardContainer", index, 10 - priority.value);
+
   const animatedStyle = useAnimatedStyle(() => ({
     position: "absolute",
-    height: 200,
+    height: 500,
     width: 325,
     backgroundColor: color,
-    bottom: withTiming(BOTTOM_BUFFER + 20 * priority.value),
+    bottom: withTiming(BOTTOM_BUFFER + 10 * priority.value),
     borderRadius: 8,
-    zIndex: interpolate(priority.value, [0, 2], [20, 10]),
+    zIndex: 10 - priority.value,
     transform: [
       { translateY: translateY.value },
+      {translateX: priority.value * -10},
       {
         rotate: rotationValue.value,
-      },
-      {
-        scale: withTiming(interpolate(priority.value, [0, 2], [1, 0.9]), {
-          duration: 400,
-          easing: Easing.quad,
-        }),
       },
     ],
   }));
@@ -220,11 +217,11 @@ export const CardStack = () => {
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
         <CardContainer
-          index={0}
+          index={2}
           updatePriorities={updatePriorities}
-          frontDisplay={firstCardText}
-          priority={firstPriority}
-          color={Colors.LIGHT_RED}
+          frontDisplay={thirdCardText}
+          priority={thirdPriority}
+          color={Colors.LIGHT_BLUE}
         />
         <CardContainer
           index={1}
@@ -234,11 +231,11 @@ export const CardStack = () => {
           color={Colors.LIGHT_GOLD}
         />
         <CardContainer
-          index={2}
+          index={0}
           updatePriorities={updatePriorities}
-          frontDisplay={thirdCardText}
-          priority={thirdPriority}
-          color={Colors.LIGHT_BLUE}
+          frontDisplay={firstCardText}
+          priority={firstPriority}
+          color={Colors.LIGHT_RED}
         />
       </SafeAreaView>
     </GestureHandlerRootView>
