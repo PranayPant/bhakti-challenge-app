@@ -1,46 +1,34 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
+import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
 import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  Text,
-  Button,
-  Dimensions,
-  TextStyle,
-} from "react-native";
-import Animated, {
   useSharedValue,
   useDerivedValue,
   useAnimatedStyle,
-  useAnimatedProps,
   interpolate,
   useAnimatedReaction,
   withTiming,
   runOnJS,
   Easing,
-  SharedValue,
   DerivedValue,
 } from "react-native-reanimated";
 import {
   GestureDetector,
   GestureHandlerRootView,
   Gesture,
-  Pressable,
 } from "react-native-gesture-handler";
 
 import { Card, Colors } from "./Card";
+import { Trivia } from "@/constants/Trivia";
 
 const { height, width } = Dimensions.get("window");
 
 const DECK_SIZE = 3;
 
-const randomSentences = ["0", "1", "2", "3", "4"];
-
 interface CardContainerProps {
   index: number;
   color: string;
   frontDisplay: DerivedValue<string>;
+  backDisplay: DerivedValue<string>;
   priority: DerivedValue<number>;
   updatePriorities: VoidFunction;
 }
@@ -50,6 +38,7 @@ const CardContainer = ({
   color,
   updatePriorities,
   frontDisplay,
+  backDisplay,
   priority,
 }: CardContainerProps) => {
   const BOTTOM_BUFFER = 30;
@@ -69,11 +58,28 @@ const CardContainer = ({
   );
 
   const panGesture = Gesture.Pan()
-    .onBegin(({ absoluteX, translationY, translationX }) => {
+    .onBegin(({ absoluteX, translationX, translationY }) => {
+      console.log("onBegin", absoluteX, translationX, translationY);
       if (priority.value > 0) {
         return;
       }
-      //translateY.value = translationY;
+      if (Math.abs(Math.round(translationX)) < 50) {
+        translateX.value = withTiming(
+          0,
+          {
+            duration: 200,
+            easing: Easing.quad,
+          },
+          () => {
+            isRightFlick.value = true;
+          }
+        );
+        rotation.value = withTiming(BOTTOM_BUFFER, {
+          duration: 200,
+          easing: Easing.quad,
+        });
+        return;
+      }
       rotation.value = translationX + BOTTOM_BUFFER;
       translateX.value = translationX;
 
@@ -81,15 +87,15 @@ const CardContainer = ({
         isRightFlick.value = false;
       }
     })
-    .onUpdate(({ translationY, translationX }) => {
+    .onUpdate(({ translationX }) => {
       if (priority.value > 0) {
         return;
       }
-      //translateY.value = translationY;
       rotation.value = translationX + BOTTOM_BUFFER;
       translateX.value = translationX;
     })
-    .onEnd(({ translationY, translationX }) => {
+    .onEnd(({ translationX }) => {
+      console.log("onEnd", translationX);
       if (priority.value > 0) {
         return;
       }
@@ -136,8 +142,6 @@ const CardContainer = ({
       );
     });
 
-  console.log("CardContainer", index, 10 - priority.value);
-
   const animatedStyle = useAnimatedStyle(() => ({
     position: "absolute",
     height: 400,
@@ -161,6 +165,7 @@ const CardContainer = ({
         <Card
           id={index}
           frontDisplay={frontDisplay}
+          backDisplay={backDisplay}
           style={animatedStyle}
         ></Card>
       </GestureDetector>
@@ -188,15 +193,27 @@ export const CardStack = () => {
   });
 
   const firstCardText = useDerivedValue(() => {
-    return `${firstCard.value}`;
+    return `${Trivia[firstCard.value % Trivia.length].question}`;
   });
 
   const secondCardText = useDerivedValue(() => {
-    return `${secondCard.value}`;
+    return `${Trivia[secondCard.value % Trivia.length].question}`;
   });
 
   const thirdCardText = useDerivedValue(() => {
-    return `${thirdCard.value}`;
+    return `${Trivia[thirdCard.value % Trivia.length].question}`;
+  });
+
+  const firstCardAnswer = useDerivedValue(() => {
+    return `${Trivia[firstCard.value % Trivia.length].correctAnswer}`;
+  });
+
+  const secondCardAnswer = useDerivedValue(() => {
+    return `${Trivia[secondCard.value % Trivia.length].correctAnswer}`;
+  });
+
+  const thirdCardAnswer = useDerivedValue(() => {
+    return `${Trivia[thirdCard.value % Trivia.length].correctAnswer}`;
   });
 
   const updatePriorities = useCallback(() => {
@@ -207,12 +224,9 @@ export const CardStack = () => {
   useAnimatedReaction(
     () => priorities.value,
     (updatedPriorities) => {
-      console.log("Priorities changed", updatedPriorities);
       if (updatedPriorities[0] === 0) {
-        console.log("Incrementing last card at the start of every iteration");
         thirdCard.value = firstCard.value + DECK_SIZE - 1;
       } else if (updatedPriorities[0] === DECK_SIZE - 1) {
-        console.log("Incrementing first two cards by DECK_SIZE");
         firstCard.value = firstCard.value + DECK_SIZE;
         secondCard.value = secondCard.value + DECK_SIZE;
       }
@@ -226,6 +240,7 @@ export const CardStack = () => {
           index={2}
           updatePriorities={updatePriorities}
           frontDisplay={thirdCardText}
+          backDisplay={thirdCardAnswer}
           priority={thirdPriority}
           color={Colors.LIGHT_BLUE}
         />
@@ -233,6 +248,7 @@ export const CardStack = () => {
           index={1}
           updatePriorities={updatePriorities}
           frontDisplay={secondCardText}
+          backDisplay={secondCardAnswer}
           priority={secondPriority}
           color={Colors.LIGHT_GOLD}
         />
@@ -240,6 +256,7 @@ export const CardStack = () => {
           index={0}
           updatePriorities={updatePriorities}
           frontDisplay={firstCardText}
+          backDisplay={firstCardAnswer}
           priority={firstPriority}
           color={Colors.LIGHT_RED}
         />

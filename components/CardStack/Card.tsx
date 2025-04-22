@@ -60,10 +60,17 @@ interface CardProps {
   id: number;
   style: object;
   frontDisplay: DerivedValue<string>;
+  backDisplay: DerivedValue<string>;
   children?: React.ReactNode;
 }
 
-export const Card = ({ id, style, frontDisplay, children }: CardProps) => {
+export const Card = ({
+  id,
+  style,
+  frontDisplay,
+  backDisplay,
+  children,
+}: CardProps) => {
   const isFlipped = useSharedValue(false);
 
   const getColor = () => {
@@ -129,13 +136,14 @@ export const Card = ({ id, style, frontDisplay, children }: CardProps) => {
         <AnimatedText
           style={{
             position: "absolute",
-            top: 20,
-            right: 20,
+            top: 100,
             backgroundColor: "lightskyblue",
             padding: 8,
-            width: 100,
+            width: 250,
             height: 40,
+            marginHorizontal: 20,
             borderRadius: 8,
+            textOverflow: "ellipsis",
           }}
           text={frontDisplay}
         ></AnimatedText>
@@ -160,6 +168,20 @@ export const Card = ({ id, style, frontDisplay, children }: CardProps) => {
           { backgroundColor: "lightgreen", borderRadius: 8 },
         ]}
       >
+        <AnimatedText
+          style={{
+            position: "absolute",
+            top: 100,
+            backgroundColor: "lightskyblue",
+            padding: 8,
+            width: 250,
+            height: 40,
+            marginHorizontal: 20,
+            borderRadius: 8,
+            textOverflow: "ellipsis",
+          }}
+          text={backDisplay}
+        ></AnimatedText>
         <View style={cardStyle.spacer} />
         <View style={cardStyle.container}>
           <View style={[cardStyle.circle, { backgroundColor: getColor() }]} />
