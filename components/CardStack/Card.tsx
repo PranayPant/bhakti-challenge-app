@@ -105,8 +105,8 @@ export const Card = ({ id, style, frontDisplay, children }: CardProps) => {
       <Pressable
         style={{
           position: "absolute",
-          top: 50,
-          left: 50,
+          top: 20,
+          left: 20,
           backgroundColor: "lightskyblue",
           padding: 8,
           width: 100,
@@ -129,8 +129,8 @@ export const Card = ({ id, style, frontDisplay, children }: CardProps) => {
         <AnimatedText
           style={{
             position: "absolute",
-            top: 50,
-            right: 50,
+            top: 20,
+            right: 20,
             backgroundColor: "lightskyblue",
             padding: 8,
             width: 100,

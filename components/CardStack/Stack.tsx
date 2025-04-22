@@ -54,41 +54,47 @@ const CardContainer = ({
 }: CardContainerProps) => {
   const BOTTOM_BUFFER = 30;
   const translateY = useSharedValue(0);
+  const translateX = useSharedValue(0);
   const rotation = useSharedValue(BOTTOM_BUFFER);
   const isRightFlick = useSharedValue(true);
   const rotationValue = useDerivedValue(
     () =>
       `${interpolate(
         rotation.value,
-        isRightFlick.value ? [BOTTOM_BUFFER, height] : [BOTTOM_BUFFER, -height],
+        isRightFlick.value
+          ? [BOTTOM_BUFFER * priority.value, height]
+          : [BOTTOM_BUFFER * priority.value, -height],
         [0, 4]
       )}rad`
   );
 
   const panGesture = Gesture.Pan()
-    .onBegin(({ absoluteX, translationY }) => {
+    .onBegin(({ absoluteX, translationY, translationX }) => {
       if (priority.value > 0) {
         return;
       }
-      translateY.value = translationY;
-      rotation.value = translationY + BOTTOM_BUFFER;
-      if (absoluteX < width / 2) {
+      //translateY.value = translationY;
+      rotation.value = translationX + BOTTOM_BUFFER;
+      translateX.value = translationX;
+
+      if (absoluteX < (width * 0.8) / 2) {
         isRightFlick.value = false;
       }
     })
-    .onUpdate(({ translationY }) => {
+    .onUpdate(({ translationY, translationX }) => {
       if (priority.value > 0) {
         return;
       }
-      translateY.value = translationY;
-      rotation.value = translationY + BOTTOM_BUFFER;
+      //translateY.value = translationY;
+      rotation.value = translationX + BOTTOM_BUFFER;
+      translateX.value = translationX;
     })
-    .onEnd(({ translationY }) => {
+    .onEnd(({ translationY, translationX }) => {
       if (priority.value > 0) {
         return;
       }
-      if (Math.abs(Math.round(translationY)) < 100) {
-        translateY.value = withTiming(
+      if (Math.abs(Math.round(translationX)) < 50) {
+        translateX.value = withTiming(
           0,
           {
             duration: 200,
@@ -107,7 +113,7 @@ const CardContainer = ({
 
       runOnJS(updatePriorities)();
 
-      translateY.value = withTiming(
+      translateX.value = withTiming(
         0,
         {
           duration: 400,
@@ -119,7 +125,7 @@ const CardContainer = ({
       );
 
       rotation.value = withTiming(
-        -1280,
+        0,
         {
           duration: 400,
           easing: Easing.linear,
@@ -134,15 +140,15 @@ const CardContainer = ({
 
   const animatedStyle = useAnimatedStyle(() => ({
     position: "absolute",
-    height: 500,
-    width: 325,
+    height: 400,
+    width: 300,
     backgroundColor: color,
     bottom: withTiming(BOTTOM_BUFFER + 10 * priority.value),
     borderRadius: 8,
     zIndex: 10 - priority.value,
     transform: [
       { translateY: translateY.value },
-      {translateX: priority.value * -10},
+      { translateX: translateX.value + priority.value * -10 },
       {
         rotate: rotationValue.value,
       },
