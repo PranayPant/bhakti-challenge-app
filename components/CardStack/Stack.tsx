@@ -42,6 +42,7 @@ const CardContainer = ({
   priority,
 }: CardContainerProps) => {
   const BOTTOM_BUFFER = 30;
+  const isFlipped = useSharedValue(false);
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
   const rotation = useSharedValue(BOTTOM_BUFFER);
@@ -59,7 +60,6 @@ const CardContainer = ({
 
   const panGesture = Gesture.Pan()
     .onBegin(({ absoluteX, translationX, translationY }) => {
-      console.log("onBegin", absoluteX, translationX, translationY);
       if (priority.value > 0) {
         return;
       }
@@ -95,7 +95,6 @@ const CardContainer = ({
       translateX.value = translationX;
     })
     .onEnd(({ translationX }) => {
-      console.log("onEnd", translationX);
       if (priority.value > 0) {
         return;
       }
@@ -116,6 +115,8 @@ const CardContainer = ({
         });
         return;
       }
+
+      isFlipped.value = false;
 
       runOnJS(updatePriorities)();
 
@@ -142,11 +143,10 @@ const CardContainer = ({
       );
     });
 
-  const animatedStyle = useAnimatedStyle(() => ({
+  const animatedRootStyle = useAnimatedStyle(() => ({
     position: "absolute",
     height: 400,
     width: 300,
-    backgroundColor: color,
     bottom: withTiming(BOTTOM_BUFFER + 10 * priority.value),
     borderRadius: 8,
     zIndex: 10 - priority.value,
@@ -159,14 +159,29 @@ const CardContainer = ({
     ],
   }));
 
+  const animatedFrontStyle = useAnimatedStyle(() => ({
+    backgroundColor: color,
+    borderRadius: 8,
+    zIndex: isFlipped.value ? 0 : 10,
+  }));
+
+  const animatedBackStyle = useAnimatedStyle(() => ({
+    backgroundColor: "lightgreen",
+    borderRadius: 8,
+    zIndex: isFlipped.value ? 10 : 0,
+  }));
+
   return (
     <>
       <GestureDetector gesture={panGesture}>
         <Card
           id={index}
+          isFlipped={isFlipped}
           frontDisplay={frontDisplay}
           backDisplay={backDisplay}
-          style={animatedStyle}
+          rootStyle={animatedRootStyle}
+          frontStyle={animatedFrontStyle}
+          backStyle={animatedBackStyle}
         ></Card>
       </GestureDetector>
     </>

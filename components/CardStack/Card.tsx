@@ -5,6 +5,7 @@ import {
   Text,
   TextStyle,
   TextInput,
+  ViewStyle,
 } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -58,7 +59,10 @@ function AnimatedText({
 
 interface CardProps {
   id: number;
-  style: object;
+  isFlipped: SharedValue<boolean>;
+  rootStyle: ViewStyle;
+  frontStyle?: ViewStyle;
+  backStyle?: ViewStyle;
   frontDisplay: DerivedValue<string>;
   backDisplay: DerivedValue<string>;
   children?: React.ReactNode;
@@ -66,13 +70,14 @@ interface CardProps {
 
 export const Card = ({
   id,
-  style,
+  isFlipped,
+  rootStyle,
+  frontStyle,
+  backStyle,
   frontDisplay,
   backDisplay,
   children,
 }: CardProps) => {
-  const isFlipped = useSharedValue(false);
-
   const getColor = () => {
     switch (id % 3) {
       case 0:
@@ -107,32 +112,32 @@ export const Card = ({
   };
 
   return (
-    <Animated.View style={style}>
+    <Animated.View style={rootStyle}>
       {children}
-      <Pressable
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 20,
-          backgroundColor: "lightskyblue",
-          padding: 8,
-          width: 100,
-          height: 40,
-          borderRadius: 8,
-          zIndex: 99999,
-        }}
-        onPress={handlePress}
-      >
-        <Text>Flip</Text>
-      </Pressable>
 
       <Animated.View
         style={[
           cardStyle.spacer,
           flipCardStyles.base,
           regularCardAnimatedStyle,
+          frontStyle,
         ]}
       >
+        <Pressable
+          style={{
+            position: "absolute",
+            top: 20,
+            left: 20,
+            backgroundColor: "lightskyblue",
+            padding: 8,
+            width: 100,
+            height: 40,
+            borderRadius: 8,
+          }}
+          onPress={handlePress}
+        >
+          <Text>See answer</Text>
+        </Pressable>
         <AnimatedText
           style={{
             position: "absolute",
@@ -143,7 +148,6 @@ export const Card = ({
             height: 40,
             marginHorizontal: 20,
             borderRadius: 8,
-            textOverflow: "ellipsis",
           }}
           text={frontDisplay}
         ></AnimatedText>
@@ -165,9 +169,24 @@ export const Card = ({
           cardStyle.spacer,
           flipCardStyles.base,
           flippedCardAnimatedStyle,
-          { backgroundColor: "lightgreen", borderRadius: 8 },
+          backStyle,
         ]}
       >
+        <Pressable
+          style={{
+            position: "absolute",
+            top: 20,
+            left: 20,
+            backgroundColor: "lightskyblue",
+            padding: 8,
+            width: 100,
+            height: 40,
+            borderRadius: 8,
+          }}
+          onPress={handlePress}
+        >
+          <Text>Go back</Text>
+        </Pressable>
         <AnimatedText
           style={{
             position: "absolute",
@@ -178,7 +197,6 @@ export const Card = ({
             height: 40,
             marginHorizontal: 20,
             borderRadius: 8,
-            textOverflow: "ellipsis",
           }}
           text={backDisplay}
         ></AnimatedText>
