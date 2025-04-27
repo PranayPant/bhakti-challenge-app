@@ -17,14 +17,7 @@ import Animated, {
   useAnimatedProps,
 } from "react-native-reanimated";
 
-export const Colors = {
-  LIGHT_BLUE: "#afd0ff",
-  LIGHT_GOLD: "#e8d38f",
-  LIGHT_RED: "#ff7e85",
-  DARK_BLUE: "#4a64a8",
-  DARK_GOLD: "#85692a",
-  DARK_RED: "#992e1e",
-};
+import { Colors } from "@/constants/Colors";
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 Animated.addWhitelistedNativeProps({ text: true });
@@ -44,10 +37,10 @@ function AnimatedText({
   return (
     <AnimatedTextInput
       editable={false}
+      multiline
+      numberOfLines={2}
       style={{
-        backgroundColor: "lightgreen",
-        width: 200,
-        zIndex: 900,
+        textAlign: "center",
         ...style,
       }}
       {...props}
@@ -78,17 +71,6 @@ export const Card = ({
   backDisplay,
   children,
 }: CardProps) => {
-  const getColor = () => {
-    switch (id % 3) {
-      case 0:
-        return Colors.DARK_BLUE;
-      case 1:
-        return Colors.DARK_RED;
-      case 2:
-        return Colors.DARK_GOLD;
-    }
-  };
-
   const regularCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]);
     const rotateValue = withTiming(`${spinValue}deg`, { duration: 500 });
@@ -123,12 +105,28 @@ export const Card = ({
           frontStyle,
         ]}
       >
-        <Pressable
+        <View
           style={{
             position: "absolute",
             top: 20,
+            backgroundColor: "white",
+            width: 260,
+            height: 200,
+            marginHorizontal: 20,
+            borderRadius: 8,
+          }}
+        >
+          <AnimatedText
+            text={frontDisplay}
+            style={{ marginTop: 20, wordWrap: "break-word" }}
+          />
+        </View>
+        <Pressable
+          style={{
+            position: "absolute",
+            bottom: 20,
             left: 20,
-            backgroundColor: "lightskyblue",
+            backgroundColor: Colors.purple[300],
             padding: 8,
             width: 100,
             height: 40,
@@ -136,33 +134,8 @@ export const Card = ({
           }}
           onPress={handlePress}
         >
-          <Text>See answer</Text>
+          <Text style={{ margin: "auto", color: "white" }}>See answer</Text>
         </Pressable>
-        <AnimatedText
-          style={{
-            position: "absolute",
-            top: 100,
-            backgroundColor: "lightskyblue",
-            padding: 8,
-            width: 250,
-            height: 40,
-            marginHorizontal: 20,
-            borderRadius: 8,
-          }}
-          text={frontDisplay}
-        ></AnimatedText>
-        <View style={cardStyle.spacer} />
-        <View style={cardStyle.container}>
-          <View style={[cardStyle.circle, { backgroundColor: getColor() }]} />
-          <View>
-            <View
-              style={[cardStyle.topLine, { backgroundColor: getColor() }]}
-            />
-            <View
-              style={[cardStyle.bottomLine, { backgroundColor: getColor() }]}
-            />
-          </View>
-        </View>
       </Animated.View>
       <Animated.View
         style={[
@@ -172,12 +145,25 @@ export const Card = ({
           backStyle,
         ]}
       >
-        <Pressable
+        <View
           style={{
             position: "absolute",
             top: 20,
+            backgroundColor: "white",
+            width: 260,
+            height: 200,
+            marginHorizontal: 20,
+            borderRadius: 8,
+          }}
+        >
+          <AnimatedText text={backDisplay} style={{ margin: 20 }} />
+        </View>
+        <Pressable
+          style={{
+            position: "absolute",
+            bottom: 20,
             left: 20,
-            backgroundColor: "lightskyblue",
+            backgroundColor: Colors.purple[300],
             padding: 8,
             width: 100,
             height: 40,
@@ -185,33 +171,8 @@ export const Card = ({
           }}
           onPress={handlePress}
         >
-          <Text>Go back</Text>
+          <Text style={{ margin: "auto", color: "white" }}>Go back</Text>
         </Pressable>
-        <AnimatedText
-          style={{
-            position: "absolute",
-            top: 100,
-            backgroundColor: "lightskyblue",
-            padding: 8,
-            width: 250,
-            height: 40,
-            marginHorizontal: 20,
-            borderRadius: 8,
-          }}
-          text={backDisplay}
-        ></AnimatedText>
-        <View style={cardStyle.spacer} />
-        <View style={cardStyle.container}>
-          <View style={[cardStyle.circle, { backgroundColor: getColor() }]} />
-          <View>
-            <View
-              style={[cardStyle.topLine, { backgroundColor: getColor() }]}
-            />
-            <View
-              style={[cardStyle.bottomLine, { backgroundColor: getColor() }]}
-            />
-          </View>
-        </View>
       </Animated.View>
     </Animated.View>
   );

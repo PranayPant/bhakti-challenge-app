@@ -17,8 +17,9 @@ import {
   Gesture,
 } from "react-native-gesture-handler";
 
-import { Card, Colors } from "./Card";
+import { Card } from "./Card";
 import { Trivia } from "@/constants/Trivia";
+import { Colors } from "@/constants/Colors";
 import { useChallengeStore } from "@/stores/challenges";
 
 const { height, width } = Dimensions.get("window");
@@ -277,7 +278,7 @@ export const CardStack = () => {
           frontDisplay={thirdCardText}
           backDisplay={thirdCardAnswer}
           priority={thirdPriority}
-          color={Colors.LIGHT_BLUE}
+          color={Colors.blue[400]}
         />
         <CardContainer
           index={1}
@@ -285,7 +286,7 @@ export const CardStack = () => {
           frontDisplay={secondCardText}
           backDisplay={secondCardAnswer}
           priority={secondPriority}
-          color={Colors.LIGHT_GOLD}
+          color={Colors.yellow[400]}
         />
         <CardContainer
           index={0}
@@ -293,7 +294,7 @@ export const CardStack = () => {
           frontDisplay={firstCardText}
           backDisplay={firstCardAnswer}
           priority={firstPriority}
-          color={Colors.LIGHT_RED}
+          color={Colors.red[400]}
         />
       </SafeAreaView>
     </GestureHandlerRootView>
