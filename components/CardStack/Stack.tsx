@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
+import { SafeAreaView, StyleSheet, Dimensions, View, Text } from "react-native";
 import {
   useSharedValue,
   useDerivedValue,
@@ -19,6 +19,7 @@ import {
 
 import { Card, Colors } from "./Card";
 import { Trivia } from "@/constants/Trivia";
+import { useChallengeStore } from "@/stores/challenges";
 
 const { height, width } = Dimensions.get("window");
 
@@ -195,6 +196,13 @@ export const CardStack = () => {
   const secondCard = useSharedValue(1);
   const thirdCard = useSharedValue(2);
 
+  const selectedChallenges = useChallengeStore(
+    (state) => state.selectedChallenges
+  );
+  const filteredTrivia = Trivia.filter((item) =>
+    selectedChallenges.includes(item.id.toString())
+  );
+
   const firstPriority = useDerivedValue(() => {
     return priorities.value.findIndex((item) => item === 0);
   });
@@ -208,27 +216,39 @@ export const CardStack = () => {
   });
 
   const firstCardText = useDerivedValue(() => {
-    return `${Trivia[firstCard.value % Trivia.length].question}`;
+    return `${
+      filteredTrivia[firstCard.value % filteredTrivia.length].question
+    }`;
   });
 
   const secondCardText = useDerivedValue(() => {
-    return `${Trivia[secondCard.value % Trivia.length].question}`;
+    return `${
+      filteredTrivia[secondCard.value % filteredTrivia.length].question
+    }`;
   });
 
   const thirdCardText = useDerivedValue(() => {
-    return `${Trivia[thirdCard.value % Trivia.length].question}`;
+    return `${
+      filteredTrivia[thirdCard.value % filteredTrivia.length].question
+    }`;
   });
 
   const firstCardAnswer = useDerivedValue(() => {
-    return `${Trivia[firstCard.value % Trivia.length].correctAnswer}`;
+    return `${
+      filteredTrivia[firstCard.value % filteredTrivia.length].correctAnswer
+    }`;
   });
 
   const secondCardAnswer = useDerivedValue(() => {
-    return `${Trivia[secondCard.value % Trivia.length].correctAnswer}`;
+    return `${
+      filteredTrivia[secondCard.value % filteredTrivia.length].correctAnswer
+    }`;
   });
 
   const thirdCardAnswer = useDerivedValue(() => {
-    return `${Trivia[thirdCard.value % Trivia.length].correctAnswer}`;
+    return `${
+      filteredTrivia[thirdCard.value % filteredTrivia.length].correctAnswer
+    }`;
   });
 
   const updatePriorities = useCallback(() => {
