@@ -1,46 +1,36 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
+import { SafeAreaView, StyleSheet, Dimensions, View, Text } from "react-native";
 import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  Text,
-  Button,
-  Dimensions,
-  TextStyle,
-} from "react-native";
-import Animated, {
   useSharedValue,
   useDerivedValue,
   useAnimatedStyle,
-  useAnimatedProps,
   interpolate,
   useAnimatedReaction,
   withTiming,
   runOnJS,
   Easing,
-  SharedValue,
   DerivedValue,
 } from "react-native-reanimated";
 import {
   GestureDetector,
   GestureHandlerRootView,
   Gesture,
-  Pressable,
 } from "react-native-gesture-handler";
 
-import { Card, Colors } from "./Card";
+import { Card } from "./Card";
+import { Trivia } from "@/constants/Trivia";
+import { Colors } from "@/constants/Colors";
+import { useChallengeStore } from "@/stores/challenges";
 
 const { height, width } = Dimensions.get("window");
 
 const DECK_SIZE = 3;
 
-const randomSentences = ["0", "1", "2", "3", "4"];
-
 interface CardContainerProps {
   index: number;
   color: string;
   frontDisplay: DerivedValue<string>;
+  backDisplay: DerivedValue<string>;
   priority: DerivedValue<number>;
   updatePriorities: VoidFunction;
 }
@@ -50,45 +40,68 @@ const CardContainer = ({
   color,
   updatePriorities,
   frontDisplay,
+  backDisplay,
   priority,
 }: CardContainerProps) => {
   const BOTTOM_BUFFER = 30;
+  const isFlipped = useSharedValue(false);
   const translateY = useSharedValue(0);
+  const translateX = useSharedValue(0);
   const rotation = useSharedValue(BOTTOM_BUFFER);
   const isRightFlick = useSharedValue(true);
   const rotationValue = useDerivedValue(
     () =>
       `${interpolate(
         rotation.value,
-        isRightFlick.value ? [BOTTOM_BUFFER, height] : [BOTTOM_BUFFER, -height],
+        isRightFlick.value
+          ? [BOTTOM_BUFFER * priority.value, height]
+          : [BOTTOM_BUFFER * priority.value, -height],
         [0, 4]
       )}rad`
   );
 
   const panGesture = Gesture.Pan()
-    .onBegin(({ absoluteX, translationY }) => {
+    .onBegin(({ absoluteX, translationX, translationY }) => {
       if (priority.value > 0) {
         return;
       }
-      translateY.value = translationY;
-      rotation.value = translationY + BOTTOM_BUFFER;
-      if (absoluteX < width / 2) {
+      if (Math.abs(Math.round(translationX)) < 50) {
+        translateX.value = withTiming(
+          0,
+          {
+            duration: 200,
+            easing: Easing.quad,
+          },
+          () => {
+            isRightFlick.value = true;
+          }
+        );
+        rotation.value = withTiming(BOTTOM_BUFFER, {
+          duration: 200,
+          easing: Easing.quad,
+        });
+        return;
+      }
+      rotation.value = translationX + BOTTOM_BUFFER;
+      translateX.value = translationX;
+
+      if (absoluteX < (width * 0.8) / 2) {
         isRightFlick.value = false;
       }
     })
-    .onUpdate(({ translationY }) => {
+    .onUpdate(({ translationX }) => {
       if (priority.value > 0) {
         return;
       }
-      translateY.value = translationY;
-      rotation.value = translationY + BOTTOM_BUFFER;
+      rotation.value = translationX + BOTTOM_BUFFER;
+      translateX.value = translationX;
     })
-    .onEnd(({ translationY }) => {
+    .onEnd(({ translationX }) => {
       if (priority.value > 0) {
         return;
       }
-      if (Math.abs(Math.round(translationY)) < 100) {
-        translateY.value = withTiming(
+      if (Math.abs(Math.round(translationX)) < 50) {
+        translateX.value = withTiming(
           0,
           {
             duration: 200,
@@ -105,9 +118,11 @@ const CardContainer = ({
         return;
       }
 
+      isFlipped.value = false;
+
       runOnJS(updatePriorities)();
 
-      translateY.value = withTiming(
+      translateX.value = withTiming(
         0,
         {
           duration: 400,
@@ -119,7 +134,7 @@ const CardContainer = ({
       );
 
       rotation.value = withTiming(
-        -1280,
+        0,
         {
           duration: 400,
           easing: Easing.linear,
@@ -130,26 +145,32 @@ const CardContainer = ({
       );
     });
 
-  const animatedStyle = useAnimatedStyle(() => ({
+  const animatedRootStyle = useAnimatedStyle(() => ({
     position: "absolute",
-    height: 200,
-    width: 325,
-    backgroundColor: color,
-    bottom: withTiming(BOTTOM_BUFFER + 20 * priority.value),
+    height: 400,
+    width: 300,
+    bottom: withTiming(BOTTOM_BUFFER + 10 * priority.value),
     borderRadius: 8,
-    zIndex: interpolate(priority.value, [0, 2], [20, 10]),
+    zIndex: 10 - priority.value,
     transform: [
       { translateY: translateY.value },
+      { translateX: translateX.value + priority.value * -10 },
       {
         rotate: rotationValue.value,
       },
-      {
-        scale: withTiming(interpolate(priority.value, [0, 2], [1, 0.9]), {
-          duration: 400,
-          easing: Easing.quad,
-        }),
-      },
     ],
+  }));
+
+  const animatedFrontStyle = useAnimatedStyle(() => ({
+    backgroundColor: color,
+    borderRadius: 8,
+    zIndex: isFlipped.value ? 0 : 10,
+  }));
+
+  const animatedBackStyle = useAnimatedStyle(() => ({
+    backgroundColor: "lightgreen",
+    borderRadius: 8,
+    zIndex: isFlipped.value ? 10 : 0,
   }));
 
   return (
@@ -157,8 +178,12 @@ const CardContainer = ({
       <GestureDetector gesture={panGesture}>
         <Card
           id={index}
+          isFlipped={isFlipped}
           frontDisplay={frontDisplay}
-          style={animatedStyle}
+          backDisplay={backDisplay}
+          rootStyle={animatedRootStyle}
+          frontStyle={animatedFrontStyle}
+          backStyle={animatedBackStyle}
         ></Card>
       </GestureDetector>
     </>
@@ -171,6 +196,13 @@ export const CardStack = () => {
   const firstCard = useSharedValue(0);
   const secondCard = useSharedValue(1);
   const thirdCard = useSharedValue(2);
+
+  const selectedChallenges = useChallengeStore(
+    (state) => state.selectedChallenges
+  );
+  const filteredTrivia = Trivia.filter((item) =>
+    selectedChallenges.includes(item.id.toString())
+  );
 
   const firstPriority = useDerivedValue(() => {
     return priorities.value.findIndex((item) => item === 0);
@@ -185,15 +217,39 @@ export const CardStack = () => {
   });
 
   const firstCardText = useDerivedValue(() => {
-    return `${firstCard.value}`;
+    return `${
+      filteredTrivia[firstCard.value % filteredTrivia.length].question
+    }`;
   });
 
   const secondCardText = useDerivedValue(() => {
-    return `${secondCard.value}`;
+    return `${
+      filteredTrivia[secondCard.value % filteredTrivia.length].question
+    }`;
   });
 
   const thirdCardText = useDerivedValue(() => {
-    return `${thirdCard.value}`;
+    return `${
+      filteredTrivia[thirdCard.value % filteredTrivia.length].question
+    }`;
+  });
+
+  const firstCardAnswer = useDerivedValue(() => {
+    return `${
+      filteredTrivia[firstCard.value % filteredTrivia.length].correctAnswer
+    }`;
+  });
+
+  const secondCardAnswer = useDerivedValue(() => {
+    return `${
+      filteredTrivia[secondCard.value % filteredTrivia.length].correctAnswer
+    }`;
+  });
+
+  const thirdCardAnswer = useDerivedValue(() => {
+    return `${
+      filteredTrivia[thirdCard.value % filteredTrivia.length].correctAnswer
+    }`;
   });
 
   const updatePriorities = useCallback(() => {
@@ -204,12 +260,9 @@ export const CardStack = () => {
   useAnimatedReaction(
     () => priorities.value,
     (updatedPriorities) => {
-      console.log("Priorities changed", updatedPriorities);
       if (updatedPriorities[0] === 0) {
-        console.log("Incrementing last card at the start of every iteration");
         thirdCard.value = firstCard.value + DECK_SIZE - 1;
       } else if (updatedPriorities[0] === DECK_SIZE - 1) {
-        console.log("Incrementing first two cards by DECK_SIZE");
         firstCard.value = firstCard.value + DECK_SIZE;
         secondCard.value = secondCard.value + DECK_SIZE;
       }
@@ -220,25 +273,28 @@ export const CardStack = () => {
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
         <CardContainer
-          index={0}
+          index={2}
           updatePriorities={updatePriorities}
-          frontDisplay={firstCardText}
-          priority={firstPriority}
-          color={Colors.LIGHT_RED}
+          frontDisplay={thirdCardText}
+          backDisplay={thirdCardAnswer}
+          priority={thirdPriority}
+          color={Colors.blue[400]}
         />
         <CardContainer
           index={1}
           updatePriorities={updatePriorities}
           frontDisplay={secondCardText}
+          backDisplay={secondCardAnswer}
           priority={secondPriority}
-          color={Colors.LIGHT_GOLD}
+          color={Colors.yellow[400]}
         />
         <CardContainer
-          index={2}
+          index={0}
           updatePriorities={updatePriorities}
-          frontDisplay={thirdCardText}
-          priority={thirdPriority}
-          color={Colors.LIGHT_BLUE}
+          frontDisplay={firstCardText}
+          backDisplay={firstCardAnswer}
+          priority={firstPriority}
+          color={Colors.red[400]}
         />
       </SafeAreaView>
     </GestureHandlerRootView>

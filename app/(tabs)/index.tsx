@@ -1,74 +1,137 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Text,
+  Button,
+  FlatList,
+  Pressable,
+} from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Trivia } from "@/constants/Trivia";
+import { useState } from "react";
+import { useRouter } from "expo-router";
+import { useChallengeStore } from "@/stores/challenges";
 
 export default function HomeScreen() {
+  const challenges = useChallengeStore((store) => store.selectedChallenges);
+  const toggle = useChallengeStore((store) => store.toggleSelectedChallenge);
+  const initialize = useChallengeStore((store) => store.setSelectedChallenges);
+  const clear = useChallengeStore((store) => store.clearSelectedChallenges);
+
+  const router = useRouter();
+  const handlePress = () => {
+    router.push("/deck");
+  };
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.root}>
+      <View
+        style={{
+          position: "sticky",
+          top: 0,
+          margin: 10,
+          display: "flex",
+          flexDirection: "row",
+          gap: 10,
+        }}
+      >
+        <Pressable
+          style={{
+            backgroundColor: "purple",
+            padding: 10,
+            borderRadius: 5,
+          }}
+          onPress={handlePress}
+        >
+          <Text style={{ color: "white" }}>Go to Deck</Text>
+        </Pressable>
+        <Pressable
+          style={{
+            backgroundColor: "purple",
+            padding: 10,
+            borderRadius: 5,
+          }}
+          onPress={() => {
+            initialize(Trivia.map((item) => `${item.id}`));
+          }}
+          onLongPress={() => {
+            clear();
+          }}
+          delayLongPress={500}
+        >
+          <Text style={{ color: "white" }}>Toggle select all</Text>
+        </Pressable>
+      </View>
+
+      <FlatList
+        style={styles.list}
+        numColumns={3}
+        data={Trivia}
+        renderItem={({ item }) => {
+          return (
+            <View
+              style={[
+                styles.card,
+                challenges.includes(item.id.toString()) && styles.selected,
+              ]}
+            >
+              <Text>{item.id}</Text>
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  toggle(item.id.toString());
+                }}
+              >
+                <Text
+                  style={{
+                    color: challenges.includes(item.id.toString())
+                      ? "white"
+                      : "black",
+                  }}
+                >
+                  {challenges.includes(item.id.toString())
+                    ? "Selected"
+                    : "Select"}
+                </Text>
+              </Pressable>
+            </View>
+          );
+        }}
+        keyExtractor={(item) => `${item.id}`}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  root: {
+    flex: 1,
+    backgroundColor: "lightgreen",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  list: {
+    flexDirection: "column",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  card: {
+    width: 100,
+    height: 100,
+    margin: 10,
+    borderRadius: 10,
+    backgroundColor: "lightblue",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  selected: {
+    shadowColor: "#3b82f6",
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  button: {
+    backgroundColor: "lightcoral",
+    color: "white",
+    padding: 8,
+    borderRadius: 4,
+    marginTop: 10,
   },
 });
