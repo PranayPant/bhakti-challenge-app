@@ -112,14 +112,15 @@ export const Card = ({
             backgroundColor: "white",
             width: 260,
             height: 200,
+            padding: 20,
             marginHorizontal: 20,
             borderRadius: 8,
+            alignItems: "center",
           }}
         >
-          <AnimatedText
-            text={frontDisplay}
-            style={{ marginTop: 20, wordWrap: "break-word" }}
-          />
+          <Text style={{ marginTop: 20, wordWrap: "break-word" }}>
+            {frontDisplay.value}
+          </Text>
         </View>
         <Pressable
           style={{
@@ -153,10 +154,14 @@ export const Card = ({
             width: 260,
             height: 200,
             marginHorizontal: 20,
+            padding: 20,
             borderRadius: 8,
+            alignItems: "center",
           }}
         >
-          <AnimatedText text={backDisplay} style={{ margin: 20 }} />
+          <Text style={{ marginTop: 20, wordWrap: "break-word" }}>
+            {backDisplay.value}
+          </Text>
         </View>
         <Pressable
           style={{
