@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { SafeAreaView, StyleSheet, Dimensions, View, Text } from "react-native";
 import {
   useSharedValue,
@@ -29,8 +29,8 @@ const DECK_SIZE = 3;
 interface CardContainerProps {
   index: number;
   color: string;
-  frontDisplay: DerivedValue<string>;
-  backDisplay: DerivedValue<string>;
+  frontDisplay: string;
+  backDisplay: string;
   priority: DerivedValue<number>;
   updatePriorities: VoidFunction;
 }
@@ -196,6 +196,12 @@ export const CardStack = () => {
   const firstCard = useSharedValue(0);
   const secondCard = useSharedValue(1);
   const thirdCard = useSharedValue(2);
+  const [firstCardFront, setFirstCardFront] = useState("");
+  const [firstCardBack, setFirstCardBack] = useState("");
+  const [secondCardFront, setSecondCardFront] = useState("");
+  const [secondCardBack, setSecondCardBack] = useState("");
+  const [thirdCardFront, setThirdCardFront] = useState("");
+  const [thirdCardBack, setThirdCardBack] = useState("");
 
   const selectedChallenges = useChallengeStore(
     (state) => state.selectedChallenges
@@ -204,9 +210,6 @@ export const CardStack = () => {
   const filteredTrivia = Trivia.filter((item) =>
     selectedChallenges.includes(item.id.toString())
   );
-
-  console.log("Selected challenges: ", selectedChallenges);
-  console.log("Filtered trivia: ", filteredTrivia.map((item => item.id)));
 
   const firstPriority = useDerivedValue(() => {
     return priorities.value.findIndex((item) => item === 0);
@@ -273,30 +276,72 @@ export const CardStack = () => {
     }
   );
 
+  useAnimatedReaction(
+    () => firstCardText.value,
+    (text) => {
+      runOnJS(setFirstCardFront)(text);
+    }
+  );
+
+  useAnimatedReaction(
+    () => firstCardAnswer.value,
+    (answer) => {
+      runOnJS(setFirstCardBack)(answer);
+    }
+  );
+
+  useAnimatedReaction(
+    () => secondCardText.value,
+    (text) => {
+      runOnJS(setSecondCardFront)(text);
+    }
+  );
+
+  useAnimatedReaction(
+    () => secondCardAnswer.value,
+    (answer) => {
+      runOnJS(setSecondCardBack)(answer);
+    }
+  );
+
+  useAnimatedReaction(
+    () => thirdCardText.value,
+    (text) => {
+      runOnJS(setThirdCardFront)(text);
+    }
+  );
+
+  useAnimatedReaction(
+    () => thirdCardAnswer.value,
+    (answer) => {
+      runOnJS(setThirdCardBack)(answer);
+    }
+  );
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
         <CardContainer
           index={2}
           updatePriorities={updatePriorities}
-          frontDisplay={thirdCardText}
-          backDisplay={thirdCardAnswer}
+          frontDisplay={thirdCardFront}
+          backDisplay={thirdCardBack}
           priority={thirdPriority}
           color={Colors.blue[400]}
         />
         <CardContainer
           index={1}
           updatePriorities={updatePriorities}
-          frontDisplay={secondCardText}
-          backDisplay={secondCardAnswer}
+          frontDisplay={secondCardFront}
+          backDisplay={secondCardBack}
           priority={secondPriority}
           color={Colors.yellow[400]}
         />
         <CardContainer
           index={0}
           updatePriorities={updatePriorities}
-          frontDisplay={firstCardText}
-          backDisplay={firstCardAnswer}
+          frontDisplay={firstCardFront}
+          backDisplay={firstCardBack}
           priority={firstPriority}
           color={Colors.red[400]}
         />
