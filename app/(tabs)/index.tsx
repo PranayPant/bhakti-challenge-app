@@ -9,75 +9,55 @@ import {
 } from "react-native";
 
 import { Trivia } from "@/constants/Trivia";
-import { useState } from "react";
 import { useRouter } from "expo-router";
 import { useChallengeStore } from "@/stores/challenges";
 
 export default function HomeScreen() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
   const toggle = useChallengeStore((store) => store.toggleSelectedChallenge);
-  const initialize = useChallengeStore((store) => store.setSelectedChallenges);
-  const clear = useChallengeStore((store) => store.clearSelectedChallenges);
+  const toggleAll = useChallengeStore((store) => store.toggleAllChallenges);
 
   const router = useRouter();
   const handlePress = () => {
     router.push("/deck");
   };
   return (
-    <SafeAreaView style={styles.root}>
-      <View
-        style={{
-          position: "sticky",
-          top: 0,
-          margin: 10,
-          display: "flex",
-          flexDirection: "row",
-          gap: 10,
-        }}
-      >
+    <SafeAreaView className="flex-1 bg-gray-100 p-4 ">
+      <View className="p-4 flex-row justify-between items-center mb-4">
         <Pressable
-          style={{
-            backgroundColor: "purple",
-            padding: 10,
-            borderRadius: 5,
-          }}
+          className="bg-purple-500 p-2 rounded-md"
           onPress={handlePress}
         >
-          <Text style={{ color: "white" }}>Go to Deck</Text>
+          <Text className="text-white">Go to Deck</Text>
         </Pressable>
         <Pressable
-          style={{
-            backgroundColor: "purple",
-            padding: 10,
-            borderRadius: 5,
-          }}
+          className="bg-purple-500 p-2 rounded-md"
           onPress={() => {
-            initialize(Trivia.map((item) => `${item.id}`));
-          }}
-          onLongPress={() => {
-            clear();
+            toggleAll(Trivia.map((item) => item.id.toString()));
           }}
           delayLongPress={500}
         >
-          <Text style={{ color: "white" }}>Toggle select all</Text>
+          <Text className="text-white">Toggle select all</Text>
         </Pressable>
       </View>
 
       <FlatList
-        style={styles.list}
+        className="flex-col"
         numColumns={3}
         data={Trivia}
+        contentContainerClassName="items-center"
         renderItem={({ item }) => {
           return (
             <View
-              style={[
-                styles.card,
-                challenges.includes(item.id.toString()) && styles.selected,
-              ]}
+              className={`w-24 h-24 m-2 rounded-lg bg-blue-200 justify-center items-center ${
+                challenges.includes(item.id.toString())
+                  ? "border-2 border-blue-500"
+                  : ""
+              }`}
             >
               <Text>{item.id}</Text>
               <Pressable
-                style={styles.button}
+                className="bg-red-300 text-white p-2 rounded mt-2"
                 onPress={() => {
                   toggle(item.id.toString());
                 }}
@@ -102,36 +82,3 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: "lightgreen",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  list: {
-    flexDirection: "column",
-  },
-  card: {
-    width: 100,
-    height: 100,
-    margin: 10,
-    borderRadius: 10,
-    backgroundColor: "lightblue",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  selected: {
-    shadowColor: "#3b82f6",
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-  button: {
-    backgroundColor: "lightcoral",
-    color: "white",
-    padding: 8,
-    borderRadius: 4,
-    marginTop: 10,
-  },
-});

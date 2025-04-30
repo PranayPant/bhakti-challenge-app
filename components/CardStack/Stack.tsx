@@ -200,9 +200,13 @@ export const CardStack = () => {
   const selectedChallenges = useChallengeStore(
     (state) => state.selectedChallenges
   );
+
   const filteredTrivia = Trivia.filter((item) =>
     selectedChallenges.includes(item.id.toString())
   );
+
+  console.log("Selected challenges: ", selectedChallenges);
+  console.log("Filtered trivia: ", filteredTrivia.map((item => item.id)));
 
   const firstPriority = useDerivedValue(() => {
     return priorities.value.findIndex((item) => item === 0);
