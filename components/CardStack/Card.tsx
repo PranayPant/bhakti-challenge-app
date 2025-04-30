@@ -56,8 +56,8 @@ interface CardProps {
   rootStyle: ViewStyle;
   frontStyle?: ViewStyle;
   backStyle?: ViewStyle;
-  frontDisplay: DerivedValue<string>;
-  backDisplay: DerivedValue<string>;
+  frontDisplay: string;
+  backDisplay: string;
   children?: React.ReactNode;
 }
 
@@ -119,7 +119,7 @@ export const Card = ({
           }}
         >
           <Text style={{ marginTop: 20, wordWrap: "break-word" }}>
-            {frontDisplay.value}
+            {frontDisplay}
           </Text>
         </View>
         <Pressable
@@ -160,7 +160,7 @@ export const Card = ({
           }}
         >
           <Text style={{ marginTop: 20, wordWrap: "break-word" }}>
-            {backDisplay.value}
+            {backDisplay}
           </Text>
         </View>
         <Pressable
