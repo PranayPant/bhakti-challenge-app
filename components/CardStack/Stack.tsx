@@ -21,8 +21,6 @@ import { Card } from "./Card";
 import { Trivia } from "@/constants/Trivia";
 import { Colors } from "@/constants/Colors";
 import { useChallengeStore } from "@/stores/challenges";
-import hindiChallengeData from "@/data/hindi-challenges.json";
-import englishChallengeData from "@/data/english-challenges.json";
 
 const { height, width } = Dimensions.get("window");
 
@@ -181,8 +179,12 @@ const CardContainer = ({
         <Card
           id={index}
           isFlipped={isFlipped}
-          frontDisplay={frontDisplay}
-          backDisplay={backDisplay}
+          frontDisplay={
+            <Text className="bg-yellow-500 rounded-2xl p-4">
+              {frontDisplay}
+            </Text>
+          }
+          backDisplay={<Text>{backDisplay}</Text>}
           rootStyle={animatedRootStyle}
           frontStyle={animatedFrontStyle}
           backStyle={animatedBackStyle}
@@ -206,15 +208,7 @@ export const CardStack = () => {
   const [thirdCardBack, setThirdCardBack] = useState("");
 
   const selectedChallenges = useChallengeStore(
-    (state) => state.selectedChallenges
-  );
-
-  const filteredEnglishChallenges = englishChallengeData.filter((item) =>
-    selectedChallenges.includes(item.id.toString())
-  );
-
-  const filteredHindiChallenges = hindiChallengeData.filter((item) =>
-    selectedChallenges.includes(item.id.toString())
+    (state) => state.selectedChallengesData
   );
 
   const firstPriority = useDerivedValue(() => {
@@ -231,46 +225,37 @@ export const CardStack = () => {
 
   const firstCardText = useDerivedValue(() => {
     return `${
-      filteredHindiChallenges[firstCard.value % filteredHindiChallenges.length]
-        .title
+      selectedChallenges[firstCard.value % selectedChallenges.length].title
     }`;
   });
 
   const secondCardText = useDerivedValue(() => {
     return `${
-      filteredHindiChallenges[secondCard.value % filteredHindiChallenges.length]
-        .title
+      selectedChallenges[secondCard.value % selectedChallenges.length].title
     }`;
   });
 
   const thirdCardText = useDerivedValue(() => {
     return `${
-      filteredHindiChallenges[thirdCard.value % filteredHindiChallenges.length]
-        .title
+      selectedChallenges[thirdCard.value % selectedChallenges.length].title
     }`;
   });
 
   const firstCardAnswer = useDerivedValue(() => {
     return `${
-      filteredEnglishChallenges[
-        firstCard.value % filteredEnglishChallenges.length
-      ].title
+      selectedChallenges[firstCard.value % selectedChallenges.length].title
     }`;
   });
 
   const secondCardAnswer = useDerivedValue(() => {
     return `${
-      filteredEnglishChallenges[
-        secondCard.value % filteredEnglishChallenges.length
-      ].title
+      selectedChallenges[secondCard.value % selectedChallenges.length].title
     }`;
   });
 
   const thirdCardAnswer = useDerivedValue(() => {
     return `${
-      filteredEnglishChallenges[
-        thirdCard.value % filteredEnglishChallenges.length
-      ].title
+      selectedChallenges[thirdCard.value % selectedChallenges.length].title
     }`;
   });
 
@@ -370,7 +355,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "black",
     padding: 8,
   },
 });

@@ -3,10 +3,10 @@ import { CardStack } from "@/components/CardStack";
 import { useChallengeStore } from "@/stores/challenges";
 
 export default function Deck() {
-  const challenges = useChallengeStore((store) => store.selectedChallenges);
+  const challenges = useChallengeStore((store) => store.selectedChallengesData);
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-purple-500">
       {challenges.length > 0 ? (
         <CardStack />
       ) : (

@@ -3,8 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  TextStyle,
-  TextInput,
   ViewStyle,
 } from "react-native";
 import Animated, {
@@ -12,43 +10,10 @@ import Animated, {
   interpolate,
   withTiming,
   SharedValue,
-  useSharedValue,
-  DerivedValue,
-  useAnimatedProps,
 } from "react-native-reanimated";
 
 import { Colors } from "@/constants/Colors";
-
-const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
-Animated.addWhitelistedNativeProps({ text: true });
-
-function AnimatedText({
-  text,
-  style,
-  ...props
-}: {
-  text: DerivedValue<string>;
-  style?: TextStyle;
-}) {
-  const animatedProps = useAnimatedProps(() => ({
-    text: text.value,
-    defaultValue: text.value,
-  }));
-  return (
-    <AnimatedTextInput
-      editable={false}
-      multiline
-      numberOfLines={2}
-      style={{
-        textAlign: "center",
-        ...style,
-      }}
-      {...props}
-      value={text.value}
-      animatedProps={animatedProps}
-    />
-  );
-}
+import { ReactNode } from "react";
 
 interface CardProps {
   id: number;
@@ -56,8 +21,8 @@ interface CardProps {
   rootStyle: ViewStyle;
   frontStyle?: ViewStyle;
   backStyle?: ViewStyle;
-  frontDisplay: string;
-  backDisplay: string;
+  frontDisplay: ReactNode;
+  backDisplay: ReactNode;
   children?: React.ReactNode;
 }
 
@@ -118,9 +83,7 @@ export const Card = ({
             alignItems: "center",
           }}
         >
-          <Text style={{ marginTop: 20, wordWrap: "break-word" }}>
-            {frontDisplay}
-          </Text>
+          {frontDisplay}
         </View>
         <Pressable
           style={{
@@ -159,9 +122,7 @@ export const Card = ({
             alignItems: "center",
           }}
         >
-          <Text style={{ marginTop: 20, wordWrap: "break-word" }}>
-            {backDisplay}
-          </Text>
+          {backDisplay}
         </View>
         <Pressable
           style={{
