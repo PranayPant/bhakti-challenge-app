@@ -1,18 +1,15 @@
-const fs = require("fs");
-const rawText = require("../data/hindi-challenges-raw");
-
 /**
  * Parse raw Hindi Bhakti text into an array of BhaktiChallenge objects
- * @param rawText - The raw Hindi text containing multiple challenges
+ * @param rawText - The raw text containing multiple challenges
+ * @param language - The language of the text (default: "hindi")
  * @returns An array of BhaktiChallenge objects
  */
-function parseBhaktiChallenges(rawText) {
+function parseBhaktiChallenges(rawText, language) {
   // Regular expression to match challenge titles and their content
 
-  const titleRegex = /(.+?)\s*\|\s*Bhakti Challenge (\d+)(?:\s*\|\s*(.+))?/;
-  const dohaLine1Regex = /(.+?)\s*।$/;
-  const dohaLine2Regex = /(.+?)॥\s*(\d+)\s*.*$/;
-  const radhaGovindGeetRegex = /गोविंद राधे$/;
+  const titleRegex = /(.+?)\s*\|\s*[a-zA-Z\s]+(\d+)(?:\s*\|\s*(.+))?/;
+  const dohaLine1Regex = /(.+)\s*।$/;
+  const dohaLine2Regex = /(.+)॥\s*(\d+)\s*.*$/;
 
   const challenges = [];
   const lines = rawText.split("\n");
@@ -35,7 +32,6 @@ function parseBhaktiChallenges(rawText) {
       const challenge = {
         id,
         title,
-        book: "राधा गोविंद गीत", // Updated book name
         dohas: [],
         category,
       };
@@ -49,15 +45,10 @@ function parseBhaktiChallenges(rawText) {
       const dohaMatch2 = trimmedLine.match(dohaLine2Regex);
       if (dohaMatch1) {
         const dohaText = dohaMatch1[1].trim() + "।";
-        const isRadhaGovindGeet = radhaGovindGeetRegex.test(
-          dohaMatch1[1].trim()
-        );
         dohaToAdd = {
           line1: dohaText,
         };
-        lastChallenge.book = isRadhaGovindGeet
-          ? "राधा गोविंद गीत"
-          : "श्यामा श्याम गीत";
+
       } else if (dohaMatch2) {
         const dohaText = dohaMatch2[1].trim() + "॥";
         const sequence = lastChallenge.dohas.length + 1;
@@ -71,16 +62,7 @@ function parseBhaktiChallenges(rawText) {
         };
         lastChallenge.dohas.push(dohaToAdd);
       } else {
-        // Handle cases where the doha doesn't have a number at the end
-        const dohaText = trimmedLine.trim();
-        const dohaSequenceNumber = lastChallenge.dohas.length + 1;
-        const dohaLineNumber = lastChallenge.dohas.length + 1;
-        lastChallenge.dohas.push({
-          dohaText,
-          dohaSequenceNumber,
-          dohaLineNumber,
-          challengeId: lastChallenge.id,
-        });
+        throw new Error(`Unrecognized line format: ${trimmedLine}`);
       }
     }
   }
@@ -94,14 +76,11 @@ function parseBhaktiChallenges(rawText) {
 /**
  * Main function to handle both possible formats
  */
-function parseBhaktiText(rawText) {
+function raw2Json(rawText, language = "hindi") {
   // First try the regex-based parser
-  let challenges = parseBhaktiChallenges(rawText);
+  let challenges = parseBhaktiChallenges(rawText, language);
 
   return challenges;
 }
 
-// Example usage
-
-const challenges = parseBhaktiText(rawText);
-fs.writeFileSync("data/hindi-challenges.json", JSON.stringify(challenges, null, 2));
+module.exports = raw2Json;
