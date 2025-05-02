@@ -1,5 +1,18 @@
 import { create } from "zustand";
 
+export interface Challenge {
+  id: number; // Unique identifier for the challenge
+  title: string; // Title of the challenge
+  dohas: Array<{
+    line1: string;
+    line2?: string;
+    sequence?: number;
+    line?: number;
+  }>; // Array of dohas associated with the challenge
+  category?: string; // Optional category for the challenge
+  book?: string; // Book associated with the challenge
+}
+
 export interface ChallengeStore {
   selectedChallenges: string[]; // Array of selected challenge IDs
   addSelectedChallenge: (challenge: string) => void; // Function to add a challenge ID to the selectedChallenges array

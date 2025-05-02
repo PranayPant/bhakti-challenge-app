@@ -4,6 +4,7 @@ import { useChallengeStore } from "@/stores/challenges";
 
 export default function Deck() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
+
   return (
     <SafeAreaView className="flex-1">
       {challenges.length > 0 ? (

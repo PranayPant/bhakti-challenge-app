@@ -900,6 +900,13 @@
         "challengeId": 20,
         "sequence": 5,
         "line": 143
+      },
+      {
+        "line1": "kahīṁ tē bhī ānā nahiṁ gōviṁda rādhē।",
+        "line2": "ura mēṁ hai bāhara jhalaka dikhā dē॥",
+        "challengeId": 20,
+        "sequence": 6,
+        "line": 147
       }
     ]
   },
@@ -1999,11 +2006,5 @@
         "line": 295
       }
     ]
-  },
-  {
-    "id": 147,
-    "title": "ura mēṁ hai bāhara jhalaka dikhā dē |",
-    "dohas": [],
-    "category": "|"
   }
 ]

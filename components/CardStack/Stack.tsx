@@ -21,6 +21,8 @@ import { Card } from "./Card";
 import { Trivia } from "@/constants/Trivia";
 import { Colors } from "@/constants/Colors";
 import { useChallengeStore } from "@/stores/challenges";
+import hindiChallengeData from "@/data/hindi-challenges.json";
+import englishChallengeData from "@/data/english-challenges.json";
 
 const { height, width } = Dimensions.get("window");
 
@@ -207,7 +209,11 @@ export const CardStack = () => {
     (state) => state.selectedChallenges
   );
 
-  const filteredTrivia = Trivia.filter((item) =>
+  const filteredEnglishChallenges = englishChallengeData.filter((item) =>
+    selectedChallenges.includes(item.id.toString())
+  );
+
+  const filteredHindiChallenges = hindiChallengeData.filter((item) =>
     selectedChallenges.includes(item.id.toString())
   );
 
@@ -225,37 +231,46 @@ export const CardStack = () => {
 
   const firstCardText = useDerivedValue(() => {
     return `${
-      filteredTrivia[firstCard.value % filteredTrivia.length].question
+      filteredHindiChallenges[firstCard.value % filteredHindiChallenges.length]
+        .title
     }`;
   });
 
   const secondCardText = useDerivedValue(() => {
     return `${
-      filteredTrivia[secondCard.value % filteredTrivia.length].question
+      filteredHindiChallenges[secondCard.value % filteredHindiChallenges.length]
+        .title
     }`;
   });
 
   const thirdCardText = useDerivedValue(() => {
     return `${
-      filteredTrivia[thirdCard.value % filteredTrivia.length].question
+      filteredHindiChallenges[thirdCard.value % filteredHindiChallenges.length]
+        .title
     }`;
   });
 
   const firstCardAnswer = useDerivedValue(() => {
     return `${
-      filteredTrivia[firstCard.value % filteredTrivia.length].correctAnswer
+      filteredEnglishChallenges[
+        firstCard.value % filteredEnglishChallenges.length
+      ].title
     }`;
   });
 
   const secondCardAnswer = useDerivedValue(() => {
     return `${
-      filteredTrivia[secondCard.value % filteredTrivia.length].correctAnswer
+      filteredEnglishChallenges[
+        secondCard.value % filteredEnglishChallenges.length
+      ].title
     }`;
   });
 
   const thirdCardAnswer = useDerivedValue(() => {
     return `${
-      filteredTrivia[thirdCard.value % filteredTrivia.length].correctAnswer
+      filteredEnglishChallenges[
+        thirdCard.value % filteredEnglishChallenges.length
+      ].title
     }`;
   });
 
