@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Bhakti Challenge 1",
+    "title": "",
     "dohas": [
       {
         "line1": "śrī guru caraṇōṁ mēṁ gōviṁda rādhē।",
@@ -35,7 +35,7 @@
   },
   {
     "id": 2,
-    "title": "Bhakti Challenge 2",
+    "title": "",
     "dohas": [
       {
         "line1": "ēka vara dē dē rādhē gōviṁda rādhē।",
@@ -83,7 +83,7 @@
   },
   {
     "id": 3,
-    "title": "Bhakti Challenge 3",
+    "title": "",
     "dohas": [
       {
         "line1": "saba kō dūm̐ sammāna gōviṁda rādhē।",
@@ -131,7 +131,7 @@
   },
   {
     "id": 4,
-    "title": "Bhakti Challenge 4",
+    "title": "",
     "dohas": [
       {
         "line1": "hari sāthī banē kā hai gōviṁda rādhē।",

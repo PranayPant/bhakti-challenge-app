@@ -7,7 +7,7 @@
 function parseBhaktiChallenges(rawText, language) {
   // Regular expression to match challenge titles and their content
 
-  const titleRegex = /(.+?)\s*\|\s*[a-zA-Z\s]+(\d+)(?:\s*\|\s*(.+))?/;
+  const titleRegex = /(.*?)\s*\|\s*[a-zA-Z\s]+(\d+)(?:\s*\|\s*(.+))?/;
   const dohaLine1Regex = /(.+)\s*।$/;
   const dohaLine2Regex = /(.+)॥\s*(\d+)\s*.*$/;
 

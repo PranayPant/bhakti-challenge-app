@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { SafeAreaView, StyleSheet, Dimensions, View, Text } from "react-native";
+import React, { ReactNode, useCallback, useState } from "react";
+import { SafeAreaView, StyleSheet, Dimensions, Text } from "react-native";
 import {
   useSharedValue,
   useDerivedValue,
@@ -18,9 +18,10 @@ import {
 } from "react-native-gesture-handler";
 
 import { Card } from "./Card";
-import { Trivia } from "@/constants/Trivia";
 import { Colors } from "@/constants/Colors";
 import { useChallengeStore } from "@/stores/challenges";
+import { run } from "node:test";
+import { FlashCard } from "./FlashCard";
 
 const { height, width } = Dimensions.get("window");
 
@@ -29,8 +30,8 @@ const DECK_SIZE = 3;
 interface CardContainerProps {
   index: number;
   color: string;
-  frontDisplay: string;
-  backDisplay: string;
+  frontDisplay: ReactNode;
+  backDisplay: ReactNode;
   priority: DerivedValue<number>;
   updatePriorities: VoidFunction;
 }
@@ -61,7 +62,7 @@ const CardContainer = ({
   );
 
   const panGesture = Gesture.Pan()
-    .onBegin(({ absoluteX, translationX, translationY }) => {
+    .onBegin(({ absoluteX, translationX }) => {
       if (priority.value > 0) {
         return;
       }
@@ -179,11 +180,7 @@ const CardContainer = ({
         <Card
           id={index}
           isFlipped={isFlipped}
-          frontDisplay={
-            <Text className="bg-yellow-500 rounded-2xl p-4">
-              {frontDisplay}
-            </Text>
-          }
+          frontDisplay={frontDisplay}
           backDisplay={<Text>{backDisplay}</Text>}
           rootStyle={animatedRootStyle}
           frontStyle={animatedFrontStyle}
@@ -206,10 +203,15 @@ export const CardStack = () => {
   const [secondCardBack, setSecondCardBack] = useState("");
   const [thirdCardFront, setThirdCardFront] = useState("");
   const [thirdCardBack, setThirdCardBack] = useState("");
+  const [firstCardValue, setFirstCardValue] = useState(0);
+  const [secondCardValue, setSecondCardValue] = useState(1);
+  const [thirdCardValue, setThirdCardValue] = useState(2);
 
   const selectedChallenges = useChallengeStore(
     (state) => state.selectedChallengesData
   );
+
+  const allDohas = selectedChallenges.flatMap((challenge) => challenge.dohas);
 
   const firstPriority = useDerivedValue(() => {
     return priorities.value.findIndex((item) => item === 0);
@@ -262,16 +264,19 @@ export const CardStack = () => {
   const updatePriorities = useCallback(() => {
     const newPriorities = [...priorities.value.slice(1), priorities.value[0]];
     priorities.value = newPriorities;
-  }, []);
+  }, [priorities]);
 
   useAnimatedReaction(
     () => priorities.value,
     (updatedPriorities) => {
       if (updatedPriorities[0] === 0) {
         thirdCard.value = firstCard.value + DECK_SIZE - 1;
+        runOnJS(setThirdCardValue)(thirdCard.value);
       } else if (updatedPriorities[0] === DECK_SIZE - 1) {
         firstCard.value = firstCard.value + DECK_SIZE;
         secondCard.value = secondCard.value + DECK_SIZE;
+        runOnJS(setFirstCardValue)(firstCard.value);
+        runOnJS(setSecondCardValue)(secondCard.value);
       }
     }
   );
@@ -324,24 +329,30 @@ export const CardStack = () => {
         <CardContainer
           index={2}
           updatePriorities={updatePriorities}
-          frontDisplay={thirdCardFront}
-          backDisplay={thirdCardBack}
+          frontDisplay={<FlashCard doha={allDohas[thirdCardValue]} />}
+          backDisplay={
+            selectedChallenges[allDohas[thirdCardValue].challengeId - 1].title
+          }
           priority={thirdPriority}
           color={Colors.blue[400]}
         />
         <CardContainer
           index={1}
           updatePriorities={updatePriorities}
-          frontDisplay={secondCardFront}
-          backDisplay={secondCardBack}
+          frontDisplay={<FlashCard doha={allDohas[secondCardValue]} />}
+          backDisplay={
+            selectedChallenges[allDohas[secondCardValue].challengeId - 1].title
+          }
           priority={secondPriority}
           color={Colors.yellow[400]}
         />
         <CardContainer
           index={0}
           updatePriorities={updatePriorities}
-          frontDisplay={firstCardFront}
-          backDisplay={firstCardBack}
+          frontDisplay={<FlashCard doha={allDohas[firstCardValue]} />}
+          backDisplay={
+            selectedChallenges[allDohas[firstCardValue].challengeId - 1].title
+          }
           priority={firstPriority}
           color={Colors.red[400]}
         />

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Bhakti Challenge 1",
+    "title": "",
     "dohas": [
       {
         "line1": "श्री गुरु चरणों में गोविंद राधे।",
@@ -35,7 +35,7 @@
   },
   {
     "id": 2,
-    "title": "Bhakti Challenge 2",
+    "title": "",
     "dohas": [
       {
         "line1": "एक वर दे दे राधे गोविंद राधे।",
@@ -83,7 +83,7 @@
   },
   {
     "id": 3,
-    "title": "Bhakti Challenge 3",
+    "title": "",
     "dohas": [
       {
         "line1": "सब को दूँ सम्मान गोविंद राधे।",
@@ -131,7 +131,7 @@
   },
   {
     "id": 4,
-    "title": "Bhakti Challenge 4",
+    "title": "",
     "dohas": [
       {
         "line1": "हरि साथी बने का है गोविंद राधे।",

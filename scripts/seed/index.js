@@ -1,7 +1,6 @@
 const fs = require("fs");
 const transliterate = require("./transliterate");
 const raw2Json = require("./raw2json");
-const { json } = require("stream/consumers");
 
 function processRawText() {
   try {

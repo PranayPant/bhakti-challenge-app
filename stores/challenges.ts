@@ -14,12 +14,14 @@ export type Doha = {
   line2: string;
   sequence: number;
   line: number;
+  challengeId: number;
 };
 
 export interface ChallengeStore {
   language: "hindi" | "english"; // Language of the challenges
   selectedChallenges: string[]; // Array of selected challenge IDs
   selectedChallengesData: Challenge[]; // Array of selected challenge data
+  toggleLanguage: () => void; // Function to toggle the language between Hindi and English
   addSelectedChallenge: (challenge: string) => void; // Function to add a challenge ID to the selectedChallenges array
   removeSelectedChallenge: (challenge: string) => void; // Function to remove a challenge ID from the selectedChallenges array
   clearAllChallenges: () => void; // Function to clear the selectedChallenges array
@@ -33,6 +35,10 @@ export const useChallengeStore = create(
     language: "hindi", // Default language
     selectedChallenges: [],
     selectedChallengesData: [],
+    toggleLanguage: () =>
+      set((state) => ({
+        language: state.language === "hindi" ? "english" : "hindi",
+      })),
     addSelectedChallenge: (challenge) =>
       set((state) => ({
         selectedChallenges: [...state.selectedChallenges, challenge],
@@ -78,7 +84,9 @@ useChallengeStore.subscribe(
     }
     console.log("language set to", language);
     useChallengeStore.setState({
-      selectedChallengesData: challengesData?.default,
+      selectedChallengesData: challengesData?.default.sort(
+        (a: Challenge, b: Challenge) => a.id - b.id
+      ),
     });
     challengesData = null;
   },
