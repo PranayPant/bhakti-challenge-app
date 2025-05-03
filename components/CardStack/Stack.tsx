@@ -149,9 +149,10 @@ const CardContainer = ({
     position: "absolute",
     height: 400,
     width: 300,
-    bottom: withTiming(BOTTOM_BUFFER + 10 * priority.value),
+    bottom: withTiming(BOTTOM_BUFFER + 1 * priority.value),
     borderRadius: 8,
     zIndex: 10 - priority.value,
+    transformOrigin: "bottom left",
     transform: [
       { translateY: translateY.value },
       { translateX: translateX.value + priority.value * -10 },
@@ -241,7 +242,7 @@ export const CardStack = () => {
 
   return (
     <GestureHandlerRootView style={styles.container}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView className="-rotate-[9deg]" style={styles.container}>
         <CardContainer
           index={2}
           updatePriorities={updatePriorities}

@@ -11,7 +11,7 @@ export const FlashCard = ({ doha }: FlashCardProps) => {
   );
 
   return (
-    <View>
+    <View className="w-full h-full p-2">
       <Text>Bhakti Challenge {doha.challengeId}</Text>
       <Text>{selectedChallengesData[doha.challengeId].title}</Text>
       <Text>{doha.line1}</Text>
