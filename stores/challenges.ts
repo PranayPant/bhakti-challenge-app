@@ -76,19 +76,18 @@ export const useChallengeStore = create(
 useChallengeStore.subscribe(
   (state) => state.language,
   async (language) => {
-    let challengesData;
+    let challengesData: Challenge[] = [];
     if (language === "english") {
-      challengesData = await import(`@/data/english-challenges.json`);
+      challengesData = (await import("@/data/english-challenges.json")).default;
     } else if (language === "hindi") {
-      challengesData = await import(`@/data/hindi-challenges.json`);
+      challengesData = (await import("@/data/hindi-challenges.json")).default;
     }
-    console.log("language set to", language);
     useChallengeStore.setState({
-      selectedChallengesData: challengesData?.default.sort(
-        (a: Challenge, b: Challenge) => a.id - b.id
-      ),
+      selectedChallengesData: [
+        ...challengesData.sort((a: Challenge, b: Challenge) => a.id - b.id),
+      ],
     });
-    challengesData = null;
+    challengesData = [];
   },
   {
     fireImmediately: true,
