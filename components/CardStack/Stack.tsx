@@ -20,7 +20,6 @@ import {
 import { Card } from "./Card";
 import { Colors } from "@/constants/Colors";
 import { useChallengeStore } from "@/stores/challenges";
-import { run } from "node:test";
 import { FlashCard } from "./FlashCard";
 
 const { height, width } = Dimensions.get("window");
@@ -197,12 +196,7 @@ export const CardStack = () => {
   const firstCard = useSharedValue(0);
   const secondCard = useSharedValue(1);
   const thirdCard = useSharedValue(2);
-  const [firstCardFront, setFirstCardFront] = useState("");
-  const [firstCardBack, setFirstCardBack] = useState("");
-  const [secondCardFront, setSecondCardFront] = useState("");
-  const [secondCardBack, setSecondCardBack] = useState("");
-  const [thirdCardFront, setThirdCardFront] = useState("");
-  const [thirdCardBack, setThirdCardBack] = useState("");
+
   const [firstCardValue, setFirstCardValue] = useState(0);
   const [secondCardValue, setSecondCardValue] = useState(1);
   const [thirdCardValue, setThirdCardValue] = useState(2);
@@ -225,42 +219,6 @@ export const CardStack = () => {
     return priorities.value.findIndex((item) => item === 2);
   });
 
-  const firstCardText = useDerivedValue(() => {
-    return `${
-      selectedChallenges[firstCard.value % selectedChallenges.length].title
-    }`;
-  });
-
-  const secondCardText = useDerivedValue(() => {
-    return `${
-      selectedChallenges[secondCard.value % selectedChallenges.length].title
-    }`;
-  });
-
-  const thirdCardText = useDerivedValue(() => {
-    return `${
-      selectedChallenges[thirdCard.value % selectedChallenges.length].title
-    }`;
-  });
-
-  const firstCardAnswer = useDerivedValue(() => {
-    return `${
-      selectedChallenges[firstCard.value % selectedChallenges.length].title
-    }`;
-  });
-
-  const secondCardAnswer = useDerivedValue(() => {
-    return `${
-      selectedChallenges[secondCard.value % selectedChallenges.length].title
-    }`;
-  });
-
-  const thirdCardAnswer = useDerivedValue(() => {
-    return `${
-      selectedChallenges[thirdCard.value % selectedChallenges.length].title
-    }`;
-  });
-
   const updatePriorities = useCallback(() => {
     const newPriorities = [...priorities.value.slice(1), priorities.value[0]];
     priorities.value = newPriorities;
@@ -278,48 +236,6 @@ export const CardStack = () => {
         runOnJS(setFirstCardValue)(firstCard.value);
         runOnJS(setSecondCardValue)(secondCard.value);
       }
-    }
-  );
-
-  useAnimatedReaction(
-    () => firstCardText.value,
-    (text) => {
-      runOnJS(setFirstCardFront)(text);
-    }
-  );
-
-  useAnimatedReaction(
-    () => firstCardAnswer.value,
-    (answer) => {
-      runOnJS(setFirstCardBack)(answer);
-    }
-  );
-
-  useAnimatedReaction(
-    () => secondCardText.value,
-    (text) => {
-      runOnJS(setSecondCardFront)(text);
-    }
-  );
-
-  useAnimatedReaction(
-    () => secondCardAnswer.value,
-    (answer) => {
-      runOnJS(setSecondCardBack)(answer);
-    }
-  );
-
-  useAnimatedReaction(
-    () => thirdCardText.value,
-    (text) => {
-      runOnJS(setThirdCardFront)(text);
-    }
-  );
-
-  useAnimatedReaction(
-    () => thirdCardAnswer.value,
-    (answer) => {
-      runOnJS(setThirdCardBack)(answer);
     }
   );
 
