@@ -53,9 +53,7 @@ const CardContainer = ({
     () =>
       `${interpolate(
         rotation.value,
-        isRightFlick.value
-          ? [BOTTOM_BUFFER * priority.value, height]
-          : [BOTTOM_BUFFER * priority.value, -height],
+        isRightFlick.value ? [BOTTOM_BUFFER, height] : [BOTTOM_BUFFER, -height],
         [0, 4]
       )}rad`
   );
@@ -147,16 +145,24 @@ const CardContainer = ({
 
   const animatedRootStyle = useAnimatedStyle(() => ({
     position: "absolute",
-    height: 400,
-    width: 300,
-    bottom: withTiming(BOTTOM_BUFFER + 10 * priority.value),
+    height: 450,
+    width: 350,
+    bottom: withTiming(BOTTOM_BUFFER - 10 * priority.value),
     borderRadius: 8,
-    zIndex: 10 - priority.value,
+    zIndex: 1000 - priority.value * 100,
+    elevation: 1000 - priority.value * 100,
+
     transform: [
-      { translateY: translateY.value },
-      { translateX: translateX.value + priority.value * -10 },
+      { translateY: translateY.value - 50 * priority.value },
+      { translateX: translateX.value },
       {
         rotate: rotationValue.value,
+      },
+      {
+        scale: withTiming(interpolate(priority.value, [0, 2], [1, 0.9]), {
+          duration: 200,
+          easing: Easing.quad,
+        }),
       },
     ],
   }));

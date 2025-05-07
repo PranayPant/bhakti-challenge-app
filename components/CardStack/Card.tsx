@@ -1,10 +1,4 @@
-import {
-  Pressable,
-  StyleSheet,
-  View,
-  Text,
-  ViewStyle,
-} from "react-native";
+import { Pressable, StyleSheet, View, Text, ViewStyle } from "react-native";
 import Animated, {
   useAnimatedStyle,
   interpolate,
@@ -70,21 +64,7 @@ export const Card = ({
           frontStyle,
         ]}
       >
-        <View
-          style={{
-            position: "absolute",
-            top: 20,
-            backgroundColor: "white",
-            width: 260,
-            height: 200,
-            padding: 20,
-            marginHorizontal: 20,
-            borderRadius: 8,
-            alignItems: "center",
-          }}
-        >
-          {frontDisplay}
-        </View>
+        {frontDisplay}
         <Pressable
           style={{
             position: "absolute",
