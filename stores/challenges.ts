@@ -13,11 +13,11 @@ export type Doha = {
   line1: string;
   line2: string;
   sequence: number;
-  line: number;
   challengeId: number;
 };
 
 export interface ChallengeStore {
+  sortOrder: string; // Sort order for the challenges
   language: "hindi" | "english"; // Language of the challenges
   selectedChallenges: string[]; // Array of selected challenge IDs
   selectedChallengesData: Challenge[]; // Array of selected challenge data
@@ -28,11 +28,13 @@ export interface ChallengeStore {
   toggleSelectedChallenge: (challenge: string) => void; // Function to toggle the selection of a challenge ID
   setSelectedChallenges: (challenges: string[]) => void; // Function to set the selectedChallenges array to a new array of challenge IDs
   toggleAllChallenges: (challenges: string[]) => void; // Function to toggle all challenges in the selectedChallenges array
+  toggleSortChallenges: () => void; // Function to sort challenges by ID
 }
 
 export const useChallengeStore = create(
   subscribeWithSelector<ChallengeStore>((set, get) => ({
     language: "hindi", // Default language
+    sortOrder: "asc", // Default sort order
     selectedChallenges: [],
     selectedChallengesData: [],
     toggleLanguage: () =>
@@ -70,6 +72,15 @@ export const useChallengeStore = create(
             ? []
             : challenges,
       })),
+    toggleSortChallenges: () =>
+      set(() => ({
+        sortOrder: get().sortOrder === "asc" ? "desc" : "asc",
+        selectedChallengesData: [
+          ...get().selectedChallengesData.sort((a: Challenge, b: Challenge) =>
+            get().sortOrder === "asc" ? b.id - a.id : a.id - b.id
+          ),
+        ],
+      })),
   }))
 );
 
@@ -82,9 +93,12 @@ useChallengeStore.subscribe(
     } else if (language === "hindi") {
       challengesData = (await import("@/data/hindi-challenges.json")).default;
     }
+    const sortOrder = useChallengeStore.getState().sortOrder;
     useChallengeStore.setState({
       selectedChallengesData: [
-        ...challengesData.sort((a: Challenge, b: Challenge) => a.id - b.id),
+        ...challengesData.sort((a: Challenge, b: Challenge) =>
+          sortOrder === "asc" ? a.id - b.id : b.id - a.id
+        ),
       ],
     });
     challengesData = [];

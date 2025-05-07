@@ -10,19 +10,23 @@ export const FlashCard = ({ doha }: FlashCardProps) => {
     (store) => store.selectedChallengesData
   );
 
+  const challenge = selectedChallengesData.find(
+    (challenge) => challenge.id === doha.challengeId
+  );
+
   return (
     <View className="h-[300px] rounded-lg m-4">
       <View className="ml-auto mb-4 flex flex-row ">
         <View className=" w-[200px] h-[48px] p-1 top-1 right-2 border border-white bg-yellow-300 rounded-xl">
-          <Text className="text-blue-700 my-auto ml-3 w-[120px] text-center text-pretty break-normal text-md font-semibold">
-            {selectedChallengesData[doha.challengeId - 1].title ||
-              "Bhakti Challenge"}
+          <Text className="text-blue-700 my-auto w-[150px] text-center text-md font-semibold">
+            {challenge?.title || "Bhakti Challenge"}
           </Text>
         </View>
         <View className="absolute right-0 size-[56px] border border-white bg-blue-700 rounded-[999px]">
-          <Text className="text-white m-auto text-lg">
-            {selectedChallengesData[doha.challengeId - 1].id}
-          </Text>
+          <Text className="text-white m-auto text-lg">{challenge?.id}</Text>
+          <View className="absolute bottom-0 right-0 size-[20px] bg-white rounded-[999px]">
+            <Text className="m-auto text-sm">{doha.sequence}</Text>
+          </View>
         </View>
       </View>
 

@@ -23,15 +23,6 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
-  Asset.loadAsync([
-    require("@/assets/images/image_01.png"),
-    require("@/assets/images/image_02.jpg"),
-    require("@/assets/images/image_03.jpg"),
-    require("@/assets/images/image_04.jpg"),
-    require("@/assets/images/image_02.jpg"),
-    require("@/assets/images/image_03.jpg"),
-    require("@/assets/images/image_04.jpg"),
-  ]);
 
   useEffect(() => {
     if (loaded) {
