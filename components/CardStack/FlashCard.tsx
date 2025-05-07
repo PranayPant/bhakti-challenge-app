@@ -1,4 +1,4 @@
-import { Challenge, Doha, useChallengeStore } from "@/stores/challenges";
+import { Doha, useChallengeStore } from "@/stores/challenges";
 import { View, Text } from "react-native";
 
 export interface FlashCardProps {
@@ -26,9 +26,9 @@ export const FlashCard = ({ doha }: FlashCardProps) => {
         </View>
       </View>
 
-      <View className="bg-white h-[250px] rounded-lg justify-center items-center">
-        <Text>{doha.line1}</Text>
-        <Text>{doha.line2}</Text>
+      <View className="bg-white h-[250px] rounded-lg justify-center items-center gap-2 p-2">
+        <Text className="text-xl text-center">{doha.line1}</Text>
+        <Text className="text-xl text-center">{doha.line2}</Text>
       </View>
     </View>
   );
