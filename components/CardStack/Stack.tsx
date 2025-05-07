@@ -147,9 +147,9 @@ const CardContainer = ({
 
   const animatedRootStyle = useAnimatedStyle(() => ({
     position: "absolute",
-    height: 400,
-    width: 300,
-    bottom: withTiming(BOTTOM_BUFFER + 1 * priority.value),
+    height: 450,
+    width: 350,
+    bottom: withTiming(BOTTOM_BUFFER + 10 * priority.value),
     borderRadius: 8,
     zIndex: 10 - priority.value,
     transformOrigin: "bottom left",
