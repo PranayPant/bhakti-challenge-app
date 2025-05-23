@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useState } from "react";
+import React, { ReactNode, use, useCallback, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Dimensions, Text } from "react-native";
 import {
   useSharedValue,
@@ -48,44 +48,24 @@ const CardContainer = ({
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
   const rotation = useSharedValue(BOTTOM_BUFFER);
-  const isRightFlick = useSharedValue(true);
   const rotationValue = useDerivedValue(
-    () =>
-      `${interpolate(
-        rotation.value,
-        isRightFlick.value ? [BOTTOM_BUFFER, height] : [BOTTOM_BUFFER, -height],
-        [0, 4]
-      )}rad`
+    () => `${interpolate(rotation.value, [BOTTOM_BUFFER, height], [0, 4])}rad`
   );
+  const isShuffling = useSharedValue(false);
 
   const panGesture = Gesture.Pan()
-    .onBegin(({ absoluteX, translationX }) => {
+    .onBegin(({ translationX }) => {
+      isShuffling.value = false;
       if (priority.value > 0) {
         return;
       }
       if (Math.abs(Math.round(translationX)) < 50) {
-        translateX.value = withTiming(
-          0,
-          {
-            duration: 200,
-            easing: Easing.quad,
-          },
-          () => {
-            isRightFlick.value = true;
-          }
-        );
-        rotation.value = withTiming(BOTTOM_BUFFER, {
-          duration: 200,
-          easing: Easing.quad,
-        });
+        translateX.value = 0;
+        rotation.value = BOTTOM_BUFFER;
         return;
       }
       rotation.value = translationX + BOTTOM_BUFFER;
       translateX.value = translationX;
-
-      if (absoluteX < (width * 0.8) / 2) {
-        isRightFlick.value = false;
-      }
     })
     .onUpdate(({ translationX }) => {
       if (priority.value > 0) {
@@ -98,49 +78,19 @@ const CardContainer = ({
       if (priority.value > 0) {
         return;
       }
+      isShuffling.value = true;
       if (Math.abs(Math.round(translationX)) < 50) {
-        translateX.value = withTiming(
-          0,
-          {
-            duration: 200,
-            easing: Easing.quad,
-          },
-          () => {
-            isRightFlick.value = true;
-          }
-        );
-        rotation.value = withTiming(BOTTOM_BUFFER, {
-          duration: 200,
-          easing: Easing.quad,
-        });
+        translateX.value = 0;
+        rotation.value = BOTTOM_BUFFER;
         return;
       }
 
       isFlipped.value = false;
 
-      runOnJS(updatePriorities)();
+      updatePriorities();
 
-      translateX.value = withTiming(
-        0,
-        {
-          duration: 400,
-          easing: Easing.quad,
-        },
-        () => {
-          isRightFlick.value = true;
-        }
-      );
-
-      rotation.value = withTiming(
-        0,
-        {
-          duration: 400,
-          easing: Easing.linear,
-        },
-        () => {
-          rotation.value = BOTTOM_BUFFER;
-        }
-      );
+      translateX.value = 0;
+      rotation.value = BOTTOM_BUFFER;
     });
 
   const animatedRootStyle = useAnimatedStyle(() => ({
@@ -154,7 +104,14 @@ const CardContainer = ({
 
     transform: [
       { translateY: translateY.value - 50 * priority.value },
-      { translateX: translateX.value },
+      {
+        translateX: isShuffling.value
+          ? withTiming(translateX.value, {
+              duration: 200,
+              easing: Easing.linear,
+            })
+          : translateX.value,
+      },
       {
         rotate: rotationValue.value,
       },
@@ -226,6 +183,7 @@ export const CardStack = () => {
   });
 
   const updatePriorities = useCallback(() => {
+    "worklet";
     const newPriorities = [...priorities.value.slice(1), priorities.value[0]];
     priorities.value = newPriorities;
   }, [priorities]);
