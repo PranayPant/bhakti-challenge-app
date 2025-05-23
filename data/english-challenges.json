@@ -2006,5 +2006,101 @@
         "line": 295
       }
     ]
+  },
+  {
+    "id": 44,
+    "title": "mujhē dīna banā dō",
+    "dohas": [
+      {
+        "line1": "dīnōṁ kē haiṁ dōnōṁ gōviṁda rādhē।",
+        "line2": "mana buddhi dōnōṁ kō dīna banā dē॥",
+        "challengeId": 44,
+        "sequence": 1,
+        "line": 4563
+      },
+      {
+        "line1": "bhakti aru abhimāna gōviṁda rādhē।",
+        "line2": "dōnōṁ rahēṁ ēka ṭhaura nā batā dē॥",
+        "challengeId": 44,
+        "sequence": 2,
+        "line": 4556
+      },
+      {
+        "line1": "saba kā sammāna karō gōviṁda rādhē।",
+        "line2": "saba kē haiṁ ura baiṭhē kr̥ṣṇa batā dē॥",
+        "challengeId": 44,
+        "sequence": 3,
+        "line": 4560
+      },
+      {
+        "line1": "hari guru hī haiṁ śuddha gōviṁda rādhē।",
+        "line2": "unatē juḍē jō mana prēma batā dē॥",
+        "challengeId": 44,
+        "sequence": 4,
+        "line": 5264
+      },
+      {
+        "line1": "mana mēṁ hī anaṁta pāpa gōviṁda rādhē।",
+        "line2": "mana tē hī nāma raṭō nāmī kṣamā dē॥",
+        "challengeId": 44,
+        "sequence": 5,
+        "line": 10882
+      },
+      {
+        "line1": "pāpa kē nāśa hita gōviṁda rādhē।",
+        "line2": "hari nāma guṇa līlā kīrtana karā dē॥",
+        "challengeId": 44,
+        "sequence": 6,
+        "line": 10877
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "title": "hari-guru sē hī hai saccā nātā",
+    "dohas": [
+      {
+        "line1": "aganita mātā pitā gōviṁda rādhē।",
+        "line2": "banē sām̐cē mātā pitā hari kō bhulā dē॥",
+        "challengeId": 45,
+        "sequence": 1,
+        "line": 1709
+      },
+      {
+        "line1": "ḍhūm̐ḍhtē ḍhūm̐ḍhtē gōviṁda rādhē।",
+        "line2": "bīta gayē aganita janma batā dē॥",
+        "challengeId": 45,
+        "sequence": 2,
+        "line": 1624
+      },
+      {
+        "line1": "jaba kabhu santa milē gōviṁda rādhē।",
+        "line2": "taba hī satya tatvajñāna hō batā dē॥",
+        "challengeId": 45,
+        "sequence": 3,
+        "line": 1625
+      },
+      {
+        "line1": "sārā jaga tanu hita gōviṁda rādhē।",
+        "line2": "jīva hita hari guru dō haiṁ batā dē॥",
+        "challengeId": 45,
+        "sequence": 4,
+        "line": 1705
+      },
+      {
+        "line1": "hari hī sōṁ pyāra karō gōviṁda rādhē।",
+        "line2": "jaga tē na pyāra na tō khāra karā dē॥",
+        "challengeId": 45,
+        "sequence": 5,
+        "line": 1735
+      },
+      {
+        "line1": "mana mandira ēka gōviṁda rādhē।",
+        "line2": "hari kō biṭhā dē cāhē jaga kō biṭhā dē॥",
+        "challengeId": 45,
+        "sequence": 6,
+        "line": 1736
+      }
+    ]
   }
 ]
