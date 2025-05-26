@@ -19,7 +19,7 @@ import {
 
 import { Card } from "./Card";
 import { Colors } from "@/constants/Colors";
-import { useChallengeStore } from "@/stores/challenges";
+import { Challenge, Doha, useChallengeStore } from "@/stores/challenges";
 import { FlashCard } from "./FlashCard";
 import { useCardPriorities } from "@/hooks/useCardPriorities";
 
@@ -155,21 +155,12 @@ const CardContainer = ({
 };
 
 export const CardStack = () => {
-  const selectedChallenges = useChallengeStore(
-    (state) => state.selectedChallengesData
-  );
+  const { shuffle, priorityOne, priorityTwo, priorityThree } =
+    useCardPriorities();
 
-  const allDohas = selectedChallenges.flatMap((challenge) => challenge.dohas);
-
-  const {
-    shuffle,
-    priorityOne,
-    priorityTwo,
-    priorityThree,
-    dataIndexOne,
-    dataIndexTwo,
-    dataIndexThree,
-  } = useCardPriorities();
+  const dataIndexOne = useChallengeStore((store) => store.dataIndexOne);
+  const dataIndexTwo = useChallengeStore((store) => store.dataIndexTwo);
+  const dataIndexThree = useChallengeStore((store) => store.dataIndexThree);
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -177,33 +168,24 @@ export const CardStack = () => {
         <CardContainer
           index={2}
           updatePriorities={shuffle}
-          frontDisplay={<FlashCard index={dataIndexThree} />}
-          backDisplay={
-            selectedChallenges[allDohas[dataIndexThree.value].challengeId - 1]
-              .title
-          }
+          frontDisplay={<FlashCard dataIndex={dataIndexThree} index={2} />}
+          backDisplay={""}
           priority={priorityThree}
           color={Colors.blue[400]}
         />
         <CardContainer
           index={1}
           updatePriorities={shuffle}
-          frontDisplay={<FlashCard index={dataIndexTwo} />}
-          backDisplay={
-            selectedChallenges[allDohas[dataIndexTwo.value].challengeId - 1]
-              .title
-          }
+          frontDisplay={<FlashCard dataIndex={dataIndexTwo} index={1} />}
+          backDisplay={""}
           priority={priorityTwo}
           color={Colors.yellow[400]}
         />
         <CardContainer
           index={0}
           updatePriorities={shuffle}
-          frontDisplay={<FlashCard index={dataIndexOne} />}
-          backDisplay={
-            selectedChallenges[allDohas[dataIndexOne.value].challengeId - 1]
-              .title
-          }
+          frontDisplay={<FlashCard dataIndex={dataIndexOne} index={0} />}
+          backDisplay={""}
           priority={priorityOne}
           color={Colors.red[400]}
         />

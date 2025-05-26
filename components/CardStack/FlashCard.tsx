@@ -1,21 +1,19 @@
-import { Doha, useChallengeStore } from "@/stores/challenges";
+import { useChallengeStore } from "@/stores/challenges";
 import { View, Text } from "react-native";
-import { SharedValue } from "react-native-reanimated";
 
 export interface FlashCardProps {
-  index: SharedValue<number>;
+  index: number;
+  dataIndex: number;
 }
 
-export const FlashCard = ({ index }: FlashCardProps) => {
+export const FlashCard = ({ index, dataIndex }: FlashCardProps) => {
   const selectedChallengesData = useChallengeStore(
     (store) => store.selectedChallengesData
   );
 
-  const allDohas = selectedChallengesData.flatMap(
-    (challenge) => challenge.dohas
-  );
+  const dohas = useChallengeStore((store) => store.dohas);
 
-  const doha = allDohas[index.value];
+  const doha = dohas[dataIndex];
 
   const challenge = selectedChallengesData.find(
     (challenge) => challenge.id === doha.challengeId
