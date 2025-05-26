@@ -1,5 +1,7 @@
+import { use } from "react";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
+import { filterChallenges, sortDohas } from "./utils";
 
 export interface Challenge {
   id: number; // Unique identifier for the challenge
@@ -19,67 +21,76 @@ export type Doha = {
 export interface ChallengeStore {
   sortOrder: string; // Sort order for the challenges
   language: "hindi" | "english"; // Language of the challenges
-  selectedChallenges: string[]; // Array of selected challenge IDs
-  selectedChallengesData: Challenge[]; // Array of selected challenge data
+  challengesData: Challenge[]; // Array of selected challenge data
+  selectedChallenges: Challenge[]; // Array of selected challenges
+  dohas: Doha[]; // Array of dohas associated with the challenges
+  dataIndexOne: number; // Optional index for the first data item
+  dataIndexTwo: number; // Optional index for the second data item
+  dataIndexThree: number; // Optional index for the third data item
+  filterString: string; // String to filter challenges by ID or title
   toggleLanguage: () => void; // Function to toggle the language between Hindi and English
-  addSelectedChallenge: (challenge: string) => void; // Function to add a challenge ID to the selectedChallenges array
-  removeSelectedChallenge: (challenge: string) => void; // Function to remove a challenge ID from the selectedChallenges array
-  clearAllChallenges: () => void; // Function to clear the selectedChallenges array
-  toggleSelectedChallenge: (challenge: string) => void; // Function to toggle the selection of a challenge ID
-  setSelectedChallenges: (challenges: string[]) => void; // Function to set the selectedChallenges array to a new array of challenge IDs
-  toggleAllChallenges: (challenges: string[]) => void; // Function to toggle all challenges in the selectedChallenges array
-  toggleSortChallenges: () => void; // Function to sort challenges by ID
+  toggleSort: () => void; // Function to sort challenges by ID
+  setDataIndexOne: (index: number) => void; // Function to set the index for the first data item
+  setDataIndexTwo: (index: number) => void; // Function to set the index for the second data item
+  setDataIndexThree: (index: number) => void; // Function to set the index for the third data item
+  setFilterString: (filter: string) => void; // Function to set the filter string
 }
 
 export const useChallengeStore = create(
   subscribeWithSelector<ChallengeStore>((set, get) => ({
     language: "hindi", // Default language
     sortOrder: "asc", // Default sort order
-    selectedChallenges: [],
-    selectedChallengesData: [],
+    challengesData: [],
+    selectedChallenges: [], // Initialize with an empty array
+    dohas: [], // Initialize with an empty array
+    dataIndexOne: 0, // Default index for the first data item
+    dataIndexTwo: 1, // Default index for the second data item
+    dataIndexThree: 2, // Default index for the third data item
+    filterString: "", // Initialize with an empty string
+    setFilterString: (filter: string) => {
+      set((state) => {
+        const filteredChallenges = filterChallenges(
+          state.challengesData,
+          filter
+        );
+        const dohas: Doha[] = filteredChallenges.flatMap(
+          (challenge) => challenge.dohas
+        );
+        const sortedDohas = sortDohas(dohas, state.sortOrder);
+        return {
+          selectedChallenges: filteredChallenges,
+          dohas: sortedDohas,
+          filterString: filter,
+        };
+      });
+    },
     toggleLanguage: () =>
       set((state) => ({
         language: state.language === "hindi" ? "english" : "hindi",
       })),
-    addSelectedChallenge: (challenge) =>
+
+    toggleSort: () => {
+      set((state) => {
+        const newSortOrder = state.sortOrder === "asc" ? "desc" : "asc";
+        const sortedDohas = sortDohas(state.dohas, newSortOrder);
+
+        return {
+          sortOrder: newSortOrder,
+          dohas: sortedDohas,
+        };
+      });
+    },
+    setDataIndexOne: (index: number) =>
       set((state) => ({
-        selectedChallenges: [...state.selectedChallenges, challenge],
+        dataIndexOne: index % state.dohas.length,
       })),
-    removeSelectedChallenge: (challenge) =>
+    setDataIndexTwo: (index: number) =>
       set((state) => ({
-        selectedChallenges: state.selectedChallenges.filter(
-          (id) => id !== challenge
-        ),
+        dataIndexTwo: index % state.dohas.length,
       })),
-    clearAllChallenges: () =>
-      set(() => ({
-        selectedChallenges: [],
-      })),
-    setSelectedChallenges: (challenges) =>
-      set(() => ({
-        selectedChallenges: challenges,
-      })),
-    toggleSelectedChallenge: (challenge) =>
+    setDataIndexThree: (index: number) =>
       set((state) => ({
-        selectedChallenges: state.selectedChallenges.includes(challenge)
-          ? state.selectedChallenges.filter((id) => id !== challenge)
-          : [...state.selectedChallenges, challenge],
-      })),
-    toggleAllChallenges: (challenges) =>
-      set((state) => ({
-        selectedChallenges:
-          state.selectedChallenges.length === challenges.length
-            ? []
-            : challenges,
-      })),
-    toggleSortChallenges: () =>
-      set(() => ({
-        sortOrder: get().sortOrder === "asc" ? "desc" : "asc",
-        selectedChallengesData: [
-          ...get().selectedChallengesData.sort((a: Challenge, b: Challenge) =>
-            get().sortOrder === "asc" ? b.id - a.id : a.id - b.id
-          ),
-        ],
+        dataIndexThree: index % state.dohas.length,
       })),
   }))
 );
@@ -94,12 +105,24 @@ useChallengeStore.subscribe(
       challengesData = (await import("@/data/hindi-challenges.json")).default;
     }
     const sortOrder = useChallengeStore.getState().sortOrder;
+    const currentSelectedChallengeIds = useChallengeStore
+      .getState()
+      .selectedChallenges.map((challenge) => challenge.id);
+    let newSelectedChallenges = challengesData;
+    if (currentSelectedChallengeIds.length > 0) {
+      newSelectedChallenges = challengesData.filter((challenge) =>
+        currentSelectedChallengeIds.includes(challenge.id)
+      );
+    }
+
+    const dohas: Doha[] = newSelectedChallenges.flatMap(
+      (challenge) => challenge.dohas
+    );
+    const sortedDohas = sortDohas(dohas, sortOrder);
     useChallengeStore.setState({
-      selectedChallengesData: [
-        ...challengesData.sort((a: Challenge, b: Challenge) =>
-          sortOrder === "asc" ? a.id - b.id : b.id - a.id
-        ),
-      ],
+      challengesData: [...challengesData],
+      selectedChallenges: [...newSelectedChallenges],
+      dohas: sortedDohas,
     });
     challengesData = [];
   },
