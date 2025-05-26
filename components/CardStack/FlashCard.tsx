@@ -7,15 +7,13 @@ export interface FlashCardProps {
 }
 
 export const FlashCard = ({ index, dataIndex }: FlashCardProps) => {
-  const selectedChallengesData = useChallengeStore(
-    (store) => store.selectedChallengesData
-  );
+  const challenges = useChallengeStore((store) => store.selectedChallenges);
 
   const dohas = useChallengeStore((store) => store.dohas);
 
   const doha = dohas[dataIndex];
 
-  const challenge = selectedChallengesData.find(
+  const challenge = challenges.find(
     (challenge) => challenge.id === doha.challengeId
   );
 

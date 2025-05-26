@@ -17,6 +17,7 @@ export const useCardPriorities = () => {
   const dataIndexTwo = useSharedValue(1);
   const dataIndexThree = useSharedValue(2);
 
+  const filterString = useChallengeStore((store) => store.filterString);
   const sortOrder = useChallengeStore((store) => store.sortOrder);
   const setDataIndexOne = useChallengeStore((store) => store.setDataIndexOne);
   const setDataIndexTwo = useChallengeStore((store) => store.setDataIndexTwo);
@@ -49,7 +50,10 @@ export const useCardPriorities = () => {
     dataIndexOne.value = 0;
     dataIndexTwo.value = 1;
     dataIndexThree.value = 2;
-  }, [sortOrder]);
+    priorityOne.value = 0;
+    priorityTwo.value = 1;
+    priorityThree.value = 2;
+  }, [sortOrder, filterString]);
 
   useAnimatedReaction(
     () => dataIndexOne.value,

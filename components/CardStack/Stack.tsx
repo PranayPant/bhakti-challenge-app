@@ -154,7 +154,7 @@ const CardContainer = ({
   );
 };
 
-export const CardStack = () => {
+export const CardStack = React.memo(() => {
   const { shuffle, priorityOne, priorityTwo, priorityThree } =
     useCardPriorities();
 
@@ -192,7 +192,7 @@ export const CardStack = () => {
       </SafeAreaView>
     </GestureHandlerRootView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
