@@ -21,6 +21,7 @@ import { Card } from "./Card";
 import { Colors } from "@/constants/Colors";
 import { useChallengeStore } from "@/stores/challenges";
 import { FlashCard } from "./FlashCard";
+import { useCardPriorities } from "@/hooks/useCardPriorities";
 
 const { height, width } = Dimensions.get("window");
 
@@ -154,86 +155,56 @@ const CardContainer = ({
 };
 
 export const CardStack = () => {
-  const indices = Array.from({ length: DECK_SIZE }, (_, i) => i);
-  const priorities = useSharedValue(indices);
-  const firstCard = useSharedValue(0);
-  const secondCard = useSharedValue(1);
-  const thirdCard = useSharedValue(2);
-
-  const [firstCardValue, setFirstCardValue] = useState(0);
-  const [secondCardValue, setSecondCardValue] = useState(1);
-  const [thirdCardValue, setThirdCardValue] = useState(2);
-
   const selectedChallenges = useChallengeStore(
     (state) => state.selectedChallengesData
   );
 
   const allDohas = selectedChallenges.flatMap((challenge) => challenge.dohas);
 
-  const firstPriority = useDerivedValue(() => {
-    return priorities.value.findIndex((item) => item === 0);
-  });
-
-  const secondPriority = useDerivedValue(() => {
-    return priorities.value.findIndex((item) => item === 1);
-  });
-
-  const thirdPriority = useDerivedValue(() => {
-    return priorities.value.findIndex((item) => item === 2);
-  });
-
-  const updatePriorities = useCallback(() => {
-    "worklet";
-    const newPriorities = [...priorities.value.slice(1), priorities.value[0]];
-    priorities.value = newPriorities;
-  }, [priorities]);
-
-  useAnimatedReaction(
-    () => priorities.value,
-    (updatedPriorities) => {
-      if (updatedPriorities[0] === 0) {
-        thirdCard.value = firstCard.value + DECK_SIZE - 1;
-        runOnJS(setThirdCardValue)(thirdCard.value);
-      } else if (updatedPriorities[0] === DECK_SIZE - 1) {
-        firstCard.value = firstCard.value + DECK_SIZE;
-        secondCard.value = secondCard.value + DECK_SIZE;
-        runOnJS(setFirstCardValue)(firstCard.value);
-        runOnJS(setSecondCardValue)(secondCard.value);
-      }
-    }
-  );
+  const {
+    shuffle,
+    priorityOne,
+    priorityTwo,
+    priorityThree,
+    dataIndexOne,
+    dataIndexTwo,
+    dataIndexThree,
+  } = useCardPriorities();
 
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
         <CardContainer
           index={2}
-          updatePriorities={updatePriorities}
-          frontDisplay={<FlashCard doha={allDohas[thirdCardValue]} />}
+          updatePriorities={shuffle}
+          frontDisplay={<FlashCard index={dataIndexThree} />}
           backDisplay={
-            selectedChallenges[allDohas[thirdCardValue].challengeId - 1].title
+            selectedChallenges[allDohas[dataIndexThree.value].challengeId - 1]
+              .title
           }
-          priority={thirdPriority}
+          priority={priorityThree}
           color={Colors.blue[400]}
         />
         <CardContainer
           index={1}
-          updatePriorities={updatePriorities}
-          frontDisplay={<FlashCard doha={allDohas[secondCardValue]} />}
+          updatePriorities={shuffle}
+          frontDisplay={<FlashCard index={dataIndexTwo} />}
           backDisplay={
-            selectedChallenges[allDohas[secondCardValue].challengeId - 1].title
+            selectedChallenges[allDohas[dataIndexTwo.value].challengeId - 1]
+              .title
           }
-          priority={secondPriority}
+          priority={priorityTwo}
           color={Colors.yellow[400]}
         />
         <CardContainer
           index={0}
-          updatePriorities={updatePriorities}
-          frontDisplay={<FlashCard doha={allDohas[firstCardValue]} />}
+          updatePriorities={shuffle}
+          frontDisplay={<FlashCard index={dataIndexOne} />}
           backDisplay={
-            selectedChallenges[allDohas[firstCardValue].challengeId - 1].title
+            selectedChallenges[allDohas[dataIndexOne.value].challengeId - 1]
+              .title
           }
-          priority={firstPriority}
+          priority={priorityOne}
           color={Colors.red[400]}
         />
       </SafeAreaView>
