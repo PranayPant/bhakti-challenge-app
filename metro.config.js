@@ -1,9 +1,16 @@
 const {
   wrapWithReanimatedMetroConfig,
 } = require("react-native-reanimated/metro-config");
-const { getDefaultConfig } = require("expo/metro-config");
+const { getDefaultConfig } = require("@expo/metro-config");
 const { withNativeWind } = require("nativewind/metro");
 
-const config = wrapWithReanimatedMetroConfig(getDefaultConfig(__dirname));
+const defaultConfig = getDefaultConfig(__dirname);
+defaultConfig.transformer.assetPlugins = ["expo-asset/tools/hashAssetFiles"];
 
-module.exports = withNativeWind(config, { input: "./global.css" });
+const nativeWindConfig = withNativeWind(defaultConfig, {
+  input: "./global.css",
+});
+
+const reanimatedConfig = wrapWithReanimatedMetroConfig(nativeWindConfig);
+
+module.exports = reanimatedConfig;
