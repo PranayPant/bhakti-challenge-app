@@ -144,7 +144,7 @@ const CardContainer = ({
           id={index}
           isFlipped={isFlipped}
           frontDisplay={frontDisplay}
-          backDisplay={<Text>{backDisplay}</Text>}
+          backDisplay={backDisplay}
           rootStyle={animatedRootStyle}
           frontStyle={animatedFrontStyle}
           backStyle={animatedBackStyle}
@@ -161,6 +161,7 @@ export const CardStack = React.memo(() => {
   const dataIndexOne = useChallengeStore((store) => store.dataIndexOne);
   const dataIndexTwo = useChallengeStore((store) => store.dataIndexTwo);
   const dataIndexThree = useChallengeStore((store) => store.dataIndexThree);
+  const mode = useChallengeStore((store) => store.mode);
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -168,24 +169,30 @@ export const CardStack = React.memo(() => {
         <CardContainer
           index={2}
           updatePriorities={shuffle}
-          frontDisplay={<FlashCard dataIndex={dataIndexThree} index={2} />}
-          backDisplay={""}
+          frontDisplay={
+            <FlashCard mode={mode} dataIndex={dataIndexThree} index={2} />
+          }
+          backDisplay={<FlashCard dataIndex={dataIndexThree} index={2} />}
           priority={priorityThree}
           color={Colors.blue[400]}
         />
         <CardContainer
           index={1}
           updatePriorities={shuffle}
-          frontDisplay={<FlashCard dataIndex={dataIndexTwo} index={1} />}
-          backDisplay={""}
+          frontDisplay={
+            <FlashCard mode={mode} dataIndex={dataIndexTwo} index={1} />
+          }
+          backDisplay={<FlashCard dataIndex={dataIndexTwo} index={1} />}
           priority={priorityTwo}
           color={Colors.yellow[400]}
         />
         <CardContainer
           index={0}
           updatePriorities={shuffle}
-          frontDisplay={<FlashCard dataIndex={dataIndexOne} index={0} />}
-          backDisplay={""}
+          frontDisplay={
+            <FlashCard mode={mode} dataIndex={dataIndexOne} index={0} />
+          }
+          backDisplay={<FlashCard dataIndex={dataIndexOne} index={0} />}
           priority={priorityOne}
           color={Colors.red[400]}
         />

@@ -4,9 +4,14 @@ import { View, Text } from "react-native";
 export interface FlashCardProps {
   index: number;
   dataIndex: number;
+  mode?: "quiz" | "default";
 }
 
-export const FlashCard = ({ index, dataIndex }: FlashCardProps) => {
+export const FlashCard = ({
+  index,
+  dataIndex,
+  mode = "default",
+}: FlashCardProps) => {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
 
   const dohas = useChallengeStore((store) => store.dohas);
@@ -34,8 +39,12 @@ export const FlashCard = ({ index, dataIndex }: FlashCardProps) => {
       </View>
 
       <View className="bg-white h-[250px] rounded-lg justify-center items-center gap-2 p-2">
-        <Text className="text-xl text-center">{doha.line1}</Text>
-        <Text className="text-xl text-center">{doha.line2}</Text>
+        <Text className="text-xl text-center">
+          {mode === "quiz" ? "?" : doha.line1}
+        </Text>
+        <Text className="text-xl text-center">
+          {mode === "quiz" ? "?" : doha.line2}
+        </Text>
       </View>
     </View>
   );

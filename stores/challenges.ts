@@ -28,12 +28,16 @@ export interface ChallengeStore {
   dataIndexTwo: number; // Optional index for the second data item
   dataIndexThree: number; // Optional index for the third data item
   filterString: string; // String to filter challenges by ID or title
+  mode: "quiz" | "default"; // Mode of the deck, either quiz or default
+  randomized: boolean; // Flag to indicate if the challenges are randomized
   toggleLanguage: () => void; // Function to toggle the language between Hindi and English
   toggleSort: () => void; // Function to sort challenges by ID
   setDataIndexOne: (index: number) => void; // Function to set the index for the first data item
   setDataIndexTwo: (index: number) => void; // Function to set the index for the second data item
   setDataIndexThree: (index: number) => void; // Function to set the index for the third data item
   setFilterString: (filter: string) => void; // Function to set the filter string
+  setMode: (mode: "quiz" | "default") => void; // Function to set the mode of the deck
+  setRandomized: (randomized: boolean) => void; // Function to set the randomized flag
 }
 
 export const useChallengeStore = create(
@@ -47,6 +51,25 @@ export const useChallengeStore = create(
     dataIndexTwo: 1, // Default index for the second data item
     dataIndexThree: 2, // Default index for the third data item
     filterString: "", // Initialize with an empty string
+    mode: "default", // Default mode of the deck
+    randomized: false, // Default randomized state
+    setMode: (mode: "quiz" | "default") => {
+      set({ mode });
+    },
+    setRandomized: (randomized: boolean) => {
+      set((state) => {
+        let dohas = [...state.dohas];
+        if (randomized) {
+          dohas.sort(() => Math.random() - 0.5);
+        } else {
+          dohas = sortDohas(dohas, state.sortOrder);
+        }
+        return {
+          randomized,
+          dohas,
+        };
+      });
+    },
     setFilterString: (filter: string) => {
       set((state) => {
         const filteredChallenges = filterChallenges(

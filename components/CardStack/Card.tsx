@@ -89,21 +89,7 @@ export const Card = ({
           backStyle,
         ]}
       >
-        <View
-          style={{
-            position: "absolute",
-            top: 20,
-            backgroundColor: "white",
-            width: 260,
-            height: 200,
-            marginHorizontal: 20,
-            padding: 20,
-            borderRadius: 8,
-            alignItems: "center",
-          }}
-        >
-          {backDisplay}
-        </View>
+        {backDisplay}
         <Pressable
           style={{
             position: "absolute",

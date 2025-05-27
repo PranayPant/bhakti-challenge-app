@@ -10,12 +10,12 @@ export default function () {
     // Callback should be wrapped in `React.useCallback` to avoid running the effect too often.
     useCallback(() => {
       // Invoked whenever the route is focused.
-      console.log("Hello, Index route focused!");
-      setMode("default");
+      console.log("Hello, Quiz route focused!");
+      setMode("quiz");
 
       // Return function is invoked whenever the route gets out of focus.
       return () => {
-        console.log("Index route is now unfocused.");
+        console.log("Quiz route is now unfocused.");
       };
     }, [])
   );
