@@ -24,6 +24,8 @@ export const useCardPriorities = () => {
   const setDataIndexThree = useChallengeStore(
     (store) => store.setDataIndexThree
   );
+  const mode = useChallengeStore((store) => store.mode);
+  const randomized = useChallengeStore((store) => store.randomized);
 
   const shuffle = useCallback(() => {
     "worklet";
@@ -53,7 +55,7 @@ export const useCardPriorities = () => {
     priorityOne.value = 0;
     priorityTwo.value = 1;
     priorityThree.value = 2;
-  }, [sortOrder, filterString]);
+  }, [sortOrder, filterString, mode, randomized]);
 
   useAnimatedReaction(
     () => dataIndexOne.value,

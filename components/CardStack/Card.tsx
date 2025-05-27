@@ -7,7 +7,8 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { Colors } from "@/constants/Colors";
-import { ReactNode } from "react";
+import { ReactNode, use } from "react";
+import { useChallengeStore } from "@/stores/challenges";
 
 interface CardProps {
   id: number;
@@ -52,6 +53,8 @@ export const Card = ({
     isFlipped.value = !isFlipped.value;
   };
 
+  const mode = useChallengeStore((store) => store.mode);
+
   return (
     <Animated.View style={rootStyle}>
       {children}
@@ -65,21 +68,23 @@ export const Card = ({
         ]}
       >
         {frontDisplay}
-        <Pressable
-          style={{
-            position: "absolute",
-            bottom: 20,
-            left: 20,
-            backgroundColor: Colors.purple[300],
-            padding: 8,
-            width: 100,
-            height: 40,
-            borderRadius: 8,
-          }}
-          onPress={handlePress}
-        >
-          <Text style={{ margin: "auto", color: "white" }}>See answer</Text>
-        </Pressable>
+        {mode === "quiz" && (
+          <Pressable
+            style={{
+              position: "absolute",
+              bottom: 20,
+              left: 20,
+              backgroundColor: Colors.purple[300],
+              padding: 8,
+              width: 100,
+              height: 40,
+              borderRadius: 8,
+            }}
+            onPress={handlePress}
+          >
+            <Text style={{ margin: "auto", color: "white" }}>See answer</Text>
+          </Pressable>
+        )}
       </Animated.View>
       <Animated.View
         style={[
@@ -89,21 +94,7 @@ export const Card = ({
           backStyle,
         ]}
       >
-        <View
-          style={{
-            position: "absolute",
-            top: 20,
-            backgroundColor: "white",
-            width: 260,
-            height: 200,
-            marginHorizontal: 20,
-            padding: 20,
-            borderRadius: 8,
-            alignItems: "center",
-          }}
-        >
-          {backDisplay}
-        </View>
+        {backDisplay}
         <Pressable
           style={{
             position: "absolute",
