@@ -7,7 +7,8 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { Colors } from "@/constants/Colors";
-import { ReactNode } from "react";
+import { ReactNode, use } from "react";
+import { useChallengeStore } from "@/stores/challenges";
 
 interface CardProps {
   id: number;
@@ -52,6 +53,8 @@ export const Card = ({
     isFlipped.value = !isFlipped.value;
   };
 
+  const mode = useChallengeStore((store) => store.mode);
+
   return (
     <Animated.View style={rootStyle}>
       {children}
@@ -65,21 +68,23 @@ export const Card = ({
         ]}
       >
         {frontDisplay}
-        <Pressable
-          style={{
-            position: "absolute",
-            bottom: 20,
-            left: 20,
-            backgroundColor: Colors.purple[300],
-            padding: 8,
-            width: 100,
-            height: 40,
-            borderRadius: 8,
-          }}
-          onPress={handlePress}
-        >
-          <Text style={{ margin: "auto", color: "white" }}>See answer</Text>
-        </Pressable>
+        {mode === "quiz" && (
+          <Pressable
+            style={{
+              position: "absolute",
+              bottom: 20,
+              left: 20,
+              backgroundColor: Colors.purple[300],
+              padding: 8,
+              width: 100,
+              height: 40,
+              borderRadius: 8,
+            }}
+            onPress={handlePress}
+          >
+            <Text style={{ margin: "auto", color: "white" }}>See answer</Text>
+          </Pressable>
+        )}
       </Animated.View>
       <Animated.View
         style={[
