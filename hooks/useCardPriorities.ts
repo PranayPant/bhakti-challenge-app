@@ -55,7 +55,7 @@ export const useCardPriorities = () => {
     priorityOne.value = 0;
     priorityTwo.value = 1;
     priorityThree.value = 2;
-  }, [sortOrder, filterString, mode, randomized]);
+  }, [sortOrder, filterString, randomized]);
 
   useAnimatedReaction(
     () => dataIndexOne.value,

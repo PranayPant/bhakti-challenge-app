@@ -4,7 +4,7 @@
     "slug": "bhakti-challenge-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/murali.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -17,6 +17,7 @@
         "foregroundImage": "./assets/images/murali.png",
         "backgroundColor": "#ffffff"
       },
+      "softwareKeyboardLayoutMode": "pan",
       "package": "com.punch.up.bhaktichallengeapp"
     },
     "web": {
@@ -38,12 +39,17 @@
       [
         "expo-asset",
         {
-          "assets": [
-            "./assets/images/"
+          "assets": ["./assets/images/"]
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/arvindr.ttf"
           ]
         }
       ],
-      "expo-font",
       "expo-web-browser"
     ],
     "experiments": {

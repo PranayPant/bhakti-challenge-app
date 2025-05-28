@@ -30,7 +30,7 @@ export function Deck() {
           />
           <Pressable
             onPress={() => setFilter(filterText)}
-            className="p-2 bg-yellow-500 w-fit rounded-2xl"
+            className="p-2 bg-yellow-500 w-fit self-center rounded-2xl"
           >
             <Text>Filter</Text>
           </Pressable>

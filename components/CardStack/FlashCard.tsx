@@ -1,5 +1,6 @@
 import { useChallengeStore } from "@/stores/challenges";
 import { View, Text } from "react-native";
+import clsx from "clsx";
 
 export interface FlashCardProps {
   index: number;
@@ -13,8 +14,8 @@ export const FlashCard = ({
   mode = "default",
 }: FlashCardProps) => {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
-
   const dohas = useChallengeStore((store) => store.dohas);
+  const language = useChallengeStore((store) => store.language);
 
   const doha = dohas[dataIndex];
 
@@ -39,12 +40,28 @@ export const FlashCard = ({
       </View>
 
       <View className="bg-white h-[250px] rounded-lg justify-center items-center gap-2 p-2">
-        <Text className="text-xl text-center">
-          {mode === "quiz" ? "?" : doha.line1}
-        </Text>
-        <Text className="text-xl text-center">
-          {mode === "quiz" ? "?" : doha.line2}
-        </Text>
+        {mode === "quiz" ? (
+          <Text className="text-5xl text-center">?</Text>
+        ) : (
+          <>
+            <Text
+              className={clsx(
+                "text-center",
+                language === "hindi" ? "text-2xl" : "text-xl"
+              )}
+            >
+              {doha.line1}
+            </Text>
+            <Text
+              className={clsx(
+                "text-center",
+                language === "hindi" ? "text-2xl" : "text-xl"
+              )}
+            >
+              {doha.line2}
+            </Text>
+          </>
+        )}
       </View>
     </View>
   );
