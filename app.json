@@ -18,7 +18,8 @@
         "backgroundColor": "#ffffff"
       },
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.punch.up.bhaktichallengeapp"
+      "package": "com.punch.up.bhaktichallengeapp",
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "bundler": "metro",
@@ -45,9 +46,7 @@
       [
         "expo-font",
         {
-          "fonts": [
-            "./assets/fonts/arvindr.ttf"
-          ]
+          "fonts": ["./assets/fonts/arvindr.ttf"]
         }
       ],
       "expo-web-browser"
