@@ -1,7 +1,8 @@
-import { use } from "react";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { filterChallenges, sortDohas } from "./utils";
+import englishChallenges from "@/data/english-challenges.json";
+import hindiChallenges from "@/data/hindi-challenges.json";
 
 export interface Challenge {
   id: number; // Unique identifier for the challenge
@@ -30,6 +31,7 @@ export interface ChallengeStore {
   filterString: string; // String to filter challenges by ID or title
   mode: "quiz" | "default"; // Mode of the deck, either quiz or default
   randomized: boolean; // Flag to indicate if the challenges are randomized
+  goBackwards: VoidFunction; // Function to go backwards in the deck
   toggleLanguage: () => void; // Function to toggle the language between Hindi and English
   toggleSort: () => void; // Function to sort challenges by ID
   setDataIndexOne: (index: number) => void; // Function to set the index for the first data item
@@ -53,6 +55,15 @@ export const useChallengeStore = create(
     filterString: "", // Initialize with an empty string
     mode: "default", // Default mode of the deck
     randomized: false, // Default randomized state
+    goBackwards: () => {
+      set((state) => {
+        const dohas = [...state.dohas];
+        dohas.unshift(dohas.pop()!); // Move the last doha to the front
+        return {
+          dohas,
+        };
+      });
+    },
     setMode: (mode: "quiz" | "default") => {
       set({ mode });
     },
@@ -123,9 +134,9 @@ useChallengeStore.subscribe(
   async (language) => {
     let challengesData: Challenge[] = [];
     if (language === "english") {
-      challengesData = (await import("@/data/english-challenges.json")).default;
+      challengesData = englishChallenges;
     } else if (language === "hindi") {
-      challengesData = (await import("@/data/hindi-challenges.json")).default;
+      challengesData = hindiChallenges;
     }
     const sortOrder = useChallengeStore.getState().sortOrder;
     const currentSelectedChallengeIds = useChallengeStore
