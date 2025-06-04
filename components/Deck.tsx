@@ -16,6 +16,7 @@ export function Deck() {
   const setMode = useChallengeStore((store) => store.setMode);
   const randomized = useChallengeStore((store) => store.randomized);
   const setRandomized = useChallengeStore((store) => store.setRandomized);
+  const goBackwards = useChallengeStore((store) => store.goBackwards);
   return (
     <SafeAreaView className="flex-1 bg-purple-500 p-2">
       <View className="flex flex-row items-center gap-2 m-4 mx-auto">
@@ -78,6 +79,12 @@ export function Deck() {
           }}
         >
           <Text>Randomize ({randomized ? "On" : "Off"})</Text>
+        </Pressable>
+        <Pressable
+          className="bg-yellow-500 p-2 rounded-full w-fit"
+          onPress={goBackwards}
+        >
+          <Text>Go back one</Text>
         </Pressable>
       </View>
     </SafeAreaView>
