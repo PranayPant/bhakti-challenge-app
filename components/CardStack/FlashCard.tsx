@@ -17,7 +17,7 @@ export const FlashCard = ({
   const dohas = useChallengeStore((store) => store.dohas);
   const language = useChallengeStore((store) => store.language);
 
-  const doha = dohas[dataIndex];
+  const doha = dohas.at(dataIndex % dohas.length)!;
 
   const challenge = challenges.find(
     (challenge) => challenge.id === doha.challengeId

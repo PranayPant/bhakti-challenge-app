@@ -21,7 +21,7 @@ export function Deck() {
       <View className="flex flex-row items-center gap-2 m-4 mx-auto">
         <View className="flex flex-1 flex-row gap-2 ml-auto">
           <TextInput
-            className="flex-1 px-4 rounded-2xl border border-gray-300 bg-white"
+            className="flex-1 px-4 rounded-2xl border border-gray-300 bg-white text-black"
             placeholder="e.g 1-12,33,40+"
             placeholderTextColor="#9CA3AF"
             onChangeText={(text) => {
