@@ -13,6 +13,7 @@ export interface Challenge {
 }
 
 export type Doha = {
+  id: number; // Unique identifier for the doha
   line1: string;
   line2: string;
   sequence: number;
@@ -138,25 +139,40 @@ useChallengeStore.subscribe(
     } else if (language === "hindi") {
       challengesData = hindiChallenges;
     }
-    const sortOrder = useChallengeStore.getState().sortOrder;
-    const currentSelectedChallengeIds = useChallengeStore
-      .getState()
-      .selectedChallenges.map((challenge) => challenge.id);
-    let newSelectedChallenges = challengesData;
-    if (currentSelectedChallengeIds.length > 0) {
-      newSelectedChallenges = challengesData.filter((challenge) =>
-        currentSelectedChallengeIds.includes(challenge.id)
-      );
+
+    if (challengesData.length === 0) {
+      console.log("No challenges found for the selected language:", language);
+      return;
     }
 
-    const dohas: Doha[] = newSelectedChallenges.flatMap(
-      (challenge) => challenge.dohas
-    );
-    const sortedDohas = sortDohas(dohas, sortOrder);
+    let currentSelectedChallenges =
+      useChallengeStore.getState().selectedChallenges;
+
+    currentSelectedChallenges = currentSelectedChallenges.length
+      ? currentSelectedChallenges
+      : challengesData;
+    const newSelectedChallenges = currentSelectedChallenges.map((challenge) => {
+      const newChallenge = challengesData.find((c) => c.id === challenge.id);
+      return newChallenge ? { ...newChallenge } : challenge;
+    });
+
+    let currentDohas = useChallengeStore.getState().dohas;
+
+    currentDohas = currentDohas.length
+      ? currentDohas
+      : challengesData.flatMap((challenge) => challenge.dohas);
+
+    const newDohas = currentDohas.map((doha) => {
+      const newDoha = newSelectedChallenges
+        .find((c) => c.id === doha.challengeId)
+        ?.dohas.find((newDoha) => newDoha.sequence === doha.sequence);
+      return newDoha ? { ...doha } : doha;
+    });
+
     useChallengeStore.setState({
       challengesData: [...challengesData],
-      selectedChallenges: [...newSelectedChallenges],
-      dohas: sortedDohas,
+      selectedChallenges: newSelectedChallenges,
+      dohas: newDohas,
     });
     challengesData = [];
   },
