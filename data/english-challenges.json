@@ -4,6 +4,7 @@
     "title": "",
     "dohas": [
       {
+        "id": 101,
         "line1": "śrī guru caraṇōṁ mēṁ gōviṁda rādhē।",
         "line2": "śaraṇāgati hō tō hari tē milā dē॥",
         "challengeId": 1,
@@ -11,6 +12,7 @@
         "line": 1965
       },
       {
+        "id": 102,
         "line1": "guru jō bhī sēvā lē lē gōviṁda rādhē।",
         "line2": "garva jani karu ābhāra janā dē॥",
         "challengeId": 1,
@@ -18,6 +20,7 @@
         "line": 2029
       },
       {
+        "id": 103,
         "line1": "sārā viśva dāna karō gōviṁda rādhē।",
         "line2": "tō bhī guru r̥ṇa tē nā ur̥ṇa karā dē॥",
         "challengeId": 1,
@@ -25,6 +28,7 @@
         "line": 2030
       },
       {
+        "id": 104,
         "line1": "guru nē jō diyā jñāna gōviṁda rādhē।",
         "line2": "kōṭi prāṇa dāna bhī nā ur̥ṇa karā dē॥",
         "challengeId": 1,
@@ -38,6 +42,7 @@
     "title": "",
     "dohas": [
       {
+        "id": 201,
         "line1": "ēka vara dē dē rādhē gōviṁda rādhē।",
         "line2": "bhūlēhum̐ bhūlūm̐ nahiṁ tōhiṁ pala ādhē॥",
         "challengeId": 2,
@@ -45,6 +50,7 @@
         "line": 15
       },
       {
+        "id": 202,
         "line1": "tū tō hai dīnabandhu gōviṁda rādhē।",
         "line2": "tr̥ṇa tē adhika mōhiṁ dīna banā dē॥",
         "challengeId": 2,
@@ -52,6 +58,7 @@
         "line": 50
       },
       {
+        "id": 203,
         "line1": "tr̥ṇa tē adhika namra gōviṁda rādhē।",
         "line2": "taru tē bhī adhika sahiṣṇu banā dē॥",
         "challengeId": 2,
@@ -59,6 +66,7 @@
         "line": 52
       },
       {
+        "id": 204,
         "line1": "paradōṣa dēkhūm̐ nahiṁ gōviṁda rādhē।",
         "line2": "paranindā karūm̐ nahiṁ aisā banā dē॥",
         "challengeId": 2,
@@ -66,6 +74,7 @@
         "line": 55
       },
       {
+        "id": 205,
         "line1": "tērā hī rūpa guru gōviṁda rādhē।",
         "line2": "unakī hī sēvā karūm̐ aisā banā dē॥",
         "challengeId": 2,
@@ -73,6 +82,7 @@
         "line": 32
       },
       {
+        "id": 206,
         "line1": "tuma hō kr̥pālu dōū gōviṁda rādhē।",
         "line2": "kr̥pā kōra kari mērī bigarī banā dē॥",
         "challengeId": 2,
@@ -86,6 +96,7 @@
     "title": "",
     "dohas": [
       {
+        "id": 301,
         "line1": "saba kō dūm̐ sammāna gōviṁda rādhē।",
         "line2": "āpu māna cāhūm̐ nahiṁ aisā banā dē॥",
         "challengeId": 3,
@@ -93,6 +104,7 @@
         "line": 53
       },
       {
+        "id": 302,
         "line1": "kaisē rijhāūm̐ tōhiṁ gōviṁda rādhē।",
         "line2": "prēma tē hūm̐ nirdhana dhanī tō banā dē॥",
         "challengeId": 3,
@@ -100,6 +112,7 @@
         "line": 100
       },
       {
+        "id": 303,
         "line1": "rōma rōma cāhē tōhiṁ gōviṁda rādhē।",
         "line2": "aisī prēma rasa madirā kō pilā dē॥",
         "challengeId": 3,
@@ -107,6 +120,7 @@
         "line": 101
       },
       {
+        "id": 304,
         "line1": "ēka vara mām̐gūm̐ tō sōṁ gōviṁda rādhē।",
         "line2": "tava sukha sukhī rahūm̐ aisī banā dē॥",
         "challengeId": 3,
@@ -114,6 +128,7 @@
         "line": 134
       },
       {
+        "id": 305,
         "line1": "bhakta tōhiṁ prāṇa priya gōviṁda rādhē।",
         "line2": "hamasē patita kahām̐ jāyēṁ yē batā dē॥",
         "challengeId": 3,
@@ -121,6 +136,7 @@
         "line": 149
       },
       {
+        "id": 306,
         "line1": "kharē kō dē jaga sātha gōviṁda rādhē।",
         "line2": "khōṭē kō tērē sivā kōī sātha nā dē॥",
         "challengeId": 3,
@@ -134,6 +150,7 @@
     "title": "",
     "dohas": [
       {
+        "id": 401,
         "line1": "hari sāthī banē kā hai gōviṁda rādhē।",
         "line2": "guru sāthī bigarē kā bigarī banā dē॥",
         "challengeId": 4,
@@ -141,6 +158,7 @@
         "line": 1839
       },
       {
+        "id": 402,
         "line1": "guru tō hai mātā sama gōviṁda rādhē।",
         "line2": "śiśu mana mala dhōkē vimala banā dē॥",
         "challengeId": 4,
@@ -148,6 +166,7 @@
         "line": 1850
       },
       {
+        "id": 403,
         "line1": "śrī guru caraṇōṁ mēṁ gōviṁda rādhē।",
         "line2": "sira kō hī nahiṁ mana kō bhī jhukā dē॥",
         "challengeId": 4,
@@ -155,6 +174,7 @@
         "line": 1886
       },
       {
+        "id": 404,
         "line1": "guru jō prasanna hō tō gōviṁda rādhē।",
         "line2": "hari hōṁ prasanna binu bhakti batā dē॥",
         "challengeId": 4,
@@ -162,6 +182,7 @@
         "line": 1863
       },
       {
+        "id": 405,
         "line1": "guru kī kr̥pā binu gōviṁda rādhē।",
         "line2": "kōṭi sādhana karō hari kachu nā dē॥",
         "challengeId": 4,
@@ -169,6 +190,7 @@
         "line": 1862
       },
       {
+        "id": 406,
         "line1": "guru kī kr̥pā jō hōvē gōviṁda rādhē।",
         "line2": "bhājē āvēṁ śyāmā śyāma galabam̐hiyām̐ dē॥",
         "challengeId": 4,
@@ -182,6 +204,7 @@
     "title": "mānuṣa tana anamōla",
     "dohas": [
       {
+        "id": 501,
         "line1": "uṭha uṭha jāga jāga gōviṁda rādhē।",
         "line2": "guru ḍhiga jā guru gaila batā dē॥",
         "challengeId": 5,
@@ -189,6 +212,7 @@
         "line": 864
       },
       {
+        "id": 502,
         "line1": "ati durlabha tīnōṁ gōviṁda rādhē।",
         "line2": "nara-tanu śraddhā guru-śaraṇa batā dē॥",
         "challengeId": 5,
@@ -196,6 +220,7 @@
         "line": 865
       },
       {
+        "id": 503,
         "line1": "rādhē rādhē bōla mana gōviṁda rādhē।",
         "line2": "tana kā bharōsā nahiṁ chana mēṁ chinā dē॥",
         "challengeId": 5,
@@ -203,6 +228,7 @@
         "line": 880
       },
       {
+        "id": 504,
         "line1": "garbha mēṁ kiyē thē vādē gōviṁda rādhē।",
         "line2": "bhakti hī karūm̐gā kiṁtu bhūla gayē vādē॥",
         "challengeId": 5,
@@ -210,6 +236,7 @@
         "line": 884
       },
       {
+        "id": 505,
         "line1": "tana tō hai māṭī kā gōviṁda rādhē।",
         "line2": "ēka dina māṭī mēṁ māṭī milā dē॥",
         "challengeId": 5,
@@ -217,6 +244,7 @@
         "line": 895
       },
       {
+        "id": 506,
         "line1": "jaga chōḍnā hī hōgā gōviṁda rādhē।",
         "line2": "pahalē hī chōḍi mana hari mēṁ lagā dē॥",
         "challengeId": 5,
@@ -230,6 +258,7 @@
     "title": "niraṁtara hari-guru sēvā",
     "dohas": [
       {
+        "id": 601,
         "line1": "sōcanā hī sādhanā hai gōviṁda rādhē।",
         "line2": "bāra bāra sōcanā hī hari tē milā dē॥",
         "challengeId": 6,
@@ -237,6 +266,7 @@
         "line": 4511
       },
       {
+        "id": 602,
         "line1": "mērā tū mērā tū gōviṁda rādhē।",
         "line2": "bāra bāra sōcanā hī hari tē milā dē॥",
         "challengeId": 6,
@@ -244,6 +274,7 @@
         "line": 4512
       },
       {
+        "id": 603,
         "line1": "guru nē batāyā mōhiṁ gōviṁda rādhē।",
         "line2": "unhīṁ kā diyā hai saba unhīṁ kō luṭā dē॥",
         "challengeId": 6,
@@ -251,6 +282,7 @@
         "line": 2036
       },
       {
+        "id": 604,
         "line1": "jaba lauṁ milēṁ nā hari gōviṁda rādhē।",
         "line2": "taba lauṁ karu gurusēvā batā dē॥",
         "challengeId": 6,
@@ -258,6 +290,7 @@
         "line": 2039
       },
       {
+        "id": 605,
         "line1": "hari kī kr̥pā jō caha gōviṁda rādhē।",
         "line2": "tana mana dhana gurusēvā mēṁ lagā dē॥",
         "challengeId": 6,
@@ -265,6 +298,7 @@
         "line": 2048
       },
       {
+        "id": 606,
         "line1": "tana mana dhana dhanya gōviṁda rādhē।",
         "line2": "jō hari guru sēvā mēṁ lagā dē॥",
         "challengeId": 6,
@@ -278,6 +312,7 @@
     "title": "rōkara pukārō",
     "dohas": [
       {
+        "id": 701,
         "line1": "tērā dhyāna aisā karūm̐ gōviṁda rādhē।",
         "line2": "tērē sivā mana saba jaga kō bhulā dē॥",
         "challengeId": 7,
@@ -285,6 +320,7 @@
         "line": 230
       },
       {
+        "id": 702,
         "line1": "jaga kē liē tō rōyā gōviṁda rādhē।",
         "line2": "rōyā nahiṁ tērē liyē aba tō rulā dē॥",
         "challengeId": 7,
@@ -292,6 +328,7 @@
         "line": 462
       },
       {
+        "id": 703,
         "line1": "vaha dina kaba āyē gōviṁda rādhē।",
         "line2": "jaba hari nāma lai kē ām̐sū bahā dē॥",
         "challengeId": 7,
@@ -299,6 +336,7 @@
         "line": 614
       },
       {
+        "id": 704,
         "line1": "tērā nāma guna gātē gōviṁda rādhē।",
         "line2": "aisā prēma bādvai sudhi budhi bisarā dē॥",
         "challengeId": 7,
@@ -306,6 +344,7 @@
         "line": 624
       },
       {
+        "id": 705,
         "line1": "rahā nahiṁ jāyē mōtē gōviṁda rādhē।",
         "line2": "tuma bina ēka pala aisī banā dē॥",
         "challengeId": 7,
@@ -313,6 +352,7 @@
         "line": 625
       },
       {
+        "id": 706,
         "line1": "pala lāgē juga sama gōviṁda rādhē।",
         "line2": "sārā jaga khārā lāgē aisī banā dē॥",
         "challengeId": 7,
@@ -326,6 +366,7 @@
     "title": "prēma mēṁ nirāśā nahīṁ",
     "dohas": [
       {
+        "id": 801,
         "line1": "rō rō kē divya prēma gōviṁda rādhē।",
         "line2": "mām̐ganā hai basa tērā kāma batā dē॥",
         "challengeId": 8,
@@ -333,6 +374,7 @@
         "line": 4624
       },
       {
+        "id": 802,
         "line1": "prēma mēṁ nirāśā nahiṁ gōviṁda rādhē।",
         "line2": "prēma kā hai ādhāra āśā batā dē॥",
         "challengeId": 8,
@@ -340,6 +382,7 @@
         "line": 4629
       },
       {
+        "id": 803,
         "line1": "sadā parakhatē rahō gōviṁda rādhē।",
         "line2": "ēka dina hari kr̥pā hōgī batā dē॥",
         "challengeId": 8,
@@ -347,6 +390,7 @@
         "line": 4631
       },
       {
+        "id": 804,
         "line1": "navajāta śiśu sama gōviṁda rādhē।",
         "line2": "bhōlā bani rōnā tōhiṁ hari tē milā dē॥",
         "challengeId": 8,
@@ -354,6 +398,7 @@
         "line": 4640
       },
       {
+        "id": 805,
         "line1": "hari kē milana kī tō gōviṁda rādhē।",
         "line2": "āśā kē sātha viśvāsa baḍhā dē॥",
         "challengeId": 8,
@@ -361,6 +406,7 @@
         "line": 4642
       },
       {
+        "id": 806,
         "line1": "bāra bāra sōcō yaha gōviṁda rādhē।",
         "line2": "āja hī abhī hī śyāma jhalaka dikhā dē॥",
         "challengeId": 8,
@@ -374,6 +420,7 @@
     "title": "avasara bītyō jāta",
     "dohas": [
       {
+        "id": 901,
         "line1": "pala kā bharōsā nahiṁ gōviṁda rādhē।",
         "line2": "jānē kaba kāla nara tanu chinavā dē॥",
         "challengeId": 9,
@@ -381,6 +428,7 @@
         "line": 957
       },
       {
+        "id": 902,
         "line1": "muṭṭhī bām̐dhē āyā thā tū gōviṁda rādhē।",
         "line2": "hātha pasārē jāyē mana kō batā dē॥",
         "challengeId": 9,
@@ -388,6 +436,7 @@
         "line": 899
       },
       {
+        "id": 903,
         "line1": "hari kr̥pā tanu pāyā gōviṁda rādhē।",
         "line2": "tū bhī kr̥pā karu mana kō lagā dē॥",
         "challengeId": 9,
@@ -395,6 +444,7 @@
         "line": 883
       },
       {
+        "id": 904,
         "line1": "ēka dina tanu chinē gōviṁda rādhē।",
         "line2": "yātē mūḍh! mana hari guru mēṁ lagā dē॥",
         "challengeId": 9,
@@ -402,6 +452,7 @@
         "line": 906
       },
       {
+        "id": 905,
         "line1": "avasara bītyō jāta gōviṁda rādhē।",
         "line2": "isa nara tanu mēṁ tō bigarī banā dē॥",
         "challengeId": 9,
@@ -409,6 +460,7 @@
         "line": 937
       },
       {
+        "id": 906,
         "line1": "aba lauṁ gamāyā tūnē gōviṁda rādhē।",
         "line2": "aba hari guru mēṁ hī mana kō lagā dē॥",
         "challengeId": 9,
@@ -422,6 +474,7 @@
     "title": "mōhiṁ dīna banā dē",
     "dohas": [
       {
+        "id": 1001,
         "line1": "mamatā baḍhā dē mērī gōviṁda rādhē।",
         "line2": "tuma dōnōṁ tē hī śēṣa jaga tē haṭā dē॥",
         "challengeId": 10,
@@ -429,6 +482,7 @@
         "line": 87
       },
       {
+        "id": 1002,
         "line1": "bhaṭakata thaki gayē gōviṁda rādhē।",
         "line2": "yugala caraṇa kī śaraṇa dilā dē॥",
         "challengeId": 10,
@@ -436,6 +490,7 @@
         "line": 194
       },
       {
+        "id": 1003,
         "line1": "nāma aparādha karūm̐ gōviṁda rādhē।",
         "line2": "bāra bāra aba aparādha tē bacā dē॥",
         "challengeId": 10,
@@ -443,6 +498,7 @@
         "line": 222
       },
       {
+        "id": 1004,
         "line1": "maiṁ hūm̐ vicitra pāpī gōviṁda rādhē।",
         "line2": "pāpī na mānūm̐ kahūm̐ pāvana banā dē॥",
         "challengeId": 10,
@@ -450,6 +506,7 @@
         "line": 152
       },
       {
+        "id": 1005,
         "line1": "dīnabaṁdhu tērā nāma gōviṁda rādhē।",
         "line2": "mērō bani jāō aisī ura dīnatā dē॥",
         "challengeId": 10,
@@ -463,6 +520,7 @@
     "title": "milana kī vyākulatā",
     "dohas": [
       {
+        "id": 1101,
         "line1": "tujhatē vimukha hōkē gōviṁda rādhē।",
         "line2": "ati duḥkha pāyā hari aba tō kṣamā dē॥",
         "challengeId": 11,
@@ -470,6 +528,7 @@
         "line": 73
       },
       {
+        "id": 1102,
         "line1": "tērē tō anēka jana gōviṁda rādhē।",
         "line2": "mērā ēka tū hī jani mōhiṁ bhulā dē॥",
         "challengeId": 11,
@@ -477,6 +536,7 @@
         "line": 120
       },
       {
+        "id": 1103,
         "line1": "prēma sindhu mēṁ ḍubā dē gōviṁda rādhē।",
         "line2": "tū mērā maiṁ tērī bhāvanā baḍhā dē॥",
         "challengeId": 11,
@@ -484,6 +544,7 @@
         "line": 105
       },
       {
+        "id": 1104,
         "line1": "aura kachu nā dē nā dē gōviṁda rādhē।",
         "line2": "milana kī vyākulatā tō baḍhā dē॥",
         "challengeId": 11,
@@ -491,6 +552,7 @@
         "line": 103
       },
       {
+        "id": 1105,
         "line1": "vō dina kaba āyē gōviṁda rādhē।",
         "line2": "jaba śyāma pyārī kahi bhuja phailā dē॥",
         "challengeId": 11,
@@ -498,6 +560,7 @@
         "line": 112
       },
       {
+        "id": 1106,
         "line1": "śyāma tū milē nā milē gōviṁda rādhē।",
         "line2": "milanē kī tīvra pipāsā baḍhā dē॥",
         "challengeId": 11,
@@ -511,6 +574,7 @@
     "title": "sēvā kī lālasā",
     "dohas": [
       {
+        "id": 1201,
         "line1": "mānā aparādhī hūm̐ gōviṁda rādhē।",
         "line2": "kr̥pā śakti dvārā mōhiṁ kṣamā karavā dē॥",
         "challengeId": 12,
@@ -518,6 +582,7 @@
         "line": 439
       },
       {
+        "id": 1202,
         "line1": "kahām̐ jāum̐ kā sōṁ kahūm̐ gōviṁda rādhē।",
         "line2": "tuma binu kauna sunē ṭhaura batā dē॥",
         "challengeId": 12,
@@ -525,6 +590,7 @@
         "line": 437
       },
       {
+        "id": 1203,
         "line1": "janama janama kī hai gōviṁda rādhē।",
         "line2": "āsakti jaga kī tū hī chuḍā dē॥",
         "challengeId": 12,
@@ -532,6 +598,7 @@
         "line": 368
       },
       {
+        "id": 1204,
         "line1": "maiṁ hūm̐ tērā nitya dāsa gōviṁda rādhē।",
         "line2": "mērā vahī dāsatva mō kō dilā dē॥",
         "challengeId": 12,
@@ -539,6 +606,7 @@
         "line": 33
       },
       {
+        "id": 1205,
         "line1": "bhukti mukti kachu nā dē gōviṁda rādhē।",
         "line2": "aṣṭayāmī sēvā karūm̐ aisī banā dē॥",
         "challengeId": 12,
@@ -552,6 +620,7 @@
     "title": "tū hī mērā pitā",
     "dohas": [
       {
+        "id": 1301,
         "line1": "maiṁ tō hūm̐ abōdha śiśu gōviṁda rādhē।",
         "line2": "tū hī mērā saba kachu jñāna karā dē॥",
         "challengeId": 13,
@@ -559,6 +628,7 @@
         "line": 256
       },
       {
+        "id": 1302,
         "line1": "tū tō mērā pitā hari gōviṁda rādhē।",
         "line2": "ēka bāra mērā suta kahi kē bulā dē॥",
         "challengeId": 13,
@@ -566,6 +636,7 @@
         "line": 322
       },
       {
+        "id": 1303,
         "line1": "pitā vālā pyāra dē dē gōviṁda rādhē।",
         "line2": "bhukti mukti baikuṁṭha ādi mōhiṁ nā dē॥",
         "challengeId": 13,
@@ -573,6 +644,7 @@
         "line": 355
       },
       {
+        "id": 1304,
         "line1": "tū tō gōda lēnā cāhē gōviṁda rādhē।",
         "line2": "śiśu jaisā rōyā nahiṁ tōhiṁ dōṣa kā dē॥",
         "challengeId": 13,
@@ -580,6 +652,7 @@
         "line": 360
       },
       {
+        "id": 1305,
         "line1": "mānā maiṁnē mānā nahiṁ gōviṁda rādhē।",
         "line2": "ābhāra kintu tū pitā hai kṣamā dē॥",
         "challengeId": 13,
@@ -593,6 +666,7 @@
     "title": "darśana kī abhilāṣā",
     "dohas": [
       {
+        "id": 1401,
         "line1": "pyāra karō yā mārō gōviṁda rādhē।।",
         "line2": "pāchā nahiṁ chōḍēṁ hama pala china ādhē॥",
         "challengeId": 14,
@@ -600,6 +674,7 @@
         "line": 82
       },
       {
+        "id": 1402,
         "line1": "ura mēṁ tū baiṭhā baiṭhā gōviṁda rādhē।",
         "line2": "mērē karma likhē yaha mōhūm̐ janā dē॥",
         "challengeId": 14,
@@ -607,6 +682,7 @@
         "line": 251
       },
       {
+        "id": 1403,
         "line1": "ājā mērē sāmanē tū gōviṁda rādhē।",
         "line2": "kāhē khēlē khēla lukā chupī kā batā dē॥",
         "challengeId": 14,
@@ -614,6 +690,7 @@
         "line": 192
       },
       {
+        "id": 1404,
         "line1": "ghaṭi nāhiṁ jāyē kachu gōviṁda rādhē।",
         "line2": "mērī ōra lakhi dōu ṭuka musakā dē॥",
         "challengeId": 14,
@@ -621,6 +698,7 @@
         "line": 196
       },
       {
+        "id": 1405,
         "line1": "mōhiṁ tō bharōsō bhārī gōviṁda rādhē।",
         "line2": "kabahum̐ tō aihaiṁ dōu galabam̐hiyām̐ dē॥",
         "challengeId": 14,
@@ -628,6 +706,7 @@
         "line": 241
       },
       {
+        "id": 1406,
         "line1": "daśahūm̐ diśā mēṁ mōhiṁ gōviṁda rādhē।",
         "line2": "jita dēkhēm̐ dīkhē tū hī aisī banā dē॥",
         "challengeId": 14,
@@ -641,6 +720,7 @@
     "title": "mana vimala banā dē",
     "dohas": [
       {
+        "id": 1501,
         "line1": "tērē rōma rōma tē hī gōviṁda rādhē।",
         "line2": "brajarasa cuyē ika būm̐da pilā dē॥",
         "challengeId": 15,
@@ -648,6 +728,7 @@
         "line": 175
       },
       {
+        "id": 1502,
         "line1": "mana manamānī karē gōviṁda rādhē।",
         "line2": "yākō brajarasa kā caskā lagā dē॥",
         "challengeId": 15,
@@ -655,6 +736,7 @@
         "line": 387
       },
       {
+        "id": 1503,
         "line1": "mana baḍā nirlajja gōviṁda rādhē।",
         "line2": "bāra bāra jūtē lāta khāyē bhulā dē॥",
         "challengeId": 15,
@@ -662,6 +744,7 @@
         "line": 377
       },
       {
+        "id": 1504,
         "line1": "lakha caurāsī dvāra gōviṁda rādhē।",
         "line2": "māyā nē ghumāyā tū ghara pahum̐cā dē॥",
         "challengeId": 15,
@@ -669,6 +752,7 @@
         "line": 471
       },
       {
+        "id": 1505,
         "line1": "nirmala mana cāhē gōviṁda rādhē।",
         "line2": "mērā mana samala vimala mana lā dē॥",
         "challengeId": 15,
@@ -676,6 +760,7 @@
         "line": 348
       },
       {
+        "id": 1506,
         "line1": "tērē guna gana suni gōviṁda rādhē।।",
         "line2": "āī hūm̐ śaraṇa aba tō nā bhagā dē॥",
         "challengeId": 15,
@@ -689,6 +774,7 @@
     "title": "hari-guru bhakti karō",
     "dohas": [
       {
+        "id": 1601,
         "line1": "hari guru bhakti karō gōviṁda rādhē।",
         "line2": "hari guru tērī saba bigarī banā dē॥",
         "challengeId": 16,
@@ -696,6 +782,7 @@
         "line": 5084
       },
       {
+        "id": 1602,
         "line1": "yatra tatra sarvatra gōviṁda rādhē।",
         "line2": "hari guru sumirana mana tē karā dē॥",
         "challengeId": 16,
@@ -703,6 +790,7 @@
         "line": 4063
       },
       {
+        "id": 1603,
         "line1": "mana tē smaraṇa karō gōviṁda rādhē।",
         "line2": "hari guru dōnōṁ khaḍē garabam̐hiyām̐ dē॥",
         "challengeId": 16,
@@ -710,6 +798,7 @@
         "line": 10785
       },
       {
+        "id": 1604,
         "line1": "bām̐ha phailāyē kharē gōviṁda rādhē।",
         "line2": "tū bhī mana budhi dai kē bhuja phailā dē॥",
         "challengeId": 16,
@@ -717,6 +806,7 @@
         "line": 6569
       },
       {
+        "id": 1605,
         "line1": "pala pala parakhata gōviṁda rādhē।",
         "line2": "tū bhī tana mana aru prāṇa luṭā dē॥",
         "challengeId": 16,
@@ -724,6 +814,7 @@
         "line": 6570
       },
       {
+        "id": 1606,
         "line1": "hari guru kr̥pā tē hī gōviṁda rādhē।",
         "line2": "śrīkr̥ṣṇa divya bhakti milēgī batā dē॥",
         "challengeId": 16,
@@ -737,6 +828,7 @@
     "title": "guru kē prapanna hō jā",
     "dohas": [
       {
+        "id": 1701,
         "line1": "jaga hai asāra jāmēṁ gōviṁda rādhē।",
         "line2": "hari guru mēṁ hī pyāra sāra batā dē॥",
         "challengeId": 17,
@@ -744,6 +836,7 @@
         "line": 1828
       },
       {
+        "id": 1702,
         "line1": "māyā nē bhulāyā aru gōviṁda rādhē।",
         "line2": "guru nē jagāyā yē bhikhārī unhēṁ kā dē॥",
         "challengeId": 17,
@@ -751,6 +844,7 @@
         "line": 2032
       },
       {
+        "id": 1703,
         "line1": "guru nē sikhāyā dēnā gōviṁda rādhē।",
         "line2": "tana, mana, prāṇa saba kachu hī batā dē॥",
         "challengeId": 17,
@@ -758,6 +852,7 @@
         "line": 2035
       },
       {
+        "id": 1704,
         "line1": "guru pada sēvā karō gōviṁda rādhē।",
         "line2": "guru pada sēvā prēma mēvā dilā dē॥",
         "challengeId": 17,
@@ -765,6 +860,7 @@
         "line": 2025
       },
       {
+        "id": 1705,
         "line1": "guru kē prapanna hō jā gōviṁda rādhē।",
         "line2": "mana rūpī ḍōrī guru kara mēṁ thamā dē॥",
         "challengeId": 17,
@@ -778,6 +874,7 @@
     "title": "kr̥pā karō śrī rādhē",
     "dohas": [
       {
+        "id": 1801,
         "line1": "rādhē rānī kr̥pā kari gōviṁda rādhē।",
         "line2": "mōhūm̐ brajarasa kā caskā lagā dē॥",
         "challengeId": 18,
@@ -785,6 +882,7 @@
         "line": 631
       },
       {
+        "id": 1802,
         "line1": "nitya bihāra karēṁ gōviṁda rādhē।",
         "line2": "braja mēṁ yā mērē ura pura mēṁ batā dē॥",
         "challengeId": 18,
@@ -792,6 +890,7 @@
         "line": 11
       },
       {
+        "id": 1803,
         "line1": "garabām̐hīṁ dai kē ājā gōviṁda rādhē।",
         "line2": "ura bica jhūlā ḍāri jhūlā jhulā dē॥",
         "challengeId": 18,
@@ -799,6 +898,7 @@
         "line": 13
       },
       {
+        "id": 1804,
         "line1": "dōnōṁ divya candramā haiṁ gōviṁda rādhē।",
         "line2": "mērē dōu nainā cakōra banā dē॥",
         "challengeId": 18,
@@ -806,6 +906,7 @@
         "line": 18
       },
       {
+        "id": 1805,
         "line1": "śiva bhī śivānī banē gōviṁda rādhē।",
         "line2": "banūm̐ maiṁ divānī aisā jādū calā dē॥",
         "challengeId": 18,
@@ -813,6 +914,7 @@
         "line": 226
       },
       {
+        "id": 1806,
         "line1": "prēma divānī bani gōviṁda rādhē।",
         "line2": "gāum̐ rō kē rādhē rādhē rādhē batā dē॥",
         "challengeId": 18,
@@ -826,6 +928,7 @@
     "title": "śvāsa śvāsa sē rādhē",
     "dohas": [
       {
+        "id": 1901,
         "line1": "rādhē mērī svāmini gōviṁda rādhē।",
         "line2": "karu sumirana mana pala china ādhē॥",
         "challengeId": 19,
@@ -833,6 +936,7 @@
         "line": 6743
       },
       {
+        "id": 1902,
         "line1": "jihvā pai rādhē nāma gōviṁda rādhē।",
         "line2": "kānōṁ mēṁ rādhē gunagāna sunā dē॥",
         "challengeId": 19,
@@ -840,6 +944,7 @@
         "line": 6591
       },
       {
+        "id": 1903,
         "line1": "rādhē nāma rasa aisā gōviṁda rādhē।",
         "line2": "hari kō bulānā hō tō rādhē rādhē gā dē॥",
         "challengeId": 19,
@@ -847,6 +952,7 @@
         "line": 6639
       },
       {
+        "id": 1904,
         "line1": "sām̐sa khām̐cō 'rā' kahu gōviṁda rādhē।",
         "line2": "sām̐sa chōḍō 'dhē' kā abhyāsa karā dē॥",
         "challengeId": 19,
@@ -854,6 +960,7 @@
         "line": 6596
       },
       {
+        "id": 1905,
         "line1": "khātē pītē calatē phiratē gōviṁda rādhē।",
         "line2": "rādhē nāma jani bhūlō pala china ādhē॥",
         "challengeId": 19,
@@ -867,6 +974,7 @@
     "title": "jhalaka dikhā dē naṁdalāla",
     "dohas": [
       {
+        "id": 2001,
         "line1": "prāṇadhana prāṇēśvara gōviṁda rādhē।",
         "line2": "prāṇapati prāṇa prāṇa jhalaka dikhā dē॥",
         "challengeId": 20,
@@ -874,6 +982,7 @@
         "line": 237
       },
       {
+        "id": 2002,
         "line1": "tū tō mōhiṁ dēkhē nita gōviṁda rādhē।",
         "line2": "maiṁ bhī tōhiṁ dēkhūm̐ aisī dr̥ṣṭi dilā dē॥",
         "challengeId": 20,
@@ -881,6 +990,7 @@
         "line": 138
       },
       {
+        "id": 2003,
         "line1": "jō dr̥ṣṭi gōpiyōṁ kō gōviṁda rādhē।",
         "line2": "dī thī sōī dr̥ṣṭi mōkō dilā dē॥",
         "challengeId": 20,
@@ -888,6 +998,7 @@
         "line": 140
       },
       {
+        "id": 2004,
         "line1": "ati matavārī pyārī gōviṁda rādhē।",
         "line2": "haṁsa lajānē vārī cāla dikhā dē॥",
         "challengeId": 20,
@@ -895,6 +1006,7 @@
         "line": 142
       },
       {
+        "id": 2005,
         "line1": "muralī kī tāna nija gōviṁda rādhē।",
         "line2": "kisī tē kahūm̐gī nahiṁ cupakē sunā dē॥",
         "challengeId": 20,
@@ -902,6 +1014,7 @@
         "line": 143
       },
       {
+        "id": 2006,
         "line1": "kahīṁ tē bhī ānā nahiṁ gōviṁda rādhē।",
         "line2": "ura mēṁ hai bāhara jhalaka dikhā dē॥",
         "challengeId": 20,
@@ -915,6 +1028,7 @@
     "title": "hamārī śyāmā jū",
     "dohas": [
       {
+        "id": 2101,
         "line1": "bāra bāra avatāra liyā tūnē śyāmā।",
         "line2": "kiyā upakāra chōḍā nāma rūpa dhāmā॥",
         "challengeId": 21,
@@ -922,6 +1036,7 @@
         "line": 183
       },
       {
+        "id": 2102,
         "line1": "rasa barasānē āīṁ barasānē dhāmā।",
         "line2": "tōrē r̥ṇa ur̥ṇa na kōu kabhu śyāmā॥",
         "challengeId": 21,
@@ -929,6 +1044,7 @@
         "line": 341
       },
       {
+        "id": 2103,
         "line1": "kr̥pā kī bulāyā tūnē śyāmā nija dhāmā।",
         "line2": "mērī bhī umara laga jāyē tōhiṁ śyāmā॥",
         "challengeId": 21,
@@ -936,6 +1052,7 @@
         "line": 336
       },
       {
+        "id": 2104,
         "line1": "tōrē janma dina pai bhēṁṭa kā dūm̐ śyāmā।",
         "line2": "māyika mōrā tana mana dhana dhāmā॥",
         "challengeId": 21,
@@ -943,6 +1060,7 @@
         "line": 346
       },
       {
+        "id": 2105,
         "line1": "tōhiṁ bhēṁṭa kā dūm̐ śyāmā tū tō pūrṇakāmā।",
         "line2": "ām̐suōṁ kā hāra upahāra lē lē śyāmā॥",
         "challengeId": 21,
@@ -950,6 +1068,7 @@
         "line": 349
       },
       {
+        "id": 2106,
         "line1": "bhalī burī jaisī hūm̐ tērī hūm̐ śyāmā।",
         "line2": "bhēṁṭa mēṁ mujhē hī lē banā dē braja bāmā॥",
         "challengeId": 21,
@@ -963,6 +1082,7 @@
     "title": "nirādhāra ādhāra hamārī śyāmā",
     "dohas": [
       {
+        "id": 2201,
         "line1": "tērē jaisī karuṇāmayī nā kōi śyāmā।",
         "line2": "yāhī tē bāra bāra āyā tērē dhāmā॥",
         "challengeId": 22,
@@ -970,6 +1090,7 @@
         "line": 155
       },
       {
+        "id": 2202,
         "line1": "hama tō pukārē jāyēṁgē āṭhu yāmā।",
         "line2": "ēka dina sunanā paḍēgā tōhiṁ śyāmā॥",
         "challengeId": 22,
@@ -977,6 +1098,7 @@
         "line": 164
       },
       {
+        "id": 2203,
         "line1": "kahām̐ jāum̐ kāsōṁ kahum̐ kauna sunē śyāmā।",
         "line2": "patitana kō nāhīṁ aura kahum̐ ṭhāmā॥",
         "challengeId": 22,
@@ -984,6 +1106,7 @@
         "line": 167
       },
       {
+        "id": 2204,
         "line1": "ēka bāra hamarihum̐ ōra lakhu śyāmā।",
         "line2": "aga jaga bhaṭakata thaki gayē pāmā॥",
         "challengeId": 22,
@@ -991,6 +1114,7 @@
         "line": 166
       },
       {
+        "id": 2205,
         "line1": "lakha caurāsī dvāra mām̐gā bhīkha śyāmā।",
         "line2": "vē bhī thē bhikhārī yātē āyā tērē dhāmā॥",
         "challengeId": 22,
@@ -998,6 +1122,7 @@
         "line": 157
       },
       {
+        "id": 2206,
         "line1": "āyā karūm̐gā bāra bāra tērē dhāmā।",
         "line2": "kabahūm̐ milā dēgā dhāma dhāmī śyāmā॥",
         "challengeId": 22,
@@ -1011,6 +1136,7 @@
     "title": "dīna banā dē śyāmā",
     "dohas": [
       {
+        "id": 2301,
         "line1": "bhōra tē gātā tō hūm̐ nāma guna dhāmā।",
         "line2": "viśvāsa hōtā nahiṁ nāma mēṁ haiṁ śyāmā॥",
         "challengeId": 23,
@@ -1018,6 +1144,7 @@
         "line": 200
       },
       {
+        "id": 2302,
         "line1": "tērē mandira mēṁ karūm̐ daṇḍavat praṇāmā।",
         "line2": "kintu tana jhukē mana jhukē nāhiṁ śyāmā॥",
         "challengeId": 23,
@@ -1025,6 +1152,7 @@
         "line": 199
       },
       {
+        "id": 2303,
         "line1": "dīna bhāva tē tō tū prasanna hōvē śyāmā।",
         "line2": "ahaṁkāra pāchā nāhiṁ chōḍē āṭhu yāmā॥",
         "challengeId": 23,
@@ -1032,6 +1160,7 @@
         "line": 191
       },
       {
+        "id": 2304,
         "line1": "abhimāna tō itanā baḍh gayā śyāmā।",
         "line2": "ām̐sū nāhiṁ āvēṁ gāūm̐ nāma guṇa dhāmā॥",
         "challengeId": 23,
@@ -1039,6 +1168,7 @@
         "line": 192
       },
       {
+        "id": 2305,
         "line1": "jāni jāni nāma aparādha karūm̐ śyāmā।",
         "line2": "yama bhī na dēgā mōhiṁ narakahum̐ ṭhāmā॥",
         "challengeId": 23,
@@ -1046,6 +1176,7 @@
         "line": 194
       },
       {
+        "id": 2306,
         "line1": "brajarasa kā caskā lagā dē ura dhāmā।",
         "line2": "āṭhu yāma tērā hī smaraṇa karūm̐ śyāmā॥",
         "challengeId": 23,
@@ -1059,6 +1190,7 @@
     "title": "śrī gurudēva kr̥pāla kī bali",
     "dohas": [
       {
+        "id": 2401,
         "line1": "guru hī hai brahmā viṣṇu śiva kaha bāmā।",
         "line2": "guru brahma bhī hai jō milā dē śyāma śyāmā॥",
         "challengeId": 24,
@@ -1066,6 +1198,7 @@
         "line": 80
       },
       {
+        "id": 2402,
         "line1": "mana hai aśuddha śuddha karō guru dhāmā।",
         "line2": "śuddha mana lai kē jāō puni hari dhāmā॥",
         "challengeId": 24,
@@ -1073,6 +1206,7 @@
         "line": 89
       },
       {
+        "id": 2403,
         "line1": "guru ḍhiga mēṁ hī rahēṁ śyāma aru śyāmā।",
         "line2": "yātē gurudhāma hī hai āpu hari dhāmā॥",
         "challengeId": 24,
@@ -1080,6 +1214,7 @@
         "line": 90
       },
       {
+        "id": 2404,
         "line1": "mana tē manana karu nija guru dhāmā।",
         "line2": "guru ura baiṭhē dēkhēṁ mōhiṁ śyāma śyāmā॥",
         "challengeId": 24,
@@ -1087,6 +1222,7 @@
         "line": 991
       },
       {
+        "id": 2405,
         "line1": "mana tē manana karu dōu śyāma śyāmā।",
         "line2": "bhuja phailā kē kharē parakhata dhāmā॥",
         "challengeId": 24,
@@ -1094,6 +1230,7 @@
         "line": 989
       },
       {
+        "id": 2406,
         "line1": "gurudēva sēvā milē gayē gurudhāmā।",
         "line2": "guru kī sēvā tē milē prēma niṣkāmā॥",
         "challengeId": 24,
@@ -1107,6 +1244,7 @@
     "title": "guru dhāma mahimā",
     "dohas": [
       {
+        "id": 2501,
         "line1": "māyā nē bhulāyā jaga bhāyā āṭhu yāmā।",
         "line2": "guru nē jagāyā kahā tērī ēka śyāmā॥",
         "challengeId": 25,
@@ -1114,6 +1252,7 @@
         "line": 95
       },
       {
+        "id": 2502,
         "line1": "saṁsāra chōḍō calō saba guru dhāmā।",
         "line2": "hari guru dōnōṁ milēṁ vahām̐ āṭhu yāmā॥",
         "challengeId": 25,
@@ -1121,6 +1260,7 @@
         "line": 91
       },
       {
+        "id": 2503,
         "line1": "guru kī śaraṇa gahō jāya gurudhāmā।",
         "line2": "hari nāma guṇa gāvō banō niṣkāmā॥",
         "challengeId": 25,
@@ -1128,6 +1268,7 @@
         "line": 96
       },
       {
+        "id": 2504,
         "line1": "tana, mana, dhana dāna karō guru dhāmā।",
         "line2": "unhīṁ kī kr̥pā tē milēṁ, śyāma aru śyāmā॥",
         "challengeId": 25,
@@ -1135,6 +1276,7 @@
         "line": 92
       },
       {
+        "id": 2505,
         "line1": "nāma aparādha jani karō gurudhāmā।",
         "line2": "anyathā naraka mēṁ bhī milē nāhiṁ ṭhāmā॥",
         "challengeId": 25,
@@ -1142,6 +1284,7 @@
         "line": 97
       },
       {
+        "id": 2506,
         "line1": "ādēśa pālana hō sadā gurudhāmā।",
         "line2": "ādēśa pālana tē milēṁ śyāma śyāmā॥",
         "challengeId": 25,
@@ -1155,6 +1298,7 @@
     "title": "tērī kr̥pā kā bharōsā bhārī",
     "dohas": [
       {
+        "id": 2601,
         "line1": "mana nāhiṁ mānē manamānī karē śyāmā।",
         "line2": "viṣayōṁ kē hātha bikā mana āṭhu yāmā॥",
         "challengeId": 26,
@@ -1162,6 +1306,7 @@
         "line": 149
       },
       {
+        "id": 2602,
         "line1": "mērē pāpa likha likha thakī nāhiṁ śyāmā।",
         "line2": "maiṁ bhī pāpa kari thakā nāhiṁ āṭhu yāmā॥",
         "challengeId": 26,
@@ -1169,6 +1314,7 @@
         "line": 145
       },
       {
+        "id": 2603,
         "line1": "māyā nē ghumāyā lakha caurāsī dhāmā।",
         "line2": "aba tō bacā lē tērē dvāra āyā śyāmā॥",
         "challengeId": 26,
@@ -1176,6 +1322,7 @@
         "line": 129
       },
       {
+        "id": 2604,
         "line1": "tuma tō kr̥pāmayī bhōrī bhārī śyāmā।",
         "line2": "karōgī kr̥pā kabhu kaha braja bāmā॥",
         "challengeId": 26,
@@ -1183,6 +1330,7 @@
         "line": 122
       },
       {
+        "id": 2605,
         "line1": "sunā hai tu braja rasa bām̐ṭē āṭhu yāmā।",
         "line2": "maiṁ bhī isī āśā tē āyā dvāra śyāmā॥",
         "challengeId": 26,
@@ -1190,6 +1338,7 @@
         "line": 126
       },
       {
+        "id": 2606,
         "line1": "sēvā kī lālasā baḍhā dē mama śyāmā।",
         "line2": "mukti nāhiṁ cāhūm̐ nāhiṁ vaikuṇṭha dhāmā॥",
         "challengeId": 26,
@@ -1203,6 +1352,7 @@
     "title": "mērī kr̥pālu śyāmā",
     "dohas": [
       {
+        "id": 2701,
         "line1": "jō bhī patita gayā tērē dvāra śyāmā।",
         "line2": "khālī hātha lauṭā nahiṁ vāpasa dhāmā॥",
         "challengeId": 27,
@@ -1210,6 +1360,7 @@
         "line": 116
       },
       {
+        "id": 2702,
         "line1": "mānā maiṁnē mānā nahiṁ tērā kahā śyāmā।",
         "line2": "jaga kā hī dāsa banā rahā āṭhu yāmā॥",
         "challengeId": 27,
@@ -1217,6 +1368,7 @@
         "line": 176
       },
       {
+        "id": 2703,
         "line1": "maiṁ hī bhāgā bhāgā phirā dūra āṭhu yāmā।",
         "line2": "tū tō nija bām̐ha pasārē khaḍī śyāmā॥",
         "challengeId": 27,
@@ -1224,6 +1376,7 @@
         "line": 181
       },
       {
+        "id": 2704,
         "line1": "maiṁnē tō bhulāyā tōhiṁ sadā sadā śyāmā।",
         "line2": "phira bhī tū sadā rahī sātha uradhāmā॥",
         "challengeId": 27,
@@ -1231,6 +1384,7 @@
         "line": 182
       },
       {
+        "id": 2705,
         "line1": "mānā maiṁ patita suta hūm̐ tō tava śyāmā।",
         "line2": "mala sanē śiśu kō uṭhā lē mātu dhāmā॥",
         "challengeId": 27,
@@ -1244,6 +1398,7 @@
     "title": "bigaḍī banā dō śyāmā",
     "dohas": [
       {
+        "id": 2801,
         "line1": "tērē tō haiṁ aganita jana gunadhāmā।",
         "line2": "ēka nigunī bhī apanī kara lē śyāmā॥",
         "challengeId": 28,
@@ -1251,6 +1406,7 @@
         "line": 172
       },
       {
+        "id": 2802,
         "line1": "bigarī banānē vārī ēka tuma śyāmā।",
         "line2": "banē banē kē haiṁ sāthī tribhuvana dhāmā॥",
         "challengeId": 28,
@@ -1258,6 +1414,7 @@
         "line": 162
       },
       {
+        "id": 2803,
         "line1": "tērē nāma kā avalamba lai kē śyāmā।",
         "line2": "aganita patita gayē tērē dhāmā॥",
         "challengeId": 28,
@@ -1265,6 +1422,7 @@
         "line": 165
       },
       {
+        "id": 2804,
         "line1": "mana kaha jhalaka dikhā dē ṭuka śyāmā।।",
         "line2": "phira nāhiṁ tōrā pāchā chōhūm̐ āṭhu yāmā॥",
         "challengeId": 28,
@@ -1272,6 +1430,7 @@
         "line": 150
       },
       {
+        "id": 2805,
         "line1": "ēka bāra 'tū mōrā' kaha bhī dō śyāmā।",
         "line2": "kahā ghaṭi jāya tōrā mōrā banē kāmā॥",
         "challengeId": 28,
@@ -1279,6 +1438,7 @@
         "line": 148
       },
       {
+        "id": 2806,
         "line1": "brajarasa mēṁ rahēṁ ḍūbī braja bāmā।",
         "line2": "vāī rasa mēṁ hī ḍubā dē mōhiṁ śyāmā॥",
         "challengeId": 28,
@@ -1292,6 +1452,7 @@
     "title": "kr̥pā kā bhaṇḍāra khōlō śrī rādhē",
     "dohas": [
       {
+        "id": 2901,
         "line1": "tērī kr̥pā śakti kō bharōsō baḍō śyāmā।",
         "line2": "kabhu kr̥pā hōgī dōgī prēma niṣkāmā॥",
         "challengeId": 29,
@@ -1299,6 +1460,7 @@
         "line": 123
       },
       {
+        "id": 2902,
         "line1": "maiṁnē sunā hai tērī kr̥pā śakti śyāmā।",
         "line2": "patitōṁ kō bhī apanāvē āṭhu yāmā॥",
         "challengeId": 29,
@@ -1306,6 +1468,7 @@
         "line": 120
       },
       {
+        "id": 2903,
         "line1": "jaga jānē maiṁ tō tērā hī hūm̐ śyāmā।",
         "line2": "tū jānē viṣayana dāsa āṭhu yāmā॥",
         "challengeId": 29,
@@ -1313,6 +1476,7 @@
         "line": 170
       },
       {
+        "id": 2904,
         "line1": "tērā suta tērī gōda baiṭhā ura dhāmā।",
         "line2": "suta kō duḥkhī kaisē dēkhē mām̐ śyāmā॥",
         "challengeId": 29,
@@ -1320,6 +1484,7 @@
         "line": 179
       },
       {
+        "id": 2905,
         "line1": "kr̥pā kā bhaṇḍāra khōlō kr̥pāmayī śyāmā।",
         "line2": "mō pai karō kr̥pā sēvā dē dō nija dhāmā॥",
         "challengeId": 29,
@@ -1327,6 +1492,7 @@
         "line": 209
       },
       {
+        "id": 2906,
         "line1": "mērē tō ura kō banā lō brajadhāmā।",
         "line2": "śyāma saṁga nitya hī bihāra karō śyāmā॥",
         "challengeId": 29,
@@ -1340,6 +1506,7 @@
     "title": "rō kē pukārō śyāmā śyāma",
     "dohas": [
       {
+        "id": 3001,
         "line1": "manamānī taju bhaja śyāma aru śyāmā।",
         "line2": "jānē kaba tanu china jāya kaha bāmā॥",
         "challengeId": 30,
@@ -1347,6 +1514,7 @@
         "line": 2
       },
       {
+        "id": 3002,
         "line1": "śyāmā śyāma nāma japō cāhē āṭhu yāmā।",
         "line2": "binā prēma rījhēṁ nahiṁ kabhū śyāma śyāmā॥",
         "challengeId": 30,
@@ -1354,6 +1522,7 @@
         "line": 8
       },
       {
+        "id": 3003,
         "line1": "nāmī kē samāna hī haiṁ nāma aru dhāmā।",
         "line2": "rō kē pukārō jō tō kahēṁ braja bāmā॥",
         "challengeId": 30,
@@ -1361,6 +1530,7 @@
         "line": 13
       },
       {
+        "id": 3004,
         "line1": "śyāmā śyāma mēṁ jō guṇa sōi brajadhāmā।",
         "line2": "aisī niṣṭhā tē vāsa karō yēhi ṭhāmā॥",
         "challengeId": 30,
@@ -1368,6 +1538,7 @@
         "line": 971
       },
       {
+        "id": 3005,
         "line1": "śyāmā śyāma jāyam̐ nahiṁ taji brajadhāmā।",
         "line2": "rō rō kē pukārō milēṁgē śyāma śyāmā॥",
         "challengeId": 30,
@@ -1375,6 +1546,7 @@
         "line": 973
       },
       {
+        "id": 3006,
         "line1": "śyāmā śyāma milēṁ yā nā milēṁ brajadhāmā।",
         "line2": "rahē ura āśā viśvāsa āṭhu yāmā॥",
         "challengeId": 30,
@@ -1388,6 +1560,7 @@
     "title": "bhōrē bani jāō",
     "dohas": [
       {
+        "id": 3101,
         "line1": "bhōrē bani jāō kyōṁki bhōrībhārī śyāmā।",
         "line2": "bhōrībhārī kō priya bhōrā uradhāmā॥",
         "challengeId": 31,
@@ -1395,6 +1568,7 @@
         "line": 62
       },
       {
+        "id": 3102,
         "line1": "mānā mana ati caṁcala kaha bāmā।",
         "line2": "bāra bāra samajhāō mana tērī śyāmā॥",
         "challengeId": 31,
@@ -1402,6 +1576,7 @@
         "line": 33
       },
       {
+        "id": 3103,
         "line1": "aura dvāra jāō na ananya banō bāmā।",
         "line2": "triguṇa, tritāpa, trikarma, kāṭēṁ śyāmā॥",
         "challengeId": 31,
@@ -1409,6 +1584,7 @@
         "line": 47
       },
       {
+        "id": 3104,
         "line1": "āpu kō ikalō na mānō kaha bāmā।",
         "line2": "sadā sarvatra tērē sātha rahēṁ śyāmā॥",
         "challengeId": 31,
@@ -1416,6 +1592,7 @@
         "line": 42
       },
       {
+        "id": 3105,
         "line1": "mana mēṁ nirāśā jani lāō kaha bāmā।",
         "line2": "āśā rakhō ēka dina pighalēṁgī śyāmā॥",
         "challengeId": 31,
@@ -1423,6 +1600,7 @@
         "line": 38
       },
       {
+        "id": 3106,
         "line1": "jō mana buddhi dai kē bhajē āṭhu yāmā।",
         "line2": "vākī sam̐bhāra karēṁ śiśu janu śyāmā॥",
         "challengeId": 31,
@@ -1436,6 +1614,7 @@
     "title": "jagadgurūttama upādhi bōlēṁ",
     "dohas": [
       {
+        "id": 3201,
         "line1": "gurudhāma sama nahiṁ aura kōu dhāmā।",
         "line2": "guru kī śaraṇa jāya, jāya hari ṭhāmā॥",
         "challengeId": 32,
@@ -1443,6 +1622,7 @@
         "line": 107
       },
       {
+        "id": 3202,
         "line1": "hari guru tē na kachu mām̐gō braja bāmā।",
         "line2": "dōnōṁ tē sadā karō prēma niṣkāmā॥",
         "challengeId": 32,
@@ -1450,6 +1630,7 @@
         "line": 52
       },
       {
+        "id": 3203,
         "line1": "guru nātā mana tē jōḍō, sadā āṭhu yāmā।",
         "line2": "jaga nātā mana tē tōḍō, milēṁ śyāma śyāmā॥",
         "challengeId": 32,
@@ -1457,6 +1638,7 @@
         "line": 85
       },
       {
+        "id": 3204,
         "line1": "guru kī buddhi tē buddhi jōḍē rahō bāmā।",
         "line2": "usī buddhi tē calāō mana āṭhu yāmā॥",
         "challengeId": 32,
@@ -1464,6 +1646,7 @@
         "line": 99
       },
       {
+        "id": 3205,
         "line1": "guru ruci maham̐ ruci rākhō gurudhāmā।",
         "line2": "cāhō jani bhukti mukti vaikuṇṭha bāmā॥",
         "challengeId": 32,
@@ -1471,6 +1654,7 @@
         "line": 100
       },
       {
+        "id": 3206,
         "line1": "hari guru ēka mānō rahō gurudhāmā।",
         "line2": "anukūla cintana karō āṭhu yāmā॥",
         "challengeId": 32,
@@ -1484,6 +1668,7 @@
     "title": "prēma mēṁ vyākulatā",
     "dohas": [
       {
+        "id": 3301,
         "line1": "rādhā nāma-rūpa-guṇa-līlā-jana-dhāmā।",
         "line2": "yāhī mēṁ lagāō mana bhāva niṣkāmā॥",
         "challengeId": 33,
@@ -1491,6 +1676,7 @@
         "line": 73
       },
       {
+        "id": 3302,
         "line1": "aisā karē mana prēma caranana śyāmā।",
         "line2": "jaisā karē madhupa, kamala sōṁ bāmā॥",
         "challengeId": 33,
@@ -1498,6 +1684,7 @@
         "line": 66
       },
       {
+        "id": 3303,
         "line1": "jahām̐ jaba rahō sōcō sadā ura dhāmā।",
         "line2": "mana kī karatūta sārī likhēṁ nita śyāmā॥",
         "challengeId": 33,
@@ -1505,6 +1692,7 @@
         "line": 71
       },
       {
+        "id": 3304,
         "line1": "mērī thīṁ, mērī haiṁ, mērī rahēṁgī bhī śyāmā।",
         "line2": "dr̥ḍh viśvāsa rahē yaha āṭhu yāmā॥",
         "challengeId": 33,
@@ -1512,6 +1700,7 @@
         "line": 39
       },
       {
+        "id": 3305,
         "line1": "jala binu mīna jyōṁ vikala kaha bāmā।",
         "line2": "vaisē mana vyākula hō jāya binu śyāmā॥",
         "challengeId": 33,
@@ -1519,6 +1708,7 @@
         "line": 63
       },
       {
+        "id": 3306,
         "line1": "milē binu rahā nahiṁ jāya jaba bāmā।",
         "line2": "taba hī milēṁgē tōhiṁ śyāma aru śyāmā॥",
         "challengeId": 33,
@@ -1532,6 +1722,7 @@
     "title": "tana kāma mēṁ mana śyāma mēṁ",
     "dohas": [
       {
+        "id": 3401,
         "line1": "bāra bāra cārōṁ dhāma vārauṁ brajadhāmā।",
         "line2": "nitya vihāra karēṁ jahām̐ śyāma śyāmā॥",
         "challengeId": 34,
@@ -1539,6 +1730,7 @@
         "line": 938
       },
       {
+        "id": 3402,
         "line1": "vr̥ndāvana calō mana vahām̐ śyāma śyāmā।",
         "line2": "jahām̐ śyāma śyāmā vahām̐ milēṁ braja bāmā॥",
         "challengeId": 34,
@@ -1546,6 +1738,7 @@
         "line": 933
       },
       {
+        "id": 3403,
         "line1": "karmayōga dēkhanā hō dēkhō braja bāmā।",
         "line2": "indriyōṁ tē kāma mukha tē śyāma śyāmā॥",
         "challengeId": 34,
@@ -1553,6 +1746,7 @@
         "line": 267
       },
       {
+        "id": 3404,
         "line1": "brajabāmā nāma lai lai sadā śyāma śyāmā।",
         "line2": "khāyēṁ piyēṁ sōyēṁ jāgēṁ nita āṭhu yāmā॥",
         "challengeId": 34,
@@ -1560,6 +1754,7 @@
         "line": 265
       },
       {
+        "id": 3405,
         "line1": "rādhē rādhē gōvinda gāvēṁ braja bāmā।",
         "line2": "ām̐sū bahāvēṁ karēṁ saba gr̥ha kāmā॥",
         "challengeId": 34,
@@ -1567,6 +1762,7 @@
         "line": 266
       },
       {
+        "id": 3406,
         "line1": "rādhē rādhē gōvinda raṭō āṭhu yāmā।",
         "line2": "kabahum̐ tō kāna karēṁgē śyāma śyāmā॥",
         "challengeId": 34,
@@ -1580,6 +1776,7 @@
     "title": "gōpī prēma mahimā",
     "dohas": [
       {
+        "id": 3501,
         "line1": "jisasē milē tatvajñāna, prēma, śyāma śyāmā।",
         "line2": "usakō hī guru mānō, vahī guru dhāmā॥",
         "challengeId": 35,
@@ -1587,6 +1784,7 @@
         "line": 84
       },
       {
+        "id": 3502,
         "line1": "mana tē manana karu guru prēmadhāmā।",
         "line2": "sira dhari kara dēyam̐ prēma niṣkāmā॥",
         "challengeId": 35,
@@ -1594,6 +1792,7 @@
         "line": 993
       },
       {
+        "id": 3503,
         "line1": "mana tē manana karu rūpa śyāma śyāmā।",
         "line2": "rō kē kahu lē lō mōhūm̐ sam̐ga braja bāmā॥",
         "challengeId": 35,
@@ -1601,6 +1800,7 @@
         "line": 996
       },
       {
+        "id": 3504,
         "line1": "piya ruci maham̐ ruci rākhēṁ braja bāmā।",
         "line2": "sēvā sōi jāsōṁ sukha pāvēṁ śyāma śyāmā॥",
         "challengeId": 35,
@@ -1608,6 +1808,7 @@
         "line": 291
       },
       {
+        "id": 3505,
         "line1": "braja rasa pāyō nahiṁ kamalā sī bāmā।।",
         "line2": "gōpīkr̥pā pāyē braja rasa brajadhāmā॥",
         "challengeId": 35,
@@ -1615,6 +1816,7 @@
         "line": 923
       },
       {
+        "id": 3506,
         "line1": "gōpī prēma mahimā jānēṁ braja bāmā।",
         "line2": "brahma pāchē pāchē ghūmē bikyō binu dāmā॥",
         "challengeId": 35,
@@ -1628,6 +1830,7 @@
     "title": "tana mana dhana arpaṇa",
     "dohas": [
       {
+        "id": 3601,
         "line1": "kr̥pā pātra bananē kō gōviṁda rādhē।",
         "line2": "tana mana dhana arpana karavā dē॥",
         "challengeId": 36,
@@ -1635,6 +1838,7 @@
         "line": 1004
       },
       {
+        "id": 3602,
         "line1": "jaga tē haṭā dē mana gōviṁda rādhē।",
         "line2": "śyāma milana vyākulatā baḍhā dē॥",
         "challengeId": 36,
@@ -1642,6 +1846,7 @@
         "line": 1684
       },
       {
+        "id": 3603,
         "line1": "mērā tērā jani chōḍō gōviṁda rādhē।",
         "line2": "mērā śyāma śyāma kā maiṁ aura lagā dē॥",
         "challengeId": 36,
@@ -1649,6 +1854,7 @@
         "line": 1730
       },
       {
+        "id": 3604,
         "line1": "jitanā jō pyāra karē gōviṁda rādhē।",
         "line2": "utanā hī pyāra karēṁ śyāma bhī batā dē॥",
         "challengeId": 36,
@@ -1656,6 +1862,7 @@
         "line": 1008
       },
       {
+        "id": 3605,
         "line1": "pūrṇa prapanna hō jā gōviṁda rādhē।",
         "line2": "bana jā pataṁga ḍōrī hari kō thamā dē॥",
         "challengeId": 36,
@@ -1663,6 +1870,7 @@
         "line": 1010
       },
       {
+        "id": 3606,
         "line1": "hari guru śaraṇa mēṁ gōviṁda rādhē।",
         "line2": "sām̐cō nitya divya sukha milēgā batā dē॥",
         "challengeId": 36,
@@ -1676,6 +1884,7 @@
     "title": "udhāra baṁda karō",
     "dohas": [
       {
+        "id": 3701,
         "line1": "āyu jala bulabulā gōviṁda rādhē।",
         "line2": "jānē kaba phūṭa jāyē sabakō batā dē॥",
         "challengeId": 37,
@@ -1683,6 +1892,7 @@
         "line": 956
       },
       {
+        "id": 3702,
         "line1": "hari kō na bhūlō mana gōviṁda rādhē।",
         "line2": "nara tanu sura durlabha nā gamā dē॥",
         "challengeId": 37,
@@ -1690,6 +1900,7 @@
         "line": 866
       },
       {
+        "id": 3703,
         "line1": "hari kī śaraṇa gahu gōviṁda rādhē।",
         "line2": "hāya hāya mēṁ kāhē janama gam̐vā dē॥",
         "challengeId": 37,
@@ -1697,6 +1908,7 @@
         "line": 897
       },
       {
+        "id": 3704,
         "line1": "aganita janama tō gōviṁda rādhē।",
         "line2": "jaga mēṁ gamāyā yaha tanu nā gamā dē॥",
         "challengeId": 37,
@@ -1704,6 +1916,7 @@
         "line": 869
       },
       {
+        "id": 3705,
         "line1": "bhajūm̐gā bhajūm̐gā kahi gōviṁda rādhē।",
         "line2": "kāhē aganita janma yūm̐ hī gamā dē॥",
         "challengeId": 37,
@@ -1711,6 +1924,7 @@
         "line": 931
       },
       {
+        "id": 3706,
         "line1": "saba taja hari bhaja gōviṁda rādhē।",
         "line2": "tērī saba bigarī āpu banā dē॥",
         "challengeId": 37,
@@ -1724,6 +1938,7 @@
     "title": "khēlō hari saṁga hōlī",
     "dohas": [
       {
+        "id": 3801,
         "line1": "dīnatā priya hari gōviṁda rādhē।",
         "line2": "bhakti mēṁ dīnatā hai pramukha batā dē॥",
         "challengeId": 38,
@@ -1731,6 +1946,7 @@
         "line": 4553
       },
       {
+        "id": 3802,
         "line1": "navajāta śiśu bani gōviṁda rādhē।",
         "line2": "karu krandana mana śuddha karā dē॥",
         "challengeId": 38,
@@ -1738,6 +1954,7 @@
         "line": 4547
       },
       {
+        "id": 3803,
         "line1": "rasanā tē gāvō nita gōviṁda rādhē।",
         "line2": "mana tē milana vyākulatā baḍhā dē॥",
         "challengeId": 38,
@@ -1745,6 +1962,7 @@
         "line": 10924
       },
       {
+        "id": 3804,
         "line1": "rō rō kē mām̐gō prēma gōviṁda rādhē।",
         "line2": "ēka dina rōnā raṁga lāyē batā dē॥",
         "challengeId": 38,
@@ -1752,6 +1970,7 @@
         "line": 4568
       },
       {
+        "id": 3805,
         "line1": "dravībhūta mana maham̐ gōviṁda rādhē।",
         "line2": "śyāmā śyāma kā raṁga milā dē॥",
         "challengeId": 38,
@@ -1759,6 +1978,7 @@
         "line": 10930
       },
       {
+        "id": 3806,
         "line1": "hōrī khēlē hari sōṁ sō gōviṁda rādhē।",
         "line2": "jākē hr̥daya divya prēma hō batā dē॥",
         "challengeId": 38,
@@ -1772,6 +1992,7 @@
     "title": "niṣkāma ām̐sū bahāiyē",
     "dohas": [
       {
+        "id": 3901,
         "line1": "divya prēma pānē kī gōviṁda rādhē।",
         "line2": "sarvaprathama tīvra lālasā baḍhā dē॥",
         "challengeId": 39,
@@ -1779,6 +2000,7 @@
         "line": 4595
       },
       {
+        "id": 3902,
         "line1": "bani kē abōdha śiśu gōviṁda rādhē।",
         "line2": "hari tē hī mām̐gō prēma batā dē॥",
         "challengeId": 39,
@@ -1786,6 +2008,7 @@
         "line": 4569
       },
       {
+        "id": 3903,
         "line1": "jagata kō ām̐sū nā dē gōviṁda rādhē।",
         "line2": "hari guru hita nita ām̐sū bahā dē॥",
         "challengeId": 39,
@@ -1793,6 +2016,7 @@
         "line": 4581
       },
       {
+        "id": 3904,
         "line1": "hari guru kr̥pā mānō gōviṁda rādhē।",
         "line2": "mana jaba hari hita ām̐sū bahā dē॥",
         "challengeId": 39,
@@ -1800,6 +2024,7 @@
         "line": 4598
       },
       {
+        "id": 3905,
         "line1": "sōi jīvana dhanya gōviṁda rādhē।",
         "line2": "jō hari guru hita ām̐sū bahā dē॥",
         "challengeId": 39,
@@ -1807,6 +2032,7 @@
         "line": 4582
       },
       {
+        "id": 3906,
         "line1": "niṣkāma ām̐sū tē hī gōviṁda rādhē।",
         "line2": "śyāmā śyāma pighalēṁ milēṁ bhī batā dē॥",
         "challengeId": 39,
@@ -1820,6 +2046,7 @@
     "title": "rāma nāma kī mahimā",
     "dohas": [
       {
+        "id": 4001,
         "line1": "kali sama yuga nahiṁ gōviṁda rādhē।",
         "line2": "hari nāma hari dhyāna hari tē milā dē॥",
         "challengeId": 40,
@@ -1827,6 +2054,7 @@
         "line": 10739
       },
       {
+        "id": 4002,
         "line1": "jō hari sōī rāma gōviṁda rādhē।",
         "line2": "jō rāma sōī kr̥ṣṇa sāra batā dē॥",
         "challengeId": 40,
@@ -1834,6 +2062,7 @@
         "line": 10814
       },
       {
+        "id": 4003,
         "line1": "nāma mēṁ hai aisī śakti gōviṁda rādhē।",
         "line2": "nāmī kō bhī ānē kō vivaśa karā dē॥",
         "challengeId": 40,
@@ -1841,6 +2070,7 @@
         "line": 10850
       },
       {
+        "id": 4004,
         "line1": "śabarī nē nāma japā gōviṁda rādhē।",
         "line2": "jūṭhē bēra khākē nāma mahimā baḍhā dē॥",
         "challengeId": 40,
@@ -1848,6 +2078,7 @@
         "line": 10863
       },
       {
+        "id": 4005,
         "line1": "rāma nē ahilyā tārī gōviṁda rādhē।",
         "line2": "nāma kōṭi patitana pāvana banā dē॥",
         "challengeId": 40,
@@ -1855,6 +2086,7 @@
         "line": 10866
       },
       {
+        "id": 4006,
         "line1": "nāma mēṁ hai nāmī vāsa gōviṁda rādhē।",
         "line2": "asa dr̥ḍh viśvāsa nāmī kō bulā dē॥",
         "challengeId": 40,
@@ -1868,6 +2100,7 @@
     "title": "guru sēvā hī dharma hamārō",
     "dohas": [
       {
+        "id": 4101,
         "line1": "hari guru sēvā hī gōviṁda rādhē।",
         "line2": "jīva kā ēka uddēśya batā dē॥",
         "challengeId": 41,
@@ -1875,6 +2108,7 @@
         "line": 4051
       },
       {
+        "id": 4102,
         "line1": "sēvya kī icchā mēṁ gōviṁda rādhē।",
         "line2": "icchā rakhanā hī sēvā batā dē॥",
         "challengeId": 41,
@@ -1882,6 +2116,7 @@
         "line": 3728
       },
       {
+        "id": 4103,
         "line1": "sēvā kō ājñā kā gōviṁda rādhē।",
         "line2": "śata pratiśata pālana hī batā dē॥",
         "challengeId": 41,
@@ -1889,6 +2124,7 @@
         "line": 4052
       },
       {
+        "id": 4104,
         "line1": "jō na karē hari guru gōviṁda rādhē।",
         "line2": "sēvā vaha kara śava kā hai batā dē॥",
         "challengeId": 41,
@@ -1896,6 +2132,7 @@
         "line": 4104
       },
       {
+        "id": 4105,
         "line1": "kapaṭa rahita hōkē gōviṁda rādhē।",
         "line2": "hari guru sēvā mēṁ hī mana kō lagā dē॥",
         "challengeId": 41,
@@ -1903,6 +2140,7 @@
         "line": 4050
       },
       {
+        "id": 4106,
         "line1": "hari guru kr̥pā tē hī gōviṁda rādhē।",
         "line2": "maiṁnē kachu sēvā kī yaha bhāva banā dē॥",
         "challengeId": 41,
@@ -1916,6 +2154,7 @@
     "title": "rōma-rōma sē hari-guru sēvā",
     "dohas": [
       {
+        "id": 4201,
         "line1": "prāṇa jaba jāyē hari gōviṁda rādhē।",
         "line2": "tanu paṁca mahābhūta sēvā mēṁ lagā dē॥",
         "challengeId": 42,
@@ -1923,6 +2162,7 @@
         "line": 3731
       },
       {
+        "id": 4202,
         "line1": "jala milē sōī jala gōviṁda rādhē।",
         "line2": "jēhi jala hari asnāna karā dē॥",
         "challengeId": 42,
@@ -1930,6 +2170,7 @@
         "line": 3732
       },
       {
+        "id": 4203,
         "line1": "tēja milē darpaṇa gōviṁda rādhē।",
         "line2": "sōi jāmēṁ hari mukha dēkhēṁ batā dē॥",
         "challengeId": 42,
@@ -1937,6 +2178,7 @@
         "line": 3733
       },
       {
+        "id": 4204,
         "line1": "vyōma milē sēvā kuṁja gōviṁda rādhē।",
         "line2": "jaham̐ śyāmā śyāma sam̐ga rāsa racā dē॥",
         "challengeId": 42,
@@ -1944,6 +2186,7 @@
         "line": 3734
       },
       {
+        "id": 4205,
         "line1": "bhūmi milē sōī patha gōviṁda rādhē।",
         "line2": "jēhi patha calēṁ śyāmā śyāma batā dē॥",
         "challengeId": 42,
@@ -1951,6 +2194,7 @@
         "line": 3735
       },
       {
+        "id": 4206,
         "line1": "pavana vyajana milē gōviṁda rādhē।",
         "line2": "sōi, sakhi jāsōṁ śyāmā śyāma kō havā dē॥",
         "challengeId": 42,
@@ -1964,6 +2208,7 @@
     "title": "hari-guru hī haiṁ sām̐cī mātā",
     "dohas": [
       {
+        "id": 4301,
         "line1": "navajāta śiśu nahiṁ gōviṁda rādhē।",
         "line2": "jānē kauna mātā mātā jñāna karā dē॥",
         "challengeId": 43,
@@ -1971,6 +2216,7 @@
         "line": 257
       },
       {
+        "id": 4302,
         "line1": "hari tū bhī kaisī mām̐ hai gōviṁda rādhē।",
         "line2": "śiśu kara jaga caṭṭū jhunajhunā thamā dē॥",
         "challengeId": 43,
@@ -1978,6 +2224,7 @@
         "line": 259
       },
       {
+        "id": 4303,
         "line1": "brajarasa būm̐da dē dē gōviṁda rādhē।",
         "line2": "mām̐ bhī śiśu mukha paya būm̐da cuvā dē॥",
         "challengeId": 43,
@@ -1985,6 +2232,7 @@
         "line": 260
       },
       {
+        "id": 4304,
         "line1": "māyā nē sulāyā aisā gōviṁda rādhē।",
         "line2": "aganita yuga bītē aba tō jagā dē॥",
         "challengeId": 43,
@@ -1992,6 +2240,7 @@
         "line": 287
       },
       {
+        "id": 4305,
         "line1": "hōtē haiṁ kupūta jaga gōviṁda rādhē।",
         "line2": "huī kyā kumātā kahum̐ tū hī batā dē॥",
         "challengeId": 43,
@@ -1999,6 +2248,7 @@
         "line": 293
       },
       {
+        "id": 4306,
         "line1": "tērī māyā nē banāyā gōviṁda rādhē।",
         "line2": "mōkō kupūta tū supūta banā dē॥",
         "challengeId": 43,
@@ -2012,6 +2262,7 @@
     "title": "mujhē dīna banā dō",
     "dohas": [
       {
+        "id": 4401,
         "line1": "dīnōṁ kē haiṁ dōnōṁ gōviṁda rādhē।",
         "line2": "mana buddhi dōnōṁ kō dīna banā dē॥",
         "challengeId": 44,
@@ -2019,6 +2270,7 @@
         "line": 4563
       },
       {
+        "id": 4402,
         "line1": "bhakti aru abhimāna gōviṁda rādhē।",
         "line2": "dōnōṁ rahēṁ ēka ṭhaura nā batā dē॥",
         "challengeId": 44,
@@ -2026,6 +2278,7 @@
         "line": 4556
       },
       {
+        "id": 4403,
         "line1": "saba kā sammāna karō gōviṁda rādhē।",
         "line2": "saba kē haiṁ ura baiṭhē kr̥ṣṇa batā dē॥",
         "challengeId": 44,
@@ -2033,6 +2286,7 @@
         "line": 4560
       },
       {
+        "id": 4404,
         "line1": "hari guru hī haiṁ śuddha gōviṁda rādhē।",
         "line2": "unatē juḍē jō mana prēma batā dē॥",
         "challengeId": 44,
@@ -2040,6 +2294,7 @@
         "line": 5264
       },
       {
+        "id": 4405,
         "line1": "mana mēṁ hī anaṁta pāpa gōviṁda rādhē।",
         "line2": "mana tē hī nāma raṭō nāmī kṣamā dē॥",
         "challengeId": 44,
@@ -2047,6 +2302,7 @@
         "line": 10882
       },
       {
+        "id": 4406,
         "line1": "pāpa kē nāśa hita gōviṁda rādhē।",
         "line2": "hari nāma guṇa līlā kīrtana karā dē॥",
         "challengeId": 44,
@@ -2060,6 +2316,7 @@
     "title": "hari-guru sē hī hai saccā nātā",
     "dohas": [
       {
+        "id": 4501,
         "line1": "aganita mātā pitā gōviṁda rādhē।",
         "line2": "banē sām̐cē mātā pitā hari kō bhulā dē॥",
         "challengeId": 45,
@@ -2067,6 +2324,7 @@
         "line": 1709
       },
       {
+        "id": 4502,
         "line1": "ḍhūm̐ḍhtē ḍhūm̐ḍhtē gōviṁda rādhē।",
         "line2": "bīta gayē aganita janma batā dē॥",
         "challengeId": 45,
@@ -2074,6 +2332,7 @@
         "line": 1624
       },
       {
+        "id": 4503,
         "line1": "jaba kabhu santa milē gōviṁda rādhē।",
         "line2": "taba hī satya tatvajñāna hō batā dē॥",
         "challengeId": 45,
@@ -2081,6 +2340,7 @@
         "line": 1625
       },
       {
+        "id": 4504,
         "line1": "sārā jaga tanu hita gōviṁda rādhē।",
         "line2": "jīva hita hari guru dō haiṁ batā dē॥",
         "challengeId": 45,
@@ -2088,6 +2348,7 @@
         "line": 1705
       },
       {
+        "id": 4505,
         "line1": "hari hī sōṁ pyāra karō gōviṁda rādhē।",
         "line2": "jaga tē na pyāra na tō khāra karā dē॥",
         "challengeId": 45,
@@ -2095,11 +2356,66 @@
         "line": 1735
       },
       {
+        "id": 4506,
         "line1": "mana mandira ēka gōviṁda rādhē।",
         "line2": "hari kō biṭhā dē cāhē jaga kō biṭhā dē॥",
         "challengeId": 45,
         "sequence": 6,
         "line": 1736
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "title": "hari-guru hī haiṁ sanātana pitā",
+    "dohas": [
+      {
+        "id": 4601,
+        "line1": "mana ēka jaga lāgā gōviṁda rādhē।",
+        "line2": "tujhamēṁ lagānē kō dūjā mana lā dē॥",
+        "challengeId": 46,
+        "sequence": 1,
+        "line": 375
+      },
+      {
+        "id": 4602,
+        "line1": "tērē saba baccē acchē gōviṁda rādhē।",
+        "line2": "acchōṁ kē sātha ēka burē kō calā dē॥",
+        "challengeId": 46,
+        "sequence": 2,
+        "line": 530
+      },
+      {
+        "id": 4603,
+        "line1": "acchā hūm̐ burā hūm̐ jō hūm̐ gōviṁda rādhē।",
+        "line2": "tērā hī tō suta pitu lāja bacā dē॥",
+        "challengeId": 46,
+        "sequence": 3,
+        "line": 540
+      },
+      {
+        "id": 4604,
+        "line1": "pitā putra sātha rahēṁ gōviṁda rādhē।",
+        "line2": "galē nā lagāyā kaisā pitā hai batā dē॥",
+        "challengeId": 46,
+        "sequence": 4,
+        "line": 328
+      },
+      {
+        "id": 4605,
+        "line1": "kaisā tū pitā hai mērā gōviṁda rādhē।",
+        "line2": "suta dayanīya daśā dēkhē dhyāna nā dē॥",
+        "challengeId": 46,
+        "sequence": 5,
+        "line": 334
+      },
+      {
+        "id": 4606,
+        "line1": "aba lauṁ sōyā nahiṁ gōviṁda rādhē।",
+        "line2": "nija śiśu kō nija gōda sulā dē॥",
+        "challengeId": 46,
+        "sequence": 6,
+        "line": 282
       }
     ]
   }

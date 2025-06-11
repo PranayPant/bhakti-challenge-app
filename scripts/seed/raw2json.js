@@ -54,6 +54,7 @@ function parseBhaktiChallenges(rawText, language) {
         const sequence = lastChallenge.dohas.length + 1;
         const line = parseInt(dohaMatch2[2], 10);
         dohaToAdd = {
+          id: parseInt(`${lastChallenge.id.toString().padStart(3, '0')}${sequence.toString().padStart(2, '0')}`),
           line1: dohaToAdd.line1,
           line2: dohaText,
           challengeId: lastChallenge.id,

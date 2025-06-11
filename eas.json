@@ -18,9 +18,7 @@
   "submit": {
     "production": {
       "android": {
-        "serviceAccountKeyPath": "./bhakti-challenge-app-android.secret.json",
-        "track": "internal",
-        "releaseStatus": "draft"
+        "serviceAccountKeyPath": "./bhakti-challenge-app-android.secret.json"
       }
     }
   }
