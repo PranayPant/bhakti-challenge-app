@@ -160,13 +160,13 @@ useChallengeStore.subscribe(
 
     currentDohas = currentDohas.length
       ? currentDohas
-      : challengesData.flatMap((challenge) => challenge.dohas);
+      : currentSelectedChallenges.flatMap((challenge) => challenge.dohas);
 
     const newDohas = currentDohas.map((doha) => {
       const newDoha = newSelectedChallenges
         .find((c) => c.id === doha.challengeId)
         ?.dohas.find((newDoha) => newDoha.sequence === doha.sequence);
-      return newDoha ? { ...doha } : doha;
+      return newDoha ? { ...newDoha } : doha;
     });
 
     useChallengeStore.setState({
