@@ -1,13 +1,15 @@
 import { Pressable, Text, TextInput, View } from "react-native";
+
 import { CardStack } from "@/components/CardStack";
 import { useChallengeStore } from "@/stores/challenges";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
+import { Select } from "./ui/Select";
 
 export function Deck() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
   const language = useChallengeStore((store) => store.language);
-  const toggleLanguage = useChallengeStore((store) => store.toggleLanguage);
+  const setLanguage = useChallengeStore((store) => store.setLanguage);
   const sort = useChallengeStore((store) => store.toggleSort);
   const sortOrder = useChallengeStore((store) => store.sortOrder);
   const [filterText, setFilterText] = useState("");
@@ -19,7 +21,7 @@ export function Deck() {
   const goBackwards = useChallengeStore((store) => store.goBackwards);
   return (
     <SafeAreaView className="flex-1 bg-purple-500 p-2">
-      <View className="flex flex-row items-center gap-2 m-4 mx-auto">
+      <View className="flex flex-row gap-2 m-4 mx-auto">
         <View className="flex flex-1 flex-row gap-2 ml-auto">
           <TextInput
             className="flex-1 px-4 rounded-2xl border border-gray-300 bg-white text-black"
@@ -42,12 +44,15 @@ export function Deck() {
         >
           <Text>Sort ({sortOrder})</Text>
         </Pressable>
-        <Pressable
-          onPress={toggleLanguage}
-          className="p-2 bg-yellow-500 w-fit rounded-2xl"
-        >
-          <Text> {language}</Text>
-        </Pressable>
+        <Select
+          onSelect={(value) => setLanguage(value as "hi" | "hi_trans")}
+          options={[
+            { label: "Hindi", value: "hi" },
+            { label: "Hindi (Transliterated)", value: "hi_trans" },
+          ]}
+          btnText={`Lang (${language})`}
+          btnClass="p-2 bg-yellow-500 rounded-2xl"
+        />
       </View>
 
       {challenges.length > 0 ? (

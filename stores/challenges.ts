@@ -22,7 +22,7 @@ export type Doha = {
 
 export interface ChallengeStore {
   sortOrder: string; // Sort order for the challenges
-  language: "hindi" | "english"; // Language of the challenges
+  language: "hi" | "hi_trans"; // Language of the challenges
   challengesData: Challenge[]; // Array of selected challenge data
   selectedChallenges: Challenge[]; // Array of selected challenges
   dohas: Doha[]; // Array of dohas associated with the challenges
@@ -33,7 +33,7 @@ export interface ChallengeStore {
   mode: "quiz" | "default"; // Mode of the deck, either quiz or default
   randomized: boolean; // Flag to indicate if the challenges are randomized
   goBackwards: VoidFunction; // Function to go backwards in the deck
-  toggleLanguage: () => void; // Function to toggle the language between Hindi and English
+  setLanguage: (language: "hi" | "hi_trans") => void; // Function to toggle the language between Hindi and English
   toggleSort: () => void; // Function to sort challenges by ID
   setDataIndexOne: (index: number) => void; // Function to set the index for the first data item
   setDataIndexTwo: (index: number) => void; // Function to set the index for the second data item
@@ -45,7 +45,7 @@ export interface ChallengeStore {
 
 export const useChallengeStore = create(
   subscribeWithSelector<ChallengeStore>((set, get) => ({
-    language: "hindi", // Default language
+    language: "hi", // Default language
     sortOrder: "asc", // Default sort order
     challengesData: [],
     selectedChallenges: [], // Initialize with an empty array
@@ -99,10 +99,9 @@ export const useChallengeStore = create(
         };
       });
     },
-    toggleLanguage: () =>
-      set((state) => ({
-        language: state.language === "hindi" ? "english" : "hindi",
-      })),
+    setLanguage(language) {
+      set({ language });
+    },
 
     toggleSort: () => {
       set((state) => {
@@ -134,9 +133,9 @@ useChallengeStore.subscribe(
   (state) => state.language,
   async (language) => {
     let challengesData: Challenge[] = [];
-    if (language === "english") {
+    if (language === "hi_trans") {
       challengesData = englishChallenges;
-    } else if (language === "hindi") {
+    } else if (language === "hi") {
       challengesData = hindiChallenges;
     }
 

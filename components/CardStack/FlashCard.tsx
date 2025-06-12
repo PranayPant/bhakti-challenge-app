@@ -47,7 +47,7 @@ export const FlashCard = ({
             <Text
               className={clsx(
                 "text-center",
-                language === "hindi" ? "text-2xl" : "text-xl"
+                language === "hi" ? "text-2xl" : "text-xl"
               )}
             >
               {doha.line1}
@@ -55,7 +55,7 @@ export const FlashCard = ({
             <Text
               className={clsx(
                 "text-center",
-                language === "hindi" ? "text-2xl" : "text-xl"
+                language === "hi" ? "text-2xl" : "text-xl"
               )}
             >
               {doha.line2}
