@@ -3,7 +3,7 @@ import { ChallengeStoreProvider } from "@/stores/challenge-provider";
 
 export default function () {
   return (
-    <ChallengeStoreProvider>
+    <ChallengeStoreProvider initialStore={{ mode: "quiz" }}>
       <Deck />
     </ChallengeStoreProvider>
   );

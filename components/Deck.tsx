@@ -1,10 +1,10 @@
 import { Pressable, Text, TextInput, View } from "react-native";
 
 import { CardStack } from "@/components/CardStack";
-import { useChallengeStore } from "@/stores/challenges";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import { Select } from "./ui/Select";
+import { useChallengeStore } from "@/stores/challenge-provider";
 
 export function Deck() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
@@ -19,6 +19,8 @@ export function Deck() {
   const randomized = useChallengeStore((store) => store.randomized);
   const setRandomized = useChallengeStore((store) => store.setRandomized);
   const goBackwards = useChallengeStore((store) => store.goBackwards);
+
+  console.log("Challenges Mode:", mode);
   return (
     <SafeAreaView className="flex-1 bg-purple-500 p-2">
       <View className="flex flex-row gap-2 m-4 mx-auto">
@@ -64,7 +66,7 @@ export function Deck() {
           </Text>
         </View>
       )}
-      <View className="border-2 border-dashed border-white p-2 flex flex-row items-center gap-2">
+      <View className="border-2 border-dashed border-white p-2 flex flex-row items-center gap-2 justify-center">
         <Pressable
           className="bg-yellow-500 p-2 rounded-full w-fit"
           onPress={() => {

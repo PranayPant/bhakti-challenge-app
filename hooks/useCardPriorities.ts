@@ -1,4 +1,4 @@
-import { useChallengeStore } from "@/stores/challenges";
+import { useChallengeStore } from "@/stores/challenge-provider";
 import { useCallback, useEffect, useState } from "react";
 import {
   useSharedValue,
