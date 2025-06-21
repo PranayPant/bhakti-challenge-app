@@ -20,9 +20,8 @@ export function Deck() {
   const setRandomized = useChallengeStore((store) => store.setRandomized);
   const goBackwards = useChallengeStore((store) => store.goBackwards);
 
-  console.log("Challenges Mode:", mode);
   return (
-    <SafeAreaView className="flex-1 bg-purple-500 p-2">
+    <View className="flex-1 bg-purple-500 p-2">
       <View className="flex flex-row gap-2 m-4 mx-auto">
         <View className="flex flex-1 flex-row gap-2 ml-auto">
           <TextInput
@@ -94,6 +93,6 @@ export function Deck() {
           <Text>Go back one</Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
