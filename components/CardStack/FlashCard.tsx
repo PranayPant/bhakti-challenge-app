@@ -1,6 +1,6 @@
-import { useChallengeStore } from "@/stores/challenges";
 import { View, Text } from "react-native";
 import clsx from "clsx";
+import { useChallengeStore } from "@/stores/challenge-provider";
 
 export interface FlashCardProps {
   index: number;

@@ -8,7 +8,7 @@ import Animated, {
 
 import { Colors } from "@/constants/Colors";
 import { ReactNode, use } from "react";
-import { useChallengeStore } from "@/stores/challenges";
+import { useChallengeStore } from "@/stores/challenge-provider";
 
 interface CardProps {
   id: number;

@@ -19,9 +19,9 @@ import {
 
 import { Card } from "./Card";
 import { Colors } from "@/constants/Colors";
-import { Challenge, Doha, useChallengeStore } from "@/stores/challenges";
 import { FlashCard } from "./FlashCard";
 import { useCardPriorities } from "@/hooks/useCardPriorities";
+import { useChallengeStore } from "@/stores/challenge-provider";
 
 const { height, width } = Dimensions.get("window");
 

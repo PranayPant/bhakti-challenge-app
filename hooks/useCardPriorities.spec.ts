@@ -1,9 +1,12 @@
 import { renderHook, act } from "@testing-library/react-native";
 import { useCardPriorities } from "./useCardPriorities";
+import { ChallengeStoreProvider } from "@/stores/challenge-provider";
 
 describe("useCardPriorities", () => {
   it("should initialize card priorities correctly", () => {
-    const { result } = renderHook(() => useCardPriorities());
+    const { result } = renderHook(() => useCardPriorities(), {
+      wrapper: ChallengeStoreProvider
+    });
     expect(result.current.priorityOne.value).toBe(0);
     expect(result.current.priorityTwo.value).toBe(1);
     expect(result.current.priorityThree.value).toBe(2);
@@ -13,7 +16,9 @@ describe("useCardPriorities", () => {
   });
 
   it("should update card priorities on shuffle", () => {
-    const { result } = renderHook(() => useCardPriorities());
+    const { result } = renderHook(() => useCardPriorities(), {
+      wrapper: ChallengeStoreProvider
+    });
     act(() => {
       result.current.shuffle();
     });
@@ -46,7 +51,9 @@ describe("useCardPriorities", () => {
   });
 
   it("should update data indices correctly", () => {
-    const { result } = renderHook(() => useCardPriorities());
+    const { result } = renderHook(() => useCardPriorities(), {
+      wrapper: ChallengeStoreProvider
+    });
 
     // Simulate multiple shuffles
     for (let i = 0; i < 5; i++) {
