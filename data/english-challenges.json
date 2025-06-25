@@ -2418,5 +2418,59 @@
         "line": 282
       }
     ]
+  },
+  {
+    "id": 47,
+    "title": "guru mēṁ ananyatā",
+    "dohas": [
+      {
+        "id": 4701,
+        "line1": "sabatē baḍā śatru gōviṁda rādhē।",
+        "line2": "apanā hī manamānā mana hai batā dē॥",
+        "challengeId": 47,
+        "sequence": 1,
+        "line": 10972
+      },
+      {
+        "id": 4702,
+        "line1": "sabatē baḍā mitra gōviṁda rādhē।",
+        "line2": "guru śaraṇāpanna mana hai batā dē॥",
+        "challengeId": 47,
+        "sequence": 2,
+        "line": 10973
+      },
+      {
+        "id": 4703,
+        "line1": "saṁśaya taju mana gōviṁda rādhē।",
+        "line2": "bhōlā śiśu bani hō prapanna batā dē॥",
+        "challengeId": 47,
+        "sequence": 3,
+        "line": 1014
+      },
+      {
+        "id": 4704,
+        "line1": "māyā bahakāvē jō tō gōviṁda rādhē।",
+        "line2": "guru buddhi tē mana kō samajhā dē॥",
+        "challengeId": 47,
+        "sequence": 4,
+        "line": 1144
+      },
+      {
+        "id": 4705,
+        "line1": "māyā kō kauna tarē gōviṁda rādhē।",
+        "line2": "jō śaraṇya guru nita sēvē batā dē॥",
+        "challengeId": 47,
+        "sequence": 5,
+        "line": 1146
+      },
+      {
+        "id": 4706,
+        "line1": "iṣṭa guru bhakti mēṁ tō gōviṁda rādhē।",
+        "line2": "bhāva banāō ananya batā dē॥",
+        "challengeId": 47,
+        "sequence": 6,
+        "line": 5048
+      }
+    ]
   }
 ]
