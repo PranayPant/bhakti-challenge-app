@@ -1,11 +1,11 @@
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View, Keyboard } from "react-native";
 
 import { CardStack } from "@/components/CardStack";
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select } from "./ui/Select";
 import { useChallengeStore } from "@/stores/challenge-provider";
 
@@ -23,6 +23,15 @@ export function Deck() {
 
   const insets = useSafeAreaInsets();
 
+  useEffect(() => {
+    const hideSubscription = Keyboard.addListener("keyboardWillHide", () => {
+      setFilter(filterText);
+    });
+    return () => {
+      hideSubscription.remove();
+    };
+  }, [filterText]);
+
   return (
     <View
       style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
@@ -38,7 +47,10 @@ export function Deck() {
           }}
         />
         <Pressable
-          onPress={() => setFilter(filterText)}
+          onPress={() => {
+            setFilter(filterText);
+            Keyboard.dismiss();
+          }}
           className="p-2 bg-yellow-500 w-fit self-center rounded-2xl"
         >
           <Text>Filter</Text>
