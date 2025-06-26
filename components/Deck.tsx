@@ -1,13 +1,10 @@
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View, Keyboard } from 'react-native';
 
-import { CardStack } from "@/components/CardStack";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
-import { useState } from "react";
-import { Select } from "./ui/Select";
-import { useChallengeStore } from "@/stores/challenge-provider";
+import { CardStack } from '@/components/CardStack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useEffect, useState } from 'react';
+import { Select } from './ui/Select';
+import { useChallengeStore } from '@/stores/challenge-provider';
 
 export function Deck() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
@@ -15,7 +12,7 @@ export function Deck() {
   const setLanguage = useChallengeStore((store) => store.setLanguage);
   const sort = useChallengeStore((store) => store.toggleSort);
   const sortOrder = useChallengeStore((store) => store.sortOrder);
-  const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState('');
   const setFilter = useChallengeStore((store) => store.setFilterString);
   const randomized = useChallengeStore((store) => store.randomized);
   const setRandomized = useChallengeStore((store) => store.setRandomized);
@@ -23,37 +20,55 @@ export function Deck() {
 
   const insets = useSafeAreaInsets();
 
+  useEffect(() => {
+    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => {
+      setFilter(filterText);
+    });
+    return () => {
+      hideSubscription.remove();
+    };
+  }, [filterText, setFilter]);
+
   return (
-    <View
-      style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
-      className="flex-1 bg-purple-500 px-4"
-    >
-      <View className="flex flex-row gap-2 items-center m-4 mx-auto">
+    <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }} className="flex-1 bg-purple-500 px-4">
+      <View className="flex flex-row gap-2 ml-auto mt-4">
+        <TextInput
+          className="h-10 flex-1 px-4 py-2 rounded-2xl border border-gray-300 bg-white text-black"
+          placeholder="e.g 1-12,33,40+"
+          placeholderTextColor="#9CA3AF"
+          onChangeText={(text) => {
+            setFilterText(text);
+          }}
+        />
         <Pressable
-          className="bg-yellow-500 p-2 rounded-full w-fit"
-          onPress={goBackwards}
-        >
-          <Text>Go back one</Text>
+          onPress={() => {
+            setFilter(filterText);
+            Keyboard.dismiss();
+          }}
+          className="p-2 bg-yellow-500 w-fit self-center rounded-2xl">
+          <Text>Filter</Text>
+        </Pressable>
+      </View>
+
+      <View className="flex flex-row gap-2 items-center m-4 mx-auto">
+        <Pressable className="bg-yellow-500 p-2 rounded-full w-fit" onPress={goBackwards}>
+          <Text>Back</Text>
         </Pressable>
         <Pressable
           className="bg-yellow-500 p-2 rounded-full w-fit"
           onPress={() => {
             setRandomized(!randomized);
-          }}
-        >
-          <Text>Random ({randomized ? "On" : "Off"})</Text>
+          }}>
+          <Text>Random ({randomized ? 'On' : 'Off'})</Text>
         </Pressable>
-        <Pressable
-          onPress={sort}
-          className="p-2 bg-yellow-500 w-fit rounded-2xl"
-        >
+        <Pressable onPress={sort} className="p-2 bg-yellow-500 w-fit rounded-2xl">
           <Text>Sort ({sortOrder})</Text>
         </Pressable>
         <Select
-          onSelect={(value) => setLanguage(value as "hi" | "hi_trans")}
+          onSelect={(value) => setLanguage(value as 'hi' | 'hi_trans')}
           options={[
-            { label: "Hindi", value: "hi" },
-            { label: "Hindi (Transliterated)", value: "hi_trans" },
+            { label: 'Hindi', value: 'hi' },
+            { label: 'Hindi (Transliterated)', value: 'hi_trans' }
           ]}
           btnText={`Lang (${language})`}
           btnClass="p-2 bg-yellow-500 rounded-2xl"
@@ -69,22 +84,6 @@ export function Deck() {
           </Text>
         </View>
       )}
-      <View className="flex flex-row gap-2 ml-auto">
-        <TextInput
-          className="h-10 flex-1 px-4 py-2 rounded-2xl border border-gray-300 bg-white text-black"
-          placeholder="e.g 1-12,33,40+"
-          placeholderTextColor="#9CA3AF"
-          onChangeText={(text) => {
-            setFilterText(text);
-          }}
-        />
-        <Pressable
-          onPress={() => setFilter(filterText)}
-          className="p-2 bg-yellow-500 w-fit self-center rounded-2xl"
-        >
-          <Text>Filter</Text>
-        </Pressable>
-      </View>
     </View>
   );
 }

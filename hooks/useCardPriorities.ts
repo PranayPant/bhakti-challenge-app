@@ -1,10 +1,6 @@
-import { useChallengeStore } from "@/stores/challenge-provider";
-import { useCallback, useEffect, useState } from "react";
-import {
-  useSharedValue,
-  runOnJS,
-  useAnimatedReaction,
-} from "react-native-reanimated";
+import { useChallengeStore } from '@/stores/challenge-provider';
+import { useCallback, useEffect } from 'react';
+import { useSharedValue, runOnJS, useAnimatedReaction } from 'react-native-reanimated';
 
 export const DECK_SIZE = 3;
 
@@ -21,19 +17,13 @@ export const useCardPriorities = () => {
   const sortOrder = useChallengeStore((store) => store.sortOrder);
   const setDataIndexOne = useChallengeStore((store) => store.setDataIndexOne);
   const setDataIndexTwo = useChallengeStore((store) => store.setDataIndexTwo);
-  const setDataIndexThree = useChallengeStore(
-    (store) => store.setDataIndexThree
-  );
-  const mode = useChallengeStore((store) => store.mode);
+  const setDataIndexThree = useChallengeStore((store) => store.setDataIndexThree);
   const randomized = useChallengeStore((store) => store.randomized);
 
   const shuffle = useCallback(() => {
-    "worklet";
+    'worklet';
 
-    const newCardIndexOrder = [
-      ...cardIndexOrder.value.slice(1),
-      cardIndexOrder.value[0],
-    ];
+    const newCardIndexOrder = [...cardIndexOrder.value.slice(1), cardIndexOrder.value[0]];
     cardIndexOrder.value = newCardIndexOrder;
 
     priorityOne.value = cardIndexOrder.value.findIndex((p) => p === 0);
@@ -46,7 +36,7 @@ export const useCardPriorities = () => {
       dataIndexOne.value = dataIndexOne.value + DECK_SIZE;
       dataIndexTwo.value = dataIndexTwo.value + DECK_SIZE;
     }
-  }, [priorityOne, priorityTwo, priorityThree]);
+  }, [cardIndexOrder, priorityOne, priorityTwo, priorityThree, dataIndexThree, dataIndexOne, dataIndexTwo]);
 
   useEffect(() => {
     dataIndexOne.value = 0;
@@ -55,7 +45,17 @@ export const useCardPriorities = () => {
     priorityOne.value = 0;
     priorityTwo.value = 1;
     priorityThree.value = 2;
-  }, [sortOrder, filterString, randomized]);
+  }, [
+    sortOrder,
+    filterString,
+    randomized,
+    dataIndexOne,
+    dataIndexTwo,
+    dataIndexThree,
+    priorityOne,
+    priorityTwo,
+    priorityThree
+  ]);
 
   useAnimatedReaction(
     () => dataIndexOne.value,
@@ -85,6 +85,6 @@ export const useCardPriorities = () => {
     priorityThree,
     dataIndexOne,
     dataIndexTwo,
-    dataIndexThree,
+    dataIndexThree
   };
 };

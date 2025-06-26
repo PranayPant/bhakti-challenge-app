@@ -27,18 +27,6 @@ export function ChallengeStoreProvider({
 }: ChallengeStoreProviderProps) {
   const store = useRef(createChallengeStore(initialStore)).current;
 
-  // store.subscribe(
-  //   (state) => state.language,
-  //   (language) => {
-  //     handleLanguageChange(language, store);
-  //   },
-  //   {
-  //     fireImmediately: true,
-  //   }
-  // );
-
-  console.log("Challenge Store Initialized:", store.getState().mode);
-
   return (
     <ChallengeStoreContext.Provider value={store}>
       {children}

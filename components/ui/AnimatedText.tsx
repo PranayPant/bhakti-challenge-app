@@ -1,8 +1,5 @@
-import { TextInput, TextInputProps } from "react-native";
-import Animated, {
-  DerivedValue,
-  useAnimatedProps,
-} from "react-native-reanimated";
+import { TextInput, TextInputProps } from 'react-native';
+import Animated, { DerivedValue, useAnimatedProps } from 'react-native-reanimated';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 Animated.addWhitelistedNativeProps({ text: true });
@@ -15,14 +12,7 @@ export function AnimatedText({
 } & TextInputProps) {
   const animatedProps = useAnimatedProps(() => ({
     text: text.value,
-    defaultValue: text.value,
+    defaultValue: text.value
   }));
-  return (
-    <AnimatedTextInput
-      editable={false}
-      {...props}
-      value={text.value}
-      animatedProps={animatedProps}
-    />
-  );
+  return <AnimatedTextInput editable={false} {...props} value={text.value} animatedProps={animatedProps} />;
 }
