@@ -1,14 +1,9 @@
-import { Pressable, StyleSheet, View, Text, ViewStyle } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  interpolate,
-  withTiming,
-  SharedValue,
-} from "react-native-reanimated";
+import { Pressable, StyleSheet, Text, ViewStyle } from 'react-native';
+import Animated, { useAnimatedStyle, interpolate, withTiming, SharedValue } from 'react-native-reanimated';
 
-import { Colors } from "@/constants/Colors";
-import { ReactNode, use } from "react";
-import { useChallengeStore } from "@/stores/challenge-provider";
+import { Colors } from '@/constants/Colors';
+import { ReactNode } from 'react';
+import { useChallengeStore } from '@/stores/challenge-provider';
 
 interface CardProps {
   id: number;
@@ -29,14 +24,14 @@ export const Card = ({
   backStyle,
   frontDisplay,
   backDisplay,
-  children,
+  children
 }: CardProps) => {
   const regularCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]);
     const rotateValue = withTiming(`${spinValue}deg`, { duration: 500 });
 
     return {
-      transform: [{ rotateY: rotateValue }],
+      transform: [{ rotateY: rotateValue }]
     };
   });
 
@@ -45,7 +40,7 @@ export const Card = ({
     const rotateValue = withTiming(`${spinValue}deg`, { duration: 500 });
 
     return {
-      transform: [{ rotateY: rotateValue }],
+      transform: [{ rotateY: rotateValue }]
     };
   });
 
@@ -59,56 +54,40 @@ export const Card = ({
     <Animated.View style={rootStyle}>
       {children}
 
-      <Animated.View
-        style={[
-          cardStyle.spacer,
-          flipCardStyles.base,
-          regularCardAnimatedStyle,
-          frontStyle,
-        ]}
-      >
+      <Animated.View style={[cardStyle.spacer, flipCardStyles.base, regularCardAnimatedStyle, frontStyle]}>
         {frontDisplay}
-        {mode === "quiz" && (
+        {mode === 'quiz' && (
           <Pressable
             style={{
-              position: "absolute",
+              position: 'absolute',
               bottom: 20,
               left: 20,
               backgroundColor: Colors.purple[300],
               padding: 8,
               width: 100,
               height: 40,
-              borderRadius: 8,
+              borderRadius: 8
             }}
-            onPress={handlePress}
-          >
-            <Text style={{ margin: "auto", color: "white" }}>See answer</Text>
+            onPress={handlePress}>
+            <Text style={{ margin: 'auto', color: 'white' }}>See answer</Text>
           </Pressable>
         )}
       </Animated.View>
-      <Animated.View
-        style={[
-          cardStyle.spacer,
-          flipCardStyles.base,
-          flippedCardAnimatedStyle,
-          backStyle,
-        ]}
-      >
+      <Animated.View style={[cardStyle.spacer, flipCardStyles.base, flippedCardAnimatedStyle, backStyle]}>
         {backDisplay}
         <Pressable
           style={{
-            position: "absolute",
+            position: 'absolute',
             bottom: 20,
             left: 20,
             backgroundColor: Colors.purple[300],
             padding: 8,
             width: 100,
             height: 40,
-            borderRadius: 8,
+            borderRadius: 8
           }}
-          onPress={handlePress}
-        >
-          <Text style={{ margin: "auto", color: "white" }}>Go back</Text>
+          onPress={handlePress}>
+          <Text style={{ margin: 'auto', color: 'white' }}>Go back</Text>
         </Pressable>
       </Animated.View>
     </Animated.View>
@@ -117,41 +96,41 @@ export const Card = ({
 
 const cardStyle = StyleSheet.create({
   spacer: {
-    flex: 1,
+    flex: 1
   },
   container: {
-    flexDirection: "row",
+    flexDirection: 'row'
   },
   circle: {
     height: 80,
     width: 80,
     borderRadius: 40,
     marginBottom: 20,
-    marginLeft: 15,
+    marginLeft: 15
   },
   topLine: {
     height: 20,
     width: 120,
     borderRadius: 40,
     marginBottom: 20,
-    marginLeft: 15,
+    marginLeft: 15
   },
   bottomLine: {
     height: 20,
     width: 60,
     borderRadius: 40,
     marginBottom: 20,
-    marginLeft: 15,
-  },
+    marginLeft: 15
+  }
 });
 
 const flipCardStyles = StyleSheet.create({
   base: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backfaceVisibility: "hidden",
-  },
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backfaceVisibility: 'hidden'
+  }
 });
 
 export default Card;

@@ -2472,5 +2472,59 @@
         "line": 5048
       }
     ]
+  },
+  {
+    "id": 48,
+    "title": "śyāmā śyāma kī niṣkāma sēvā",
+    "dohas": [
+      {
+        "id": 4801,
+        "line1": "saba icchā chōḍ diyā gōviṁda rādhē।",
+        "line2": "ēka icchā śyāmā śyāma sēvā dilā dē॥",
+        "challengeId": 48,
+        "sequence": 1,
+        "line": 27
+      },
+      {
+        "id": 4802,
+        "line1": "bhakti hō ananya mērī gōviṁda rādhē।",
+        "line2": "aisī mati jahām̐ milē mōhiṁ mam̐gavā dē॥",
+        "challengeId": 48,
+        "sequence": 2,
+        "line": 451
+      },
+      {
+        "id": 4803,
+        "line1": "tērē jana sīdhē sādē gōviṁda rādhē।",
+        "line2": "maiṁ hūm̐ kuṭila ati sīdhā banā dē॥",
+        "challengeId": 48,
+        "sequence": 3,
+        "line": 379
+      },
+      {
+        "id": 4804,
+        "line1": "tō sōṁ nahiṁ mām̐gūm̐ kachu gōviṁda rādhē।",
+        "line2": "gōpī jana tē gōpī prēma dilā dē॥",
+        "challengeId": 48,
+        "sequence": 4,
+        "line": 63
+      },
+      {
+        "id": 4805,
+        "line1": "viśākhā sakhī tō gōviṁda rādhē।",
+        "line2": "sadā rahēṁ śyāmā pāsa batā dē॥",
+        "challengeId": 48,
+        "sequence": 5,
+        "line": 6357
+      },
+      {
+        "id": 4806,
+        "line1": "tana mana prāṇa tērā gōviṁda rādhē।",
+        "line2": "sēvā mēṁ lē lē mōhiṁ sēvā dilā dē॥",
+        "challengeId": 48,
+        "sequence": 6,
+        "line": 569
+      }
+    ]
   }
 ]

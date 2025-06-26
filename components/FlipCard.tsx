@@ -1,16 +1,8 @@
-import React, { ReactNode } from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
-import Animated, {
-  type SharedValue,
-  interpolate,
-  runOnJS,
-  useAnimatedReaction,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { Audio } from "expo-av";
+import React, { ReactNode } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Animated, { interpolate, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { Audio } from 'expo-av';
 
 export interface FlipCardProps {
   RegularContent: ReactNode;
@@ -18,24 +10,22 @@ export interface FlipCardProps {
   index: number;
   currentIndex: number;
   handleNext?: VoidFunction;
-  direction?: "x" | "y";
+  direction?: 'x' | 'y';
   duration?: number;
   maxVisibleItems?: number;
   cardStyles?: any;
 }
 
 export const FlipCard = ({
-  direction = "y",
+  direction = 'y',
   duration = 500,
-  maxVisibleItems = 3,
   RegularContent,
   FlippedContent,
   index,
   currentIndex,
-  handleNext,
-  cardStyles,
+  cardStyles
 }: FlipCardProps) => {
-  const isFlipDirectionX = direction === "x";
+  const isFlipDirectionX = direction === 'x';
   const isFlipped = useSharedValue(false);
 
   const regularCardAnimatedStyle = useAnimatedStyle(() => {
@@ -43,9 +33,7 @@ export const FlipCard = ({
     const rotateValue = withTiming(`${spinValue}deg`, { duration });
 
     return {
-      transform: [
-        isFlipDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
-      ],
+      transform: [isFlipDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue }]
     };
   });
 
@@ -54,49 +42,33 @@ export const FlipCard = ({
     const rotateValue = withTiming(`${spinValue}deg`, { duration });
 
     return {
-      transform: [
-        isFlipDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
-      ],
+      transform: [isFlipDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue }]
     };
   });
 
   async function playFlipSound() {
-    const { sound } = await Audio.Sound.createAsync(
-      require("@/assets/sounds/swipe.mp3")
-    );
+    const { sound } = await Audio.Sound.createAsync(require('@/assets/sounds/swipe.mp3'));
     await sound.setStatusAsync({ shouldPlay: true, rate: 1.5 });
   }
 
   const tapGesture = Gesture.Tap()
     .onBegin((event) => {
       //pressed.value = true;
-      console.log("Start Tap", currentIndex, index);
+      console.log('Start Tap', currentIndex, index);
     })
     .onEnd((event) => {
       isFlipped.value = !isFlipped.value;
-      console.log("End Tap", currentIndex, index);
+      console.log('End Tap', currentIndex, index);
       runOnJS(playFlipSound)();
     });
 
   return (
     <GestureDetector gesture={tapGesture}>
       <View style={[styles.container, cardStyles]}>
-        <Animated.View
-          style={[
-            styles.flipCard,
-            styles.regularCard,
-            regularCardAnimatedStyle,
-          ]}
-        >
+        <Animated.View style={[styles.flipCard, styles.regularCard, regularCardAnimatedStyle]}>
           {RegularContent}
         </Animated.View>
-        <Animated.View
-          style={[
-            styles.flipCard,
-            styles.flippedCard,
-            flippedCardAnimatedStyle,
-          ]}
-        >
+        <Animated.View style={[styles.flipCard, styles.flippedCard, flippedCardAnimatedStyle]}>
           {FlippedContent}
         </Animated.View>
       </View>
@@ -106,21 +78,21 @@ export const FlipCard = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   flipCard: {
-    backfaceVisibility: "hidden",
-    width: "100%",
-    height: "100%",
+    backfaceVisibility: 'hidden',
+    width: '100%',
+    height: '100%',
     borderRadius: 16,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   regularCard: {
-    position: "absolute",
-    zIndex: 1,
+    position: 'absolute',
+    zIndex: 1
   },
   flippedCard: {
-    zIndex: 2,
-  },
+    zIndex: 2
+  }
 });

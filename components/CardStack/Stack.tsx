@@ -1,31 +1,23 @@
-import React, { ReactNode, use, useCallback, useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Dimensions, Text } from "react-native";
+import React, { ReactNode } from 'react';
+import { SafeAreaView, StyleSheet, Dimensions } from 'react-native';
 import {
   useSharedValue,
   useDerivedValue,
   useAnimatedStyle,
   interpolate,
-  useAnimatedReaction,
   withTiming,
-  runOnJS,
   Easing,
-  DerivedValue,
-} from "react-native-reanimated";
-import {
-  GestureDetector,
-  GestureHandlerRootView,
-  Gesture,
-} from "react-native-gesture-handler";
+  DerivedValue
+} from 'react-native-reanimated';
+import { GestureDetector, GestureHandlerRootView, Gesture } from 'react-native-gesture-handler';
 
-import { Card } from "./Card";
-import { Colors } from "@/constants/Colors";
-import { FlashCard } from "./FlashCard";
-import { useCardPriorities } from "@/hooks/useCardPriorities";
-import { useChallengeStore } from "@/stores/challenge-provider";
+import { Card } from './Card';
+import { Colors } from '@/constants/Colors';
+import { FlashCard } from './FlashCard';
+import { useCardPriorities } from '@/hooks/useCardPriorities';
+import { useChallengeStore } from '@/stores/challenge-provider';
 
-const { height, width } = Dimensions.get("window");
-
-const DECK_SIZE = 3;
+const { height } = Dimensions.get('window');
 
 interface CardContainerProps {
   index: number;
@@ -36,22 +28,13 @@ interface CardContainerProps {
   updatePriorities: VoidFunction;
 }
 
-const CardContainer = ({
-  index,
-  color,
-  updatePriorities,
-  frontDisplay,
-  backDisplay,
-  priority,
-}: CardContainerProps) => {
+const CardContainer = ({ index, color, updatePriorities, frontDisplay, backDisplay, priority }: CardContainerProps) => {
   const BOTTOM_BUFFER = 30;
   const isFlipped = useSharedValue(false);
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
   const rotation = useSharedValue(BOTTOM_BUFFER);
-  const rotationValue = useDerivedValue(
-    () => `${interpolate(rotation.value, [BOTTOM_BUFFER, height], [0, 4])}rad`
-  );
+  const rotationValue = useDerivedValue(() => `${interpolate(rotation.value, [BOTTOM_BUFFER, height], [0, 4])}rad`);
   const isShuffling = useSharedValue(false);
 
   const panGesture = Gesture.Pan()
@@ -95,7 +78,7 @@ const CardContainer = ({
     });
 
   const animatedRootStyle = useAnimatedStyle(() => ({
-    position: "absolute",
+    position: 'absolute',
     height: 450,
     width: 350,
     bottom: withTiming(BOTTOM_BUFFER - 10 * priority.value),
@@ -109,32 +92,32 @@ const CardContainer = ({
         translateX: isShuffling.value
           ? withTiming(translateX.value, {
               duration: 200,
-              easing: Easing.linear,
+              easing: Easing.linear
             })
-          : translateX.value,
+          : translateX.value
       },
       {
-        rotate: rotationValue.value,
+        rotate: rotationValue.value
       },
       {
         scale: withTiming(interpolate(priority.value, [0, 2], [1, 0.9]), {
           duration: 200,
-          easing: Easing.quad,
-        }),
-      },
-    ],
+          easing: Easing.quad
+        })
+      }
+    ]
   }));
 
   const animatedFrontStyle = useAnimatedStyle(() => ({
     backgroundColor: color,
     borderRadius: 8,
-    zIndex: isFlipped.value ? 0 : 10,
+    zIndex: isFlipped.value ? 0 : 10
   }));
 
   const animatedBackStyle = useAnimatedStyle(() => ({
-    backgroundColor: "lightgreen",
+    backgroundColor: 'lightgreen',
     borderRadius: 8,
-    zIndex: isFlipped.value ? 10 : 0,
+    zIndex: isFlipped.value ? 10 : 0
   }));
 
   return (
@@ -147,16 +130,14 @@ const CardContainer = ({
           backDisplay={backDisplay}
           rootStyle={animatedRootStyle}
           frontStyle={animatedFrontStyle}
-          backStyle={animatedBackStyle}
-        ></Card>
+          backStyle={animatedBackStyle}></Card>
       </GestureDetector>
     </>
   );
 };
 
-export const CardStack = React.memo(() => {
-  const { shuffle, priorityOne, priorityTwo, priorityThree } =
-    useCardPriorities();
+export const CardStack = () => {
+  const { shuffle, priorityOne, priorityTwo, priorityThree } = useCardPriorities();
 
   const dataIndexOne = useChallengeStore((store) => store.dataIndexOne);
   const dataIndexTwo = useChallengeStore((store) => store.dataIndexTwo);
@@ -169,9 +150,7 @@ export const CardStack = React.memo(() => {
         <CardContainer
           index={2}
           updatePriorities={shuffle}
-          frontDisplay={
-            <FlashCard mode={mode} dataIndex={dataIndexThree} index={2} />
-          }
+          frontDisplay={<FlashCard mode={mode} dataIndex={dataIndexThree} index={2} />}
           backDisplay={<FlashCard dataIndex={dataIndexThree} index={2} />}
           priority={priorityThree}
           color={Colors.blue[400]}
@@ -179,9 +158,7 @@ export const CardStack = React.memo(() => {
         <CardContainer
           index={1}
           updatePriorities={shuffle}
-          frontDisplay={
-            <FlashCard mode={mode} dataIndex={dataIndexTwo} index={1} />
-          }
+          frontDisplay={<FlashCard mode={mode} dataIndex={dataIndexTwo} index={1} />}
           backDisplay={<FlashCard dataIndex={dataIndexTwo} index={1} />}
           priority={priorityTwo}
           color={Colors.yellow[400]}
@@ -189,9 +166,7 @@ export const CardStack = React.memo(() => {
         <CardContainer
           index={0}
           updatePriorities={shuffle}
-          frontDisplay={
-            <FlashCard mode={mode} dataIndex={dataIndexOne} index={0} />
-          }
+          frontDisplay={<FlashCard mode={mode} dataIndex={dataIndexOne} index={0} />}
           backDisplay={<FlashCard dataIndex={dataIndexOne} index={0} />}
           priority={priorityOne}
           color={Colors.red[400]}
@@ -199,13 +174,13 @@ export const CardStack = React.memo(() => {
       </SafeAreaView>
     </GestureHandlerRootView>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 8,
-  },
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8
+  }
 });
