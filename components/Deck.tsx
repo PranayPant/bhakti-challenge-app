@@ -16,12 +16,11 @@ export function Deck() {
   const setFilter = useChallengeStore((store) => store.setFilterString);
   const randomized = useChallengeStore((store) => store.randomized);
   const setRandomized = useChallengeStore((store) => store.setRandomized);
-  const goBackwards = useChallengeStore((store) => store.goBackwards);
 
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => {
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
       setFilter(filterText);
     });
     return () => {
@@ -51,9 +50,6 @@ export function Deck() {
       </View>
 
       <View className="flex flex-row gap-2 items-center m-4 mx-auto">
-        <Pressable className="bg-yellow-500 p-2 rounded-full w-fit" onPress={goBackwards}>
-          <Text>Back</Text>
-        </Pressable>
         <Pressable
           className="bg-yellow-500 p-2 rounded-full w-fit"
           onPress={() => {

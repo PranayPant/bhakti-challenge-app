@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet, Text, ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, interpolate, withTiming, SharedValue } from 'react-native-reanimated';
 
-import { Colors } from '@/constants/Colors';
 import { ReactNode } from 'react';
 import { useChallengeStore } from '@/stores/challenge-provider';
+import { Icon } from 'react-native-paper';
 
 interface CardProps {
   id: number;
@@ -26,6 +26,8 @@ export const Card = ({
   backDisplay,
   children
 }: CardProps) => {
+  const goBackwards = useChallengeStore((store) => store.goBackwards);
+
   const regularCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]);
     const rotateValue = withTiming(`${spinValue}deg`, { duration: 500 });
@@ -44,11 +46,9 @@ export const Card = ({
     };
   });
 
-  const handlePress = () => {
-    isFlipped.value = !isFlipped.value;
+  const handleBack = () => {
+    goBackwards();
   };
-
-  const mode = useChallengeStore((store) => store.mode);
 
   return (
     <Animated.View style={rootStyle}>
@@ -56,39 +56,15 @@ export const Card = ({
 
       <Animated.View style={[cardStyle.spacer, flipCardStyles.base, regularCardAnimatedStyle, frontStyle]}>
         {frontDisplay}
-        {mode === 'quiz' && (
-          <Pressable
-            style={{
-              position: 'absolute',
-              bottom: 20,
-              left: 20,
-              backgroundColor: Colors.purple[300],
-              padding: 8,
-              width: 100,
-              height: 40,
-              borderRadius: 8
-            }}
-            onPress={handlePress}>
-            <Text style={{ margin: 'auto', color: 'white' }}>See answer</Text>
-          </Pressable>
-        )}
+        <Pressable
+          className="flex flex-row items-center justify-center gap-1 h-12 absolute bottom-5 right-5 bg-white p-2 rounded-lg"
+          onPress={handleBack}>
+          <Icon source="arrow-left" color="black" size={18} />
+          <Text>Go back</Text>
+        </Pressable>
       </Animated.View>
       <Animated.View style={[cardStyle.spacer, flipCardStyles.base, flippedCardAnimatedStyle, backStyle]}>
         {backDisplay}
-        <Pressable
-          style={{
-            position: 'absolute',
-            bottom: 20,
-            left: 20,
-            backgroundColor: Colors.purple[300],
-            padding: 8,
-            width: 100,
-            height: 40,
-            borderRadius: 8
-          }}
-          onPress={handlePress}>
-          <Text style={{ margin: 'auto', color: 'white' }}>Go back</Text>
-        </Pressable>
       </Animated.View>
     </Animated.View>
   );

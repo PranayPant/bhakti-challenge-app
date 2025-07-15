@@ -36,6 +36,7 @@ const CardContainer = ({ index, color, updatePriorities, frontDisplay, backDispl
   const rotation = useSharedValue(BOTTOM_BUFFER);
   const rotationValue = useDerivedValue(() => `${interpolate(rotation.value, [BOTTOM_BUFFER, height], [0, 4])}rad`);
   const isShuffling = useSharedValue(false);
+  const mode = useChallengeStore((store) => store.mode);
 
   const panGesture = Gesture.Pan()
     .onBegin(({ translationX }) => {
@@ -76,6 +77,17 @@ const CardContainer = ({ index, color, updatePriorities, frontDisplay, backDispl
       translateX.value = 0;
       rotation.value = BOTTOM_BUFFER;
     });
+
+  const doubleTapGesture = Gesture.Tap()
+    .numberOfTaps(2)
+    .onStart(() => {
+      if (priority.value > 0 || mode !== 'quiz') {
+        return;
+      }
+      isFlipped.value = !isFlipped.value;
+    });
+
+  const composedGesture = Gesture.Race(panGesture, doubleTapGesture);
 
   const animatedRootStyle = useAnimatedStyle(() => ({
     position: 'absolute',
@@ -122,7 +134,7 @@ const CardContainer = ({ index, color, updatePriorities, frontDisplay, backDispl
 
   return (
     <>
-      <GestureDetector gesture={panGesture}>
+      <GestureDetector gesture={composedGesture}>
         <Card
           id={index}
           isFlipped={isFlipped}

@@ -512,6 +512,14 @@
         "challengeId": 10,
         "sequence": 5,
         "line": 153
+      },
+      {
+        "id": 1006,
+        "line1": "tujhasā na dīnānātha gōviṁda rādhē।",
+        "line2": "mujhasā na dīna anātha kr̥pā dē॥",
+        "challengeId": 10,
+        "sequence": 6,
+        "line": 156
       }
     ]
   },
@@ -612,6 +620,14 @@
         "challengeId": 12,
         "sequence": 5,
         "line": 25
+      },
+      {
+        "id": 1206,
+        "line1": "tana mana dhana saba gōviṁda rādhē।",
+        "line2": "sēvā mēṁ lagāūm̐ tērī aisā banā dē॥",
+        "challengeId": 12,
+        "sequence": 6,
+        "line": 30
       }
     ]
   },
@@ -658,6 +674,14 @@
         "challengeId": 13,
         "sequence": 5,
         "line": 291
+      },
+      {
+        "id": 1306,
+        "line1": "maiṁ tō tērā suta hari gōviṁda rādhē।",
+        "line2": "ēka bāra nija suta galē tē lagā dē॥",
+        "challengeId": 13,
+        "sequence": 6,
+        "line": 280
       }
     ]
   },
@@ -866,6 +890,14 @@
         "challengeId": 17,
         "sequence": 5,
         "line": 1884
+      },
+      {
+        "id": 1706,
+        "line1": "pūrṇa prapanna hō jā gōviṁda rādhē।",
+        "line2": "phira hari guru tērā kāma banā dē॥",
+        "challengeId": 17,
+        "sequence": 6,
+        "line": 1885
       }
     ]
   },
@@ -966,6 +998,14 @@
         "challengeId": 19,
         "sequence": 5,
         "line": 6597
+      },
+      {
+        "id": 1906,
+        "line1": "rādhā tērē ura mēṁ haiṁ gōviṁda rādhē।",
+        "line2": "bana jā pataṁga ḍōrī rādhā kō thamā dē॥",
+        "challengeId": 19,
+        "sequence": 6,
+        "line": 6606
       }
     ]
   },
@@ -1390,6 +1430,14 @@
         "challengeId": 27,
         "sequence": 5,
         "line": 154
+      },
+      {
+        "id": 2706,
+        "line1": "mōhiṁ jani lakhu maiṁ tō pātaka dhāmā।",
+        "line2": "apanō kr̥pālu svabhāva lakhu śyāmā॥",
+        "challengeId": 27,
+        "sequence": 6,
+        "line": 168
       }
     ]
   },
@@ -1423,7 +1471,7 @@
       },
       {
         "id": 2804,
-        "line1": "mana kaha jhalaka dikhā dē ṭuka śyāmā।।",
+        "line1": "mana kaha jhalaka dikhā dē ṭuka śyāmā।",
         "line2": "phira nāhiṁ tōrā pāchā chōhūm̐ āṭhu yāmā॥",
         "challengeId": 28,
         "sequence": 4,
@@ -1809,7 +1857,7 @@
       },
       {
         "id": 3505,
-        "line1": "braja rasa pāyō nahiṁ kamalā sī bāmā।।",
+        "line1": "braja rasa pāyō nahiṁ kamalā sī bāmā।",
         "line2": "gōpīkr̥pā pāyē braja rasa brajadhāmā॥",
         "challengeId": 35,
         "sequence": 5,
@@ -2524,6 +2572,60 @@
         "challengeId": 48,
         "sequence": 6,
         "line": 569
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "title": "guru śaraṇāgati",
+    "dohas": [
+      {
+        "id": 4901,
+        "line1": "jaba lauṁ na milē guru gōviṁda rādhē।",
+        "line2": "rō kē kahō hari tū hī guru tē milā dē॥",
+        "challengeId": 49,
+        "sequence": 1,
+        "line": 2119
+      },
+      {
+        "id": 4902,
+        "line1": "śrī guru śaraṇa jā gōviṁda rādhē।",
+        "line2": "tarka vitarka kutarka bhagā dē॥",
+        "challengeId": 49,
+        "sequence": 2,
+        "line": 1987
+      },
+      {
+        "id": 4903,
+        "line1": "buddhi nē bigāḍā saba gōviṁda rādhē।",
+        "line2": "nija buddhi kō gurubuddhi mēṁ juḍā dē॥",
+        "challengeId": 49,
+        "sequence": 3,
+        "line": 1988
+      },
+      {
+        "id": 4904,
+        "line1": "guru mēṁ ananya hō jā gōviṁda rādhē।",
+        "line2": "anya mēṁ udāsīna bhāva banā dē॥",
+        "challengeId": 49,
+        "sequence": 4,
+        "line": 2000
+      },
+      {
+        "id": 4905,
+        "line1": "divyajñāna divyaprēma gōviṁda rādhē।",
+        "line2": "jaba guru dē tō vāya dīkṣā batā dē॥",
+        "challengeId": 49,
+        "sequence": 5,
+        "line": 2124
+      },
+      {
+        "id": 4906,
+        "line1": "saccā hōya sadguru gōviṁda rādhē।",
+        "line2": "saccī hō śaraṇa jō tō bigarī banā dē॥",
+        "challengeId": 49,
+        "sequence": 6,
+        "line": 2005
       }
     ]
   }
