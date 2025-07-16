@@ -1,10 +1,10 @@
 import { Pressable, Text, TextInput, View, Keyboard } from 'react-native';
-
 import { CardStack } from '@/components/CardStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 import { Select } from './ui/Select';
 import { useChallengeStore } from '@/stores/challenge-provider';
+import { useTourGuideController } from 'rn-tourguide';
 
 export function Deck() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
@@ -18,6 +18,14 @@ export function Deck() {
   const setRandomized = useChallengeStore((store) => store.setRandomized);
 
   const insets = useSafeAreaInsets();
+  const { canStart, start, TourGuideZone } = useTourGuideController();
+
+  useEffect(() => {
+    if (canStart) {
+      start(2);
+      start(1);
+    }
+  }, [canStart]);
 
   useEffect(() => {
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
@@ -39,24 +47,29 @@ export function Deck() {
             setFilterText(text);
           }}
         />
-        <Pressable
-          onPress={() => {
-            setFilter(filterText);
-            Keyboard.dismiss();
-          }}
-          className="p-2 bg-yellow-500 w-fit self-center rounded-2xl">
-          <Text>Filter</Text>
-        </Pressable>
+        <TourGuideZone text={'Step 1! 🎉'} zone={1}>
+          <Pressable
+            onPress={() => {
+              setFilter(filterText);
+              Keyboard.dismiss();
+            }}
+            className="p-2 bg-yellow-500 w-fit self-center rounded-2xl">
+            <Text>Filter</Text>
+          </Pressable>
+        </TourGuideZone>
       </View>
 
       <View className="flex flex-row gap-2 items-center m-4 mx-auto">
-        <Pressable
-          className="bg-yellow-500 p-2 rounded-full w-fit"
-          onPress={() => {
-            setRandomized(!randomized);
-          }}>
-          <Text>Random ({randomized ? 'On' : 'Off'})</Text>
-        </Pressable>
+        <TourGuideZone text={'Step 2! 🎉'} zone={2}>
+          <Pressable
+            className="bg-yellow-500 p-2 rounded-full w-fit"
+            onPress={() => {
+              setRandomized(!randomized);
+            }}>
+            <Text>Random ({randomized ? 'On' : 'Off'})</Text>
+          </Pressable>
+        </TourGuideZone>
+
         <Pressable onPress={sort} className="p-2 bg-yellow-500 w-fit rounded-2xl">
           <Text>Sort ({sortOrder})</Text>
         </Pressable>
