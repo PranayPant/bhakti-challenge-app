@@ -16,6 +16,7 @@ import { Colors } from '@/constants/Colors';
 import { FlashCard } from './FlashCard';
 import { useCardPriorities } from '@/hooks/useCardPriorities';
 import { useChallengeStore } from '@/stores/challenge-provider';
+import { TourGuideZone } from 'rn-tourguide';
 
 const { height } = Dimensions.get('window');
 

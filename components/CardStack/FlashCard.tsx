@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native';
 import { clsx } from 'clsx';
 import { useChallengeStore } from '@/stores/challenge-provider';
+import { TourGuideZone } from 'rn-tourguide';
 
 export interface FlashCardProps {
   index: number;
@@ -19,30 +20,38 @@ export const FlashCard = ({ dataIndex, mode = 'default' }: FlashCardProps) => {
 
   return (
     <View className="h-[300px] rounded-lg m-4">
-      <View className="ml-auto mb-4 flex flex-row ">
-        <View className=" w-[200px] h-[48px] p-1 top-1 right-2 border border-white bg-yellow-300 rounded-xl">
-          <Text className="text-blue-700 my-auto w-[150px] text-center text-md font-semibold">
-            {challenge?.title || 'Bhakti Challenge'}
-          </Text>
-        </View>
-        <View className="absolute right-0 size-[56px] border border-white bg-blue-700 rounded-[999px]">
-          <Text className="text-white m-auto text-lg">{challenge?.id}</Text>
-          <View className="absolute bottom-0 right-0 size-[20px] bg-white rounded-[999px]">
-            <Text className="m-auto text-sm">{doha.sequence}</Text>
+      <TourGuideZone
+        zone={1}
+        text="See the challenge name in yellow, challenge number in blue circle, and doha sequence (1-6) in small white circle.">
+        <View className="ml-auto mb-4 flex flex-row ">
+          <View className=" w-[200px] h-[48px] p-1 top-1 right-2 border border-white bg-yellow-300 rounded-xl">
+            <Text className="text-blue-700 my-auto w-[150px] text-center text-md font-semibold">
+              {challenge?.title || 'Bhakti Challenge'}
+            </Text>
+          </View>
+          <View className="absolute right-0 size-[56px] border border-white bg-blue-700 rounded-[999px]">
+            <Text className="text-white m-auto text-lg">{challenge?.id}</Text>
+            <View className="absolute bottom-0 right-0 size-[20px] bg-white rounded-[999px]">
+              <Text className="m-auto text-sm">{doha.sequence}</Text>
+            </View>
           </View>
         </View>
-      </View>
+      </TourGuideZone>
 
-      <View className="bg-white h-[250px] rounded-lg justify-center items-center gap-2 p-2">
-        {mode === 'quiz' ? (
-          <Text className="text-5xl text-center">?</Text>
-        ) : (
-          <>
-            <Text className={clsx('text-center', language === 'hi' ? 'text-2xl' : 'text-xl')}>{doha.line1}</Text>
-            <Text className={clsx('text-center', language === 'hi' ? 'text-2xl' : 'text-xl')}>{doha.line2}</Text>
-          </>
-        )}
-      </View>
+      <TourGuideZone
+        zone={2}
+        text="The doha is centered in the card. Swipe to cycle through the dohas of the selected challenge sequentially.">
+        <View className="bg-white h-[250px] rounded-lg justify-center items-center gap-2 p-2">
+          {mode === 'quiz' ? (
+            <Text className="text-5xl text-center">?</Text>
+          ) : (
+            <>
+              <Text className={clsx('text-center', language === 'hi' ? 'text-2xl' : 'text-xl')}>{doha.line1}</Text>
+              <Text className={clsx('text-center', language === 'hi' ? 'text-2xl' : 'text-xl')}>{doha.line2}</Text>
+            </>
+          )}
+        </View>
+      </TourGuideZone>
     </View>
   );
 };

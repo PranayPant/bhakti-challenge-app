@@ -4,8 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 import { Select } from './ui/Select';
 import { useChallengeStore } from '@/stores/challenge-provider';
-import { useTourGuideController } from 'rn-tourguide';
-
+import { TourGuideZone } from 'rn-tourguide';
 export function Deck() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
   const language = useChallengeStore((store) => store.language);
@@ -18,14 +17,6 @@ export function Deck() {
   const setRandomized = useChallengeStore((store) => store.setRandomized);
 
   const insets = useSafeAreaInsets();
-  const { canStart, start, TourGuideZone } = useTourGuideController();
-
-  useEffect(() => {
-    if (canStart) {
-      start(2);
-      start(1);
-    }
-  }, [canStart]);
 
   useEffect(() => {
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
@@ -47,7 +38,9 @@ export function Deck() {
             setFilterText(text);
           }}
         />
-        <TourGuideZone text={'Step 1! 🎉'} zone={1}>
+        <TourGuideZone
+          text={'By default, all challenges are selected. Tap here to filter the challenges based on your input.'}
+          zone={3}>
           <Pressable
             onPress={() => {
               setFilter(filterText);
@@ -60,7 +53,7 @@ export function Deck() {
       </View>
 
       <View className="flex flex-row gap-2 items-center m-4 mx-auto">
-        <TourGuideZone text={'Step 2! 🎉'} zone={2}>
+        <TourGuideZone text={'You can randomize the order of the dohas for a fun trivia game!'} zone={4}>
           <Pressable
             className="bg-yellow-500 p-2 rounded-full w-fit"
             onPress={() => {
@@ -70,18 +63,23 @@ export function Deck() {
           </Pressable>
         </TourGuideZone>
 
-        <Pressable onPress={sort} className="p-2 bg-yellow-500 w-fit rounded-2xl">
-          <Text>Sort ({sortOrder})</Text>
-        </Pressable>
-        <Select
-          onSelect={(value) => setLanguage(value as 'hi' | 'hi_trans')}
-          options={[
-            { label: 'Hindi', value: 'hi' },
-            { label: 'Hindi (Transliterated)', value: 'hi_trans' }
-          ]}
-          btnText={`Lang (${language})`}
-          btnClass="p-2 bg-yellow-500 rounded-2xl"
-        />
+        <TourGuideZone text={'Tap here to sort the challenges in ascending or descending order.'} zone={5}>
+          <Pressable onPress={sort} className="p-2 bg-yellow-500 w-fit rounded-2xl">
+            <Text>Sort ({sortOrder})</Text>
+          </Pressable>
+        </TourGuideZone>
+
+        <TourGuideZone text={'You can read the dohas in Hindi or Transliterated Hindi.'} zone={6}>
+          <Select
+            onSelect={(value) => setLanguage(value as 'hi' | 'hi_trans')}
+            options={[
+              { label: 'Hindi', value: 'hi' },
+              { label: 'Hindi (Transliterated)', value: 'hi_trans' }
+            ]}
+            btnText={`Lang (${language})`}
+            btnClass="p-2 bg-yellow-500 rounded-2xl"
+          />
+        </TourGuideZone>
       </View>
 
       {challenges.length > 0 ? (
