@@ -1,11 +1,10 @@
 import { Pressable, Text, TextInput, View, Keyboard } from 'react-native';
-
 import { CardStack } from '@/components/CardStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 import { Select } from './ui/Select';
 import { useChallengeStore } from '@/stores/challenge-provider';
-
+import { TourGuideZone } from 'rn-tourguide';
 export function Deck() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
   const language = useChallengeStore((store) => store.language);
@@ -16,12 +15,11 @@ export function Deck() {
   const setFilter = useChallengeStore((store) => store.setFilterString);
   const randomized = useChallengeStore((store) => store.randomized);
   const setRandomized = useChallengeStore((store) => store.setRandomized);
-  const goBackwards = useChallengeStore((store) => store.goBackwards);
 
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => {
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
       setFilter(filterText);
     });
     return () => {
@@ -40,39 +38,48 @@ export function Deck() {
             setFilterText(text);
           }}
         />
-        <Pressable
-          onPress={() => {
-            setFilter(filterText);
-            Keyboard.dismiss();
-          }}
-          className="p-2 bg-yellow-500 w-fit self-center rounded-2xl">
-          <Text>Filter</Text>
-        </Pressable>
+        <TourGuideZone
+          text={'By default, all challenges are selected. Tap here to filter the challenges based on your input.'}
+          zone={3}>
+          <Pressable
+            onPress={() => {
+              setFilter(filterText);
+              Keyboard.dismiss();
+            }}
+            className="p-2 bg-yellow-500 w-fit self-center rounded-2xl">
+            <Text>Filter</Text>
+          </Pressable>
+        </TourGuideZone>
       </View>
 
       <View className="flex flex-row gap-2 items-center m-4 mx-auto">
-        <Pressable className="bg-yellow-500 p-2 rounded-full w-fit" onPress={goBackwards}>
-          <Text>Back</Text>
-        </Pressable>
-        <Pressable
-          className="bg-yellow-500 p-2 rounded-full w-fit"
-          onPress={() => {
-            setRandomized(!randomized);
-          }}>
-          <Text>Random ({randomized ? 'On' : 'Off'})</Text>
-        </Pressable>
-        <Pressable onPress={sort} className="p-2 bg-yellow-500 w-fit rounded-2xl">
-          <Text>Sort ({sortOrder})</Text>
-        </Pressable>
-        <Select
-          onSelect={(value) => setLanguage(value as 'hi' | 'hi_trans')}
-          options={[
-            { label: 'Hindi', value: 'hi' },
-            { label: 'Hindi (Transliterated)', value: 'hi_trans' }
-          ]}
-          btnText={`Lang (${language})`}
-          btnClass="p-2 bg-yellow-500 rounded-2xl"
-        />
+        <TourGuideZone text={'You can randomize the order of the dohas for a fun trivia game!'} zone={4}>
+          <Pressable
+            className="bg-yellow-500 p-2 rounded-full w-fit"
+            onPress={() => {
+              setRandomized(!randomized);
+            }}>
+            <Text>Random ({randomized ? 'On' : 'Off'})</Text>
+          </Pressable>
+        </TourGuideZone>
+
+        <TourGuideZone text={'Tap here to sort the challenges in ascending or descending order.'} zone={5}>
+          <Pressable onPress={sort} className="p-2 bg-yellow-500 w-fit rounded-2xl">
+            <Text>Sort ({sortOrder})</Text>
+          </Pressable>
+        </TourGuideZone>
+
+        <TourGuideZone text={'You can read the dohas in Hindi or Transliterated Hindi.'} zone={6}>
+          <Select
+            onSelect={(value) => setLanguage(value as 'hi' | 'hi_trans')}
+            options={[
+              { label: 'Hindi', value: 'hi' },
+              { label: 'Hindi (Transliterated)', value: 'hi_trans' }
+            ]}
+            btnText={`Lang (${language})`}
+            btnClass="p-2 bg-yellow-500 rounded-2xl"
+          />
+        </TourGuideZone>
       </View>
 
       {challenges.length > 0 ? (

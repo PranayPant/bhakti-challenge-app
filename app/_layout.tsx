@@ -9,6 +9,8 @@ import '../global.css';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { TourGuideProvider, TourGuideZoneByPosition } from 'rn-tourguide';
+import { TourPortal } from '@/components/TourDialog';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -29,16 +31,29 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView>
-      <SafeAreaProvider>
-        <PaperProvider theme={MD3DarkTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
-        </PaperProvider>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <TourGuideProvider androidStatusBarVisible>
+      <GestureHandlerRootView>
+        <SafeAreaProvider>
+          <PaperProvider theme={MD3DarkTheme}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+            <TourPortal />
+          </PaperProvider>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+      <TourGuideZoneByPosition
+        text="Try the quiz mode to challenge yourself! Double tap on the card to flip and reveal the dohas!"
+        zone={7}
+        shape={'circle'}
+        isTourGuide
+        bottom={20}
+        right={45}
+        width={100}
+        height={100}
+      />
+    </TourGuideProvider>
   );
 }
