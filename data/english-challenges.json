@@ -2628,5 +2628,59 @@
         "line": 2005
       }
     ]
+  },
+  {
+    "id": 50,
+    "title": "mana kī śaraṇāgati",
+    "dohas": [
+      {
+        "id": 5001,
+        "line1": "mana gaḍh aisā jāmēṁ gōviṁda rādhē।",
+        "line2": "nitya vihāra karēṁ nikarana nā dē॥",
+        "challengeId": 50,
+        "sequence": 1,
+        "line": 1228
+      },
+      {
+        "id": 5002,
+        "line1": "mana gaḍh aisā jāmēṁ gōviṁda rādhē।",
+        "line2": "indrina hōḍ guru mōhiṁ sēvā dē॥",
+        "challengeId": 50,
+        "sequence": 2,
+        "line": 1230
+      },
+      {
+        "id": 5003,
+        "line1": "mana gaḍh aisā jāmēṁ gōviṁda rādhē।",
+        "line2": "ēka kāmanā hō mōhiṁ prēma sudhā dē॥",
+        "challengeId": 50,
+        "sequence": 3,
+        "line": 1231
+      },
+      {
+        "id": 5004,
+        "line1": "mana gaḍh aisā jāmēṁ gōviṁda rādhē।",
+        "line2": "guru tē kahu mōhiṁ pada sēvā dē॥",
+        "challengeId": 50,
+        "sequence": 4,
+        "line": 1235
+      },
+      {
+        "id": 5005,
+        "line1": "managaḍh aisā jāmēṁ gōviṁda rādhē।",
+        "line2": "guru ura baiṭhē hari jhalaka dikhā dē॥",
+        "challengeId": 50,
+        "sequence": 5,
+        "line": 1237
+      },
+      {
+        "id": 5006,
+        "line1": "managaḍh aisā jāmēṁ gōviṁda rādhē।",
+        "line2": "jita dēkhūm̐ hari guru hī dikhā dē॥",
+        "challengeId": 50,
+        "sequence": 6,
+        "line": 1241
+      }
+    ]
   }
 ]

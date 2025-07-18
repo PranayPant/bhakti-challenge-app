@@ -38,3 +38,10 @@ yarn-error.*
 app-example
 
 *.secret*
+
+# native directories
+android
+ios
+
+# android studio
+.idea
