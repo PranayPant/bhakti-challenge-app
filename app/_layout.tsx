@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import 'react-native-reanimated';
 import '../global.css';
 
@@ -17,7 +18,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    ArvindR: require('../assets/fonts/arvindr.ttf')
+    NotoSansDevanagari: require('../assets/fonts/NotoSansDevanagari-Regular.ttf')
   });
 
   useEffect(() => {
@@ -49,10 +50,11 @@ export default function RootLayout() {
         zone={7}
         shape={'circle'}
         isTourGuide
-        bottom={20}
-        right={45}
+        bottom={Platform.OS === 'ios' ? 30 : 0}
+        right={Platform.OS === 'ios' ? 55 : 60}
         width={100}
         height={100}
+        tooltipBottomOffset={50}
       />
     </TourGuideProvider>
   );
