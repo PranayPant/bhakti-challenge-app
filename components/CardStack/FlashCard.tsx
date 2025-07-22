@@ -24,8 +24,8 @@ export const FlashCard = ({ dataIndex, mode = 'default' }: FlashCardProps) => {
         zone={1}
         text="See the challenge name in yellow, challenge number in blue circle, and doha sequence (1-6) in small white circle.">
         <View className="ml-auto mb-4 flex flex-row ">
-          <View className=" w-[200px] h-[48px] p-1 top-1 right-2 border border-white bg-yellow-300 rounded-xl">
-            <Text className="text-blue-700 my-auto w-[150px] text-center text-md font-semibold">
+          <View className=" w-[250px] h-[48px] p-1 top-1 right-2 border border-white bg-yellow-300 rounded-xl">
+            <Text className="text-blue-700 w-4/5 my-auto line-clamp-2 text-ellipsis text-center text-lg font-semibold">
               {challenge?.title || (language === 'hi' ? 'भक्ति चैलेंज' : 'Bhakti Challenge')}
             </Text>
           </View>
