@@ -19,11 +19,17 @@ export function Deck() {
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+    // Android only
+    const didHideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setFilter(filterText);
+    });
+    // iOS only, faster
+    const willHideSubscription = Keyboard.addListener('keyboardWillHide', () => {
       setFilter(filterText);
     });
     return () => {
-      hideSubscription.remove();
+      didHideSubscription.remove();
+      willHideSubscription.remove();
     };
   }, [filterText, setFilter]);
 

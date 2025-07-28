@@ -60,7 +60,7 @@ export function TourPortal() {
           <Text>Would you like to take a tour of the app?</Text>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={() => setVisible(false)}>No, thanks</Button>
+          <Button onPress={handleTourEnd}>No, thanks</Button>
           <Button onPress={handleTour}>Yes, let&apos;s go!</Button>
         </Dialog.Actions>
       </Dialog>
