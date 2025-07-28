@@ -2682,5 +2682,59 @@
         "line": 1241
       }
     ]
+  },
+  {
+    "id": 51,
+    "title": "hari-guru hī haiṁ saccē sakhā",
+    "dohas": [
+      {
+        "id": 5101,
+        "line1": "mērē tō ēka hī haiṁ gōviṁda rādhē।",
+        "line2": "sām̐cō yāra nandakumāra batā dē॥",
+        "challengeId": 51,
+        "sequence": 1,
+        "line": 89
+      },
+      {
+        "id": 5102,
+        "line1": "rūpadhyāna karūm̐ jaba gōviṁda rādhē।",
+        "line2": "nīṁda mērī sauta bani ākē sulā dē॥",
+        "challengeId": 51,
+        "sequence": 2,
+        "line": 216
+      },
+      {
+        "id": 5103,
+        "line1": "maiṁnē tōhiṁ dēkhā nahiṁ gōviṁda rādhē।",
+        "line2": "dhyāna karūm̐ kaisē ṭuka jhām̐kī dikhā dē॥",
+        "challengeId": 51,
+        "sequence": 3,
+        "line": 234
+      },
+      {
+        "id": 5104,
+        "line1": "tū tō mērē ura mēṁ hai gōviṁda rādhē।",
+        "line2": "mujhakō bhī yaha anubhūti karā dē॥",
+        "challengeId": 51,
+        "sequence": 4,
+        "line": 250
+      },
+      {
+        "id": 5105,
+        "line1": "kaisā tū sakhā hai gōviṁda rādhē।",
+        "line2": "ēka bāra bhī nā yāra kahi kē bulā dē॥",
+        "challengeId": 51,
+        "sequence": 5,
+        "line": 263
+      },
+      {
+        "id": 5106,
+        "line1": "vēda kahē nitya sakhā gōviṁda rādhē।",
+        "line2": "usī nitya nātē kō aba tō nibhā dē॥",
+        "challengeId": 51,
+        "sequence": 6,
+        "line": 266
+      }
+    ]
   }
 ]
