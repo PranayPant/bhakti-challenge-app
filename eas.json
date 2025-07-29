@@ -20,6 +20,9 @@
       "android": {
         "serviceAccountKeyPath": "./bhakti-challenge-app-android.secret.json",
         "track": "alpha"
+      },
+      "ios": {
+        "ascAppId": "6748763930"
       }
     }
   }
