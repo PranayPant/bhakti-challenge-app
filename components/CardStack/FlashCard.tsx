@@ -24,12 +24,12 @@ export const FlashCard = ({ dataIndex, mode = 'default' }: FlashCardProps) => {
         zone={1}
         text="See the challenge name in yellow, challenge number in blue circle, and doha sequence (1-6) in small white circle.">
         <View className="ml-auto mb-4 flex flex-row ">
-          <View className=" w-[250px] h-[48px] p-1 top-1 right-2 border border-white bg-yellow-300 rounded-xl">
-            <Text className="text-blue-700 w-4/5 my-auto line-clamp-2 text-ellipsis text-center text-lg font-semibold">
+          <View className=" w-[270px] h-[58px] p-1 top-1 right-4 border border-white bg-yellow-300 rounded-xl">
+            <Text className="text-blue-700 w-4/5 mx-auto my-auto right-[23px] flex flex-row flex-wrap text-center text-lg font-semibold">
               {challenge?.title || (language === 'hi' ? 'भक्ति चैलेंज' : 'Bhakti Challenge')}
             </Text>
           </View>
-          <View className="absolute right-0 size-[56px] border border-white bg-blue-700 rounded-[999px]">
+          <View className="absolute right-0 size-[66px] border border-white bg-blue-700 rounded-[999px]">
             <Text className="text-white m-auto text-lg">{challenge?.id}</Text>
             <View className="absolute bottom-0 right-0 size-[20px] bg-white rounded-[999px]">
               <Text className="m-auto text-sm">{doha.sequence}</Text>
