@@ -14,7 +14,10 @@
     "lint": "expo lint"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFiles": [
+      "./jestSetupFile.ts"
+    ]
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.48.3",
