@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Text, Pressable } from 'react-native';
-import { Menu } from 'react-native-paper';
+import { Button, Menu } from 'react-native-paper';
 
 export interface SelectProps {
   btnText: string;
@@ -20,9 +19,9 @@ export const Select = ({ btnText, options, btnClass, onSelect }: SelectProps) =>
       onDismiss={closeMenu}
       anchorPosition="bottom"
       anchor={
-        <Pressable className={btnClass} onPress={openMenu}>
-          <Text>{btnText}</Text>
-        </Pressable>
+        <Button compact mode="contained" buttonColor="#eab308" onPress={openMenu}>
+          {btnText}
+        </Button>
       }>
       {options.map((option) => (
         <Menu.Item

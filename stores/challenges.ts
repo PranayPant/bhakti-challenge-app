@@ -1,8 +1,10 @@
+import Toast from 'react-native-toast-message';
 import { createStore } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { filterChallenges, sortDohas } from './utils';
 import englishChallenges from '@/data/english-challenges.json';
 import hindiChallenges from '@/data/hindi-challenges.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface Challenge {
   id: number; // Unique identifier for the challenge
@@ -32,6 +34,7 @@ export interface ChallengeStoreState {
   filterString: string; // String to filter challenges by ID or title
   mode: 'quiz' | 'default'; // Mode of the deck, either quiz or default
   randomized: boolean; // Flag to indicate if the challenges are randomized
+  isFetchingChallenges: boolean; // Flag to indicate if remote challenges are being fetched
 }
 
 export interface ChallengeStoreActions {
@@ -44,6 +47,7 @@ export interface ChallengeStoreActions {
   setFilterString: (filter: string) => void; // Function to set the filter string
   setMode: (mode: 'quiz' | 'default') => void; // Function to set the mode of the deck
   setRandomized: (randomized: boolean) => void; // Function to set the randomized flag
+  fetchRemoteChallenges: () => Promise<void>; // Function to fetch challenges from a remote source
 }
 
 export type ChallengeStore = ChallengeStoreState & ChallengeStoreActions;
@@ -62,6 +66,7 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
       filterString: '', // Initialize with an empty string
       mode: 'default', // Default mode of the deck
       randomized: false, // Default randomized state
+      isFetchingChallenges: false, // Default fetching state
       ...initProps, // Spread any initial properties passed in
       goBackwards: () => {
         set((state) => {
@@ -102,8 +107,8 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
           };
         });
       },
-      setLanguage(language) {
-        const updatedState = handleLanguageChange(language, get().selectedChallenges, get().dohas);
+      async setLanguage(language) {
+        const updatedState = await updateChallengesData(language, get().selectedChallenges, get().dohas);
         set({ language, ...updatedState });
       },
 
@@ -129,18 +134,90 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
       setDataIndexThree: (index: number) =>
         set((state) => ({
           dataIndexThree: index % state.dohas.length
-        }))
+        })),
+      fetchRemoteChallenges: async () => {
+        const currentLang = get().language === 'hi' ? 'hindi' : 'english';
+        let challengesData: Challenge[] = [];
+        let sanityApiToken, sanityProjectId, sanityDataset, sanityApiVersion;
+        if (process.env.EXPO_PUBLIC_ENV) {
+          sanityApiToken = process.env.EXPO_PUBLIC_SANITY_API_TOKEN;
+          sanityProjectId = process.env.EXPO_PUBLIC_SANITY_PROJECT_ID;
+          sanityDataset = process.env.EXPO_PUBLIC_SANITY_DATASET;
+          sanityApiVersion = process.env.EXPO_PUBLIC_SANITY_API_VERSION;
+        } else {
+          sanityApiToken = process.env.SANITY_API_TOKEN;
+          sanityProjectId = process.env.SANITY_PROJECT_ID;
+          sanityDataset = process.env.SANITY_DATASET;
+          sanityApiVersion = process.env.SANITY_API_VERSION;
+        }
+        try {
+          set({ isFetchingChallenges: true });
+          const challengesResponse = await fetch(
+            `https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`,
+            {
+              headers: {
+                Authorization: `Bearer ${sanityApiToken}`,
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+              },
+              method: 'POST',
+              body: JSON.stringify({
+                query: `*[_type == '${currentLang}']|order(id){id,title,dohas,category,book}`
+              })
+            }
+          );
+          console.log('Challenges fetched from remote:', challengesResponse.status);
+          Toast.show({
+            type: 'success',
+            text1: 'Challenges fetched successfully from remote.'
+          });
+
+          const json = await challengesResponse.json();
+          challengesData = json.result;
+        } catch (error) {
+          Toast.show({
+            type: 'error',
+            text1: 'Failed to fetch challenges from remote.'
+          });
+          console.error('Failed to fetch challenges from remote:', error);
+          challengesData = get().challengesData;
+        } finally {
+          set({ isFetchingChallenges: false });
+        }
+
+        try {
+          await AsyncStorage.setItem(`challengesData_${currentLang}`, JSON.stringify(challengesData));
+        } catch (error) {
+          console.error('Failed to save challenges data to AsyncStorage:', error);
+        }
+        const updatedChallengesState = await updateChallengesData(
+          get().language,
+          get().selectedChallenges,
+          get().dohas
+        );
+
+        set(updatedChallengesState);
+      }
     }))
   );
 };
 
-export const handleLanguageChange = (
+export const updateChallengesData = async (
   language: ChallengeStore['language'],
   selectedChallenges: Challenge[],
   selectedDohas: Doha[]
 ) => {
   let challengesData: Challenge[] = [];
-  if (language === 'hi_trans') {
+  let storedChallenges: Challenge[] | null = null;
+  try {
+    const storedChallengesString = await AsyncStorage.getItem(`challengesData_${language}`);
+    storedChallenges = storedChallengesString ? JSON.parse(storedChallengesString) : null;
+  } catch (error) {
+    console.error('Failed to get challenges data from AsyncStorage:', error);
+  }
+  if (storedChallenges) {
+    challengesData = storedChallenges;
+  } else if (language === 'hi_trans') {
     challengesData = englishChallenges;
   } else if (language === 'hi') {
     challengesData = hindiChallenges;

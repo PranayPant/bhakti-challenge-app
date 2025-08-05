@@ -1,10 +1,11 @@
-import { Pressable, Text, TextInput, View, Keyboard } from 'react-native';
+import { Text, TextInput, View, Keyboard } from 'react-native';
 import { CardStack } from '@/components/CardStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 import { Select } from './ui/Select';
 import { useChallengeStore } from '@/stores/challenge-provider';
 import { TourGuideZone } from 'rn-tourguide';
+import { Button } from 'react-native-paper';
 export function Deck() {
   const challenges = useChallengeStore((store) => store.selectedChallenges);
   const language = useChallengeStore((store) => store.language);
@@ -15,6 +16,8 @@ export function Deck() {
   const setFilter = useChallengeStore((store) => store.setFilterString);
   const randomized = useChallengeStore((store) => store.randomized);
   const setRandomized = useChallengeStore((store) => store.setRandomized);
+  const isFetchingChallenges = useChallengeStore((store) => store.isFetchingChallenges);
+  const fetchRemoteChallenges = useChallengeStore((store) => store.fetchRemoteChallenges);
 
   const insets = useSafeAreaInsets();
 
@@ -35,7 +38,7 @@ export function Deck() {
 
   return (
     <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }} className="flex-1 bg-purple-500 px-4">
-      <View className="flex flex-row gap-2 ml-auto mt-4">
+      <View className="flex flex-row items-center gap-2 ml-auto mt-4">
         <TextInput
           className="h-10 flex-1 px-4 py-2 rounded-2xl border border-gray-300 bg-white text-black"
           placeholder="e.g 1-12,33,40+"
@@ -47,32 +50,36 @@ export function Deck() {
         <TourGuideZone
           text={'By default, all challenges are selected. Tap here to filter the challenges based on your input.'}
           zone={3}>
-          <Pressable
+          <Button
+            mode="contained"
+            buttonColor="#eab308"
             onPress={() => {
               setFilter(filterText);
               Keyboard.dismiss();
-            }}
-            className="p-2 bg-yellow-500 w-fit self-center rounded-2xl">
-            <Text>Filter</Text>
-          </Pressable>
+            }}>
+            Filter
+          </Button>
         </TourGuideZone>
       </View>
 
-      <View className="flex flex-row gap-2 items-center m-4 mx-auto">
+      <View className="flex flex-row flex-wrap gap-2 items-center m-4 mx-auto">
         <TourGuideZone text={'You can randomize the order of the dohas for a fun trivia game!'} zone={4}>
-          <Pressable
-            className="bg-yellow-500 p-2 rounded-full w-fit"
+          <Button
+            compact
+            mode={randomized ? 'contained' : 'outlined'}
+            buttonColor={randomized ? '#eab308' : '#fff'}
+            textColor={randomized ? undefined : '#000'}
             onPress={() => {
               setRandomized(!randomized);
             }}>
-            <Text>Random ({randomized ? 'On' : 'Off'})</Text>
-          </Pressable>
+            Rand ({randomized ? 'On' : 'Off'})
+          </Button>
         </TourGuideZone>
 
         <TourGuideZone text={'Tap here to sort the challenges in ascending or descending order.'} zone={5}>
-          <Pressable onPress={sort} className="p-2 bg-yellow-500 w-fit rounded-2xl">
-            <Text>Sort ({sortOrder})</Text>
-          </Pressable>
+          <Button compact mode="contained" buttonColor="#eab308" onPress={sort}>
+            Sort ({sortOrder})
+          </Button>
         </TourGuideZone>
 
         <TourGuideZone text={'You can read the dohas in Hindi or Transliterated Hindi.'} zone={6}>
@@ -80,11 +87,24 @@ export function Deck() {
             onSelect={(value) => setLanguage(value as 'hi' | 'hi_trans')}
             options={[
               { label: 'Hindi', value: 'hi' },
-              { label: 'Hindi (Transliterated)', value: 'hi_trans' }
+              { label: 'English', value: 'hi_trans' }
             ]}
-            btnText={`Lang (${language})`}
-            btnClass="p-2 bg-yellow-500 rounded-2xl"
+            btnText={`${language === 'hi' ? 'Hindi' : 'English'}`}
           />
+        </TourGuideZone>
+        <TourGuideZone text={'Get the latest challenges by refreshing.'} zone={7}>
+          <Button
+            compact
+            mode="contained"
+            disabled={isFetchingChallenges}
+            loading={isFetchingChallenges}
+            buttonColor="#eab308"
+            icon={'download'}
+            onPress={() => {
+              fetchRemoteChallenges();
+            }}>
+            Update
+          </Button>
         </TourGuideZone>
       </View>
 
