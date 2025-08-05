@@ -19,9 +19,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup GitHub CLI
-        uses: actions/setup-gh-cli@v2
-
       - name: Install jq
         run: sudo apt-get install -y jq
 
