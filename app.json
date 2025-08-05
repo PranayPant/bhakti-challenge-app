@@ -2,7 +2,7 @@
   "expo": {
     "name": "bhakti-challenge-app",
     "slug": "bhakti-challenge-app",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/murali.png",
     "scheme": "myapp",
@@ -22,7 +22,9 @@
       },
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.punch.up.bhaktichallengeapp",
-      "permissions": ["android.permission.RECORD_AUDIO"]
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -43,13 +45,17 @@
       [
         "expo-asset",
         {
-          "assets": ["./assets/images/"]
+          "assets": [
+            "./assets/images/"
+          ]
         }
       ],
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/NotoSansDevanagari-Regular.ttf"]
+          "fonts": [
+            "./assets/fonts/NotoSansDevanagari-Regular.ttf"
+          ]
         }
       ],
       "expo-web-browser"
