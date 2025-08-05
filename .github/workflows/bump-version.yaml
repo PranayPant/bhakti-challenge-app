@@ -1,0 +1,106 @@
+name: Auto bump app version on PR
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup GitHub CLI
+        uses: actions/setup-gh-cli@v2
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Get base branch version
+        id: base_version
+        run: |
+          git fetch origin master
+          BASE_VERSION=$(git show origin/master:app.json | jq -r '.expo.version')
+          echo "base_version=$BASE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get PR labels
+        id: get_labels
+        run: |
+          PR_NUM=${{ github.event.pull_request.number }}
+          LABELS=$(gh pr view $PR_NUM --json labels -q '.labels[].name' || echo "")
+          echo "labels=$LABELS" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determine bump type
+        id: determine_bump
+        run: |
+          bump="patch"  # default bump
+
+          for label in ${{ steps.get_labels.outputs.labels }}; do
+            case "$label" in
+              release:major) bump="major" ;;
+              release:minor) bump="minor" ;;
+              release:patch) bump="patch" ;;
+            esac
+          done
+
+          echo "bump_type=$bump" >> $GITHUB_OUTPUT
+
+      - name: Get current PR version
+        id: pr_version
+        run: |
+          PR_VERSION=$(jq -r '.expo.version' app.json)
+          echo "pr_version=$PR_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Decide if bump needed
+        id: check_bump
+        run: |
+          base="${{ steps.base_version.outputs.base_version }}"
+          pr="${{ steps.pr_version.outputs.pr_version }}"
+          bump="${{ steps.determine_bump.outputs.bump_type }}"
+
+          if [ "$pr" != "$base" ]; then
+            echo "version_bumped=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "version_bumped=false" >> $GITHUB_OUTPUT
+
+          IFS='.' read -r major minor patch <<< "$base"
+          case "$bump" in
+            patch) patch=$((patch + 1)) ;;
+            minor) minor=$((minor + 1)); patch=0 ;;
+            major) major=$((major + 1)); minor=0; patch=0 ;;
+          esac
+          new_version="$major.$minor.$patch"
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
+
+      - name: Auto bump version if needed
+        if: steps.check_bump.outputs.version_bumped == 'false'
+        env:
+          GIT_USER_NAME: github-actions
+          GIT_USER_EMAIL: github-actions@github.com
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          NEW_VERSION="${{ steps.check_bump.outputs.new_version }}"
+          echo "Bumping version to $NEW_VERSION"
+
+          jq ".expo.version = \"$NEW_VERSION\"" app.json > tmp.json && mv tmp.json app.json
+          jq ".version = \"$NEW_VERSION\"" package.json > tmp.json && mv tmp.json package.json
+
+          git config user.name "$GIT_USER_NAME"
+          git config user.email "$GIT_USER_EMAIL"
+
+          git add app.json package.json
+          git commit -m "ci: auto bump app version to $NEW_VERSION"
+          git push "https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}.git" HEAD:${{ github.head_ref }}
