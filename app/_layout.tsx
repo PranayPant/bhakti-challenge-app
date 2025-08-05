@@ -8,8 +8,9 @@ import { Platform } from 'react-native';
 import 'react-native-reanimated';
 import '../global.css';
 
+import Toast from 'react-native-toast-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TourGuideProvider, TourGuideZoneByPosition } from 'rn-tourguide';
 import { TourPortal } from '@/components/TourDialog';
 
@@ -17,6 +18,8 @@ import { TourPortal } from '@/components/TourDialog';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const insets = useSafeAreaInsets();
+
   const [loaded] = useFonts({
     NotoSansDevanagari: require('../assets/fonts/NotoSansDevanagari-Regular.ttf')
   });
@@ -47,7 +50,7 @@ export default function RootLayout() {
       </GestureHandlerRootView>
       <TourGuideZoneByPosition
         text="Try the quiz mode to challenge yourself! Double tap on the card to flip and reveal the dohas!"
-        zone={7}
+        zone={8}
         shape={'circle'}
         isTourGuide
         bottom={Platform.OS === 'ios' ? 30 : 0}
@@ -56,6 +59,7 @@ export default function RootLayout() {
         height={100}
         tooltipBottomOffset={50}
       />
+      <Toast position="bottom" bottomOffset={insets.bottom + 50} visibilityTime={2000} />
     </TourGuideProvider>
   );
 }
