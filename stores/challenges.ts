@@ -24,7 +24,7 @@ export type Doha = {
 
 export interface ChallengeStoreState {
   sortOrder: string; // Sort order for the challenges
-  language: 'hi' | 'hi_trans'; // Language of the challenges
+  language: 'hindi' | 'english'; // Language of the challenges
   challengesData: Challenge[]; // Array of selected challenge data
   selectedChallenges: Challenge[]; // Array of selected challenges
   dohas: Doha[]; // Array of dohas associated with the challenges
@@ -39,7 +39,7 @@ export interface ChallengeStoreState {
 
 export interface ChallengeStoreActions {
   goBackwards: VoidFunction; // Function to go backwards in the deck
-  setLanguage: (language: 'hi' | 'hi_trans') => void; // Function to toggle the language between Hindi and English
+  setLanguage: (language: ChallengeStoreState['language']) => void; // Function to toggle the language between Hindi and English
   toggleSort: () => void; // Function to sort challenges by ID
   setDataIndexOne: (index: number) => void; // Function to set the index for the first data item
   setDataIndexTwo: (index: number) => void; // Function to set the index for the second data item
@@ -48,6 +48,7 @@ export interface ChallengeStoreActions {
   setMode: (mode: 'quiz' | 'default') => void; // Function to set the mode of the deck
   setRandomized: (randomized: boolean) => void; // Function to set the randomized flag
   fetchRemoteChallenges: () => Promise<void>; // Function to fetch challenges from a remote source
+  initializeChallenges: () => Promise<void>; // Function to initialize challenges from local storage or default data
 }
 
 export type ChallengeStore = ChallengeStoreState & ChallengeStoreActions;
@@ -55,7 +56,7 @@ export type ChallengeStore = ChallengeStoreState & ChallengeStoreActions;
 export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
   return createStore(
     subscribeWithSelector<ChallengeStore>((set, get) => ({
-      language: 'hi', // Default language
+      language: 'hindi', // Default language
       sortOrder: 'asc', // Default sort order
       challengesData: hindiChallenges,
       selectedChallenges: hindiChallenges, // Initialize with an empty array
@@ -108,7 +109,12 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         });
       },
       async setLanguage(language) {
-        const updatedState = await updateChallengesData(language, get().selectedChallenges, get().dohas);
+        const updatedState = await loadChallengesData(
+          language,
+          get().selectedChallenges,
+          get().dohas,
+          get().filterString
+        );
         set({ language, ...updatedState });
       },
 
@@ -135,8 +141,17 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         set((state) => ({
           dataIndexThree: index % state.dohas.length
         })),
+      initializeChallenges: async () => {
+        const updatedState = await loadChallengesData(
+          get().language,
+          get().selectedChallenges,
+          get().dohas,
+          get().filterString
+        );
+        set(updatedState);
+      },
       fetchRemoteChallenges: async () => {
-        const currentLang = get().language === 'hi' ? 'hindi' : 'english';
+        const currentLang = get().language;
         let challengesData: Challenge[] = [];
         let sanityApiToken, sanityProjectId, sanityDataset, sanityApiVersion;
         if (process.env.EXPO_PUBLIC_ENV) {
@@ -190,10 +205,11 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         } catch (error) {
           console.error('Failed to save challenges data to AsyncStorage:', error);
         }
-        const updatedChallengesState = await updateChallengesData(
+        const updatedChallengesState = await loadChallengesData(
           get().language,
           get().selectedChallenges,
-          get().dohas
+          get().dohas,
+          get().filterString
         );
 
         set(updatedChallengesState);
@@ -202,10 +218,11 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
   );
 };
 
-export const updateChallengesData = async (
+export const loadChallengesData = async (
   language: ChallengeStore['language'],
   selectedChallenges: Challenge[],
-  selectedDohas: Doha[]
+  selectedDohas: Doha[],
+  filterString: string = ''
 ) => {
   let challengesData: Challenge[] = [];
   let storedChallenges: Challenge[] | null = null;
@@ -217,9 +234,9 @@ export const updateChallengesData = async (
   }
   if (storedChallenges) {
     challengesData = storedChallenges;
-  } else if (language === 'hi_trans') {
+  } else if (language === 'english') {
     challengesData = englishChallenges;
-  } else if (language === 'hi') {
+  } else if (language === 'hindi') {
     challengesData = hindiChallenges;
   }
 
@@ -231,6 +248,9 @@ export const updateChallengesData = async (
   let currentSelectedChallenges = selectedChallenges;
 
   currentSelectedChallenges = currentSelectedChallenges.length ? currentSelectedChallenges : challengesData;
+  if (filterString) {
+    currentSelectedChallenges = filterChallenges(currentSelectedChallenges, filterString);
+  }
   const newSelectedChallenges = currentSelectedChallenges.map((challenge) => {
     const newChallenge = challengesData.find((c) => c.id === challenge.id);
     return newChallenge ? { ...newChallenge } : challenge;

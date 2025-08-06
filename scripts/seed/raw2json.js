@@ -12,7 +12,7 @@ function parseBhaktiChallenges(rawText, language) {
   const dohaLine2Regex = /(.+)॥\s*(\d+)\s*.*$/;
 
   const challenges = [];
-  const lines = rawText.split("\n");
+  const lines = rawText.split('\n');
   let match;
   let dohaToAdd = null;
 
@@ -24,7 +24,7 @@ function parseBhaktiChallenges(rawText, language) {
     match = trimmedLine.match(titleRegex);
 
     if (match) {
-      const title = match[1].trim();
+      const title = match[1].trim() || (language === 'hindi' ? 'भक्ति चैलेंज' : 'Bhakti Challenge');
       const id = parseInt(match[2], 10);
       const category = match[3] ? match[3].trim() : undefined;
 
@@ -33,7 +33,7 @@ function parseBhaktiChallenges(rawText, language) {
         id,
         title,
         dohas: [],
-        category,
+        category
       };
 
       challenges.push(challenge);
@@ -44,13 +44,12 @@ function parseBhaktiChallenges(rawText, language) {
       const dohaMatch1 = trimmedLine.match(dohaLine1Regex);
       const dohaMatch2 = trimmedLine.match(dohaLine2Regex);
       if (dohaMatch1) {
-        const dohaText = dohaMatch1[1].trim() + "।";
+        const dohaText = dohaMatch1[1].trim() + '।';
         dohaToAdd = {
-          line1: dohaText,
+          line1: dohaText
         };
-
       } else if (dohaMatch2) {
-        const dohaText = dohaMatch2[1].trim() + "॥";
+        const dohaText = dohaMatch2[1].trim() + '॥';
         const sequence = lastChallenge.dohas.length + 1;
         const line = parseInt(dohaMatch2[2], 10);
         dohaToAdd = {
@@ -59,7 +58,7 @@ function parseBhaktiChallenges(rawText, language) {
           line2: dohaText,
           challengeId: lastChallenge.id,
           sequence,
-          line,
+          line
         };
         lastChallenge.dohas.push(dohaToAdd);
       } else {
@@ -77,7 +76,7 @@ function parseBhaktiChallenges(rawText, language) {
 /**
  * Main function to handle both possible formats
  */
-function raw2Json(rawText, language = "hindi") {
+function raw2Json(rawText, language = 'hindi') {
   // First try the regex-based parser
   let challenges = parseBhaktiChallenges(rawText, language);
 
