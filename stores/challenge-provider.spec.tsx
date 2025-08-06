@@ -14,4 +14,11 @@ describe('useChallengeStore', () => {
     expect(result.current.dataIndexTwo).toBe(1);
     expect(result.current.dataIndexThree).toBe(2);
   });
+
+  it('should throw error when used outside of provider', () => {
+    // Test that the hook throws an error when used without the provider
+    expect(() => {
+      renderHook(() => useChallengeStore((state) => state));
+    }).toThrow('useChallengeStore must be used within ChallengeStoreProvider');
+  });
 });

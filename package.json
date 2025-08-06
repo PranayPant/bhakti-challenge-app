@@ -17,7 +17,26 @@
     "preset": "jest-expo",
     "setupFiles": [
       "./jestSetupFile.ts"
-    ]
+    ],
+    "collectCoverageFrom": [
+      "stores/**/*.{ts,tsx}",
+      "!stores/**/*.spec.{ts,tsx}",
+      "!stores/**/*.test.{ts,tsx}"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "coverageThreshold": {
+      "stores/**/*.{ts,tsx}": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.48.3",

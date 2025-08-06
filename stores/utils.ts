@@ -14,7 +14,7 @@ export const sortDohas = (dohas: Doha[], sortOrder: string) => {
       return b.sequence - a.sequence;
     }
   });
-  return sortedDohas;
+  return [...sortedDohas];
 };
 
 export const filterChallenges = (challengeData: Challenge[], filterString: string) => {

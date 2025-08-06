@@ -109,12 +109,7 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         });
       },
       async setLanguage(language) {
-        const updatedState = await loadChallengesData(
-          language,
-          get().selectedChallenges,
-          get().dohas,
-          get().filterString
-        );
+        const updatedState = await loadChallengesData(language, get().sortOrder, get().filterString);
         set({ language, ...updatedState });
       },
 
@@ -142,17 +137,12 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
           dataIndexThree: index % state.dohas.length
         })),
       initializeChallenges: async () => {
-        const updatedState = await loadChallengesData(
-          get().language,
-          get().selectedChallenges,
-          get().dohas,
-          get().filterString
-        );
+        const updatedState = await loadChallengesData(get().language, get().sortOrder, get().filterString);
         set(updatedState);
       },
       fetchRemoteChallenges: async () => {
-        const currentLang = get().language;
-        let challengesData: Challenge[] = [];
+        let englishChallengesData: Challenge[] = [];
+        let hindiChallengesData: Challenge[] = [];
         let sanityApiToken, sanityProjectId, sanityDataset, sanityApiVersion;
         if (process.env.EXPO_PUBLIC_ENV) {
           sanityApiToken = process.env.EXPO_PUBLIC_SANITY_API_TOKEN;
@@ -167,50 +157,57 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         }
         try {
           set({ isFetchingChallenges: true });
-          const challengesResponse = await fetch(
-            `https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`,
-            {
+          // Fetch both English and Hindi challenges in parallel
+          const queries = {
+            english: `*[_type == 'english']|order(id){id,title,dohas,category,book}`,
+            hindi: `*[_type == 'hindi']|order(id){id,title,dohas,category,book}`
+          };
+
+          const fetchChallenge = (lang: 'english' | 'hindi') =>
+            fetch(`https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`, {
               headers: {
                 Authorization: `Bearer ${sanityApiToken}`,
                 'Content-Type': 'application/json',
                 Accept: 'application/json'
               },
               method: 'POST',
-              body: JSON.stringify({
-                query: `*[_type == '${currentLang}']|order(id){id,title,dohas,category,book}`
-              })
-            }
-          );
-          console.log('Challenges fetched from remote:', challengesResponse.status);
+              body: JSON.stringify({ query: queries[lang] })
+            }).then((res) => res.json());
+
+          const [englishJson, hindiJson] = await Promise.all([fetchChallenge('english'), fetchChallenge('hindi')]);
+
           Toast.show({
             type: 'success',
-            text1: 'Challenges fetched successfully from remote.'
+            text1: 'Successfully updated challenges!'
           });
 
-          const json = await challengesResponse.json();
-          challengesData = json.result;
+          if (englishJson.result) {
+            englishChallengesData = englishJson.result;
+          } else {
+            console.error('No English challenges found in the response.');
+          }
+          if (hindiJson.result) {
+            hindiChallengesData = hindiJson.result;
+          } else {
+            console.error('No Hindi challenges found in the response.');
+          }
         } catch (error) {
           Toast.show({
             type: 'error',
             text1: 'Failed to fetch challenges from remote.'
           });
           console.error('Failed to fetch challenges from remote:', error);
-          challengesData = get().challengesData;
         } finally {
           set({ isFetchingChallenges: false });
         }
 
         try {
-          await AsyncStorage.setItem(`challengesData_${currentLang}`, JSON.stringify(challengesData));
+          await AsyncStorage.setItem(`challengesData_hindi`, JSON.stringify(hindiChallengesData));
+          await AsyncStorage.setItem(`challengesData_english`, JSON.stringify(englishChallengesData));
         } catch (error) {
           console.error('Failed to save challenges data to AsyncStorage:', error);
         }
-        const updatedChallengesState = await loadChallengesData(
-          get().language,
-          get().selectedChallenges,
-          get().dohas,
-          get().filterString
-        );
+        const updatedChallengesState = await loadChallengesData(get().language, get().sortOrder, get().filterString);
 
         set(updatedChallengesState);
       }
@@ -220,8 +217,7 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
 
 export const loadChallengesData = async (
   language: ChallengeStore['language'],
-  selectedChallenges: Challenge[],
-  selectedDohas: Doha[],
+  sortOrder: ChallengeStore['sortOrder'] = 'asc',
   filterString: string = ''
 ) => {
   let challengesData: Challenge[] = [];
@@ -245,31 +241,18 @@ export const loadChallengesData = async (
     return {};
   }
 
-  let currentSelectedChallenges = selectedChallenges;
+  let currentSelectedChallenges = challengesData;
 
-  currentSelectedChallenges = currentSelectedChallenges.length ? currentSelectedChallenges : challengesData;
   if (filterString) {
     currentSelectedChallenges = filterChallenges(currentSelectedChallenges, filterString);
   }
-  const newSelectedChallenges = currentSelectedChallenges.map((challenge) => {
-    const newChallenge = challengesData.find((c) => c.id === challenge.id);
-    return newChallenge ? { ...newChallenge } : challenge;
-  });
 
-  let currentDohas = selectedDohas;
-
-  currentDohas = currentDohas.length ? currentDohas : currentSelectedChallenges.flatMap((challenge) => challenge.dohas);
-
-  const newDohas = currentDohas.map((doha) => {
-    const newDoha = newSelectedChallenges
-      .find((c) => c.id === doha.challengeId)
-      ?.dohas.find((newDoha) => newDoha.sequence === doha.sequence);
-    return newDoha ? { ...newDoha } : doha;
-  });
+  let newDohas = currentSelectedChallenges.flatMap((challenge) => challenge.dohas);
+  let newDohasSorted = sortDohas(newDohas, sortOrder);
 
   return {
     challengesData: [...challengesData],
-    selectedChallenges: newSelectedChallenges,
-    dohas: newDohas
+    selectedChallenges: [...currentSelectedChallenges],
+    dohas: newDohasSorted
   };
 };
