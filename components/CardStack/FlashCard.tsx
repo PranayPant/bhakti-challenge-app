@@ -26,7 +26,7 @@ export const FlashCard = ({ dataIndex, mode = 'default' }: FlashCardProps) => {
         <View className="ml-auto mb-4 flex flex-row ">
           <View className=" w-[270px] h-[58px] p-1 top-1 right-4 border border-white bg-yellow-300 rounded-xl">
             <Text className="text-blue-700 w-4/5 mx-auto my-auto right-[23px] flex flex-row flex-wrap text-center text-lg font-semibold">
-              {challenge?.title || (language === 'hi' ? 'भक्ति चैलेंज' : 'Bhakti Challenge')}
+              {challenge?.title || (language === 'hindi' ? 'भक्ति चैलेंज' : 'Bhakti Challenge')}
             </Text>
           </View>
           <View className="absolute right-0 size-[66px] border border-white bg-blue-700 rounded-[999px]">
@@ -48,11 +48,17 @@ export const FlashCard = ({ dataIndex, mode = 'default' }: FlashCardProps) => {
           ) : (
             <>
               <Text
-                className={clsx('text-center font-[NotoSansDevanagari]', language === 'hi' ? 'text-2xl' : 'text-xl')}>
+                className={clsx(
+                  'text-center font-[NotoSansDevanagari]',
+                  language === 'hindi' ? 'text-2xl' : 'text-xl'
+                )}>
                 {doha.line1}
               </Text>
               <Text
-                className={clsx('text-center font-[NotoSansDevanagari]', language === 'hi' ? 'text-2xl' : 'text-xl')}>
+                className={clsx(
+                  'text-center font-[NotoSansDevanagari]',
+                  language === 'hindi' ? 'text-2xl' : 'text-xl'
+                )}>
                 {doha.line2}
               </Text>
             </>

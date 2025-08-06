@@ -7,7 +7,7 @@ describe('useChallengeStore', () => {
     const { result } = renderHook(() => useChallengeStore((state) => state), {
       wrapper: ChallengeStoreProvider
     });
-    expect(result.current.language).toBe('hi');
+    expect(result.current.language).toBe('hindi');
     expect(result.current.filterString).toBe('');
     expect(result.current.sortOrder).toBe('asc');
     expect(result.current.dataIndexOne).toBe(0);
