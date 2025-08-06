@@ -7,6 +7,7 @@ import { useChallengeStore } from '@/stores/challenge-provider';
 import { TourGuideZone } from 'rn-tourguide';
 import { Button } from 'react-native-paper';
 export function Deck() {
+  const insets = useSafeAreaInsets();
   const challenges = useChallengeStore((store) => store.selectedChallenges);
   const language = useChallengeStore((store) => store.language);
   const setLanguage = useChallengeStore((store) => store.setLanguage);
@@ -18,8 +19,11 @@ export function Deck() {
   const setRandomized = useChallengeStore((store) => store.setRandomized);
   const isFetchingChallenges = useChallengeStore((store) => store.isFetchingChallenges);
   const fetchRemoteChallenges = useChallengeStore((store) => store.fetchRemoteChallenges);
+  const initializeChallenges = useChallengeStore((store) => store.initializeChallenges);
 
-  const insets = useSafeAreaInsets();
+  useEffect(() => {
+    initializeChallenges();
+  }, [initializeChallenges]);
 
   useEffect(() => {
     // Android only
@@ -84,12 +88,12 @@ export function Deck() {
 
         <TourGuideZone text={'You can read the dohas in Hindi or Transliterated Hindi.'} zone={6}>
           <Select
-            onSelect={(value) => setLanguage(value as 'hi' | 'hi_trans')}
+            onSelect={(value) => setLanguage(value as 'hindi' | 'english')}
             options={[
-              { label: 'Hindi', value: 'hi' },
-              { label: 'English', value: 'hi_trans' }
+              { label: 'Hindi', value: 'hindi' },
+              { label: 'English', value: 'english' }
             ]}
-            btnText={`${language === 'hi' ? 'Hindi' : 'English'}`}
+            btnText={`${language === 'hindi' ? 'Hindi' : 'English'}`}
           />
         </TourGuideZone>
         <TourGuideZone text={'Get the latest challenges by refreshing.'} zone={7}>
@@ -112,7 +116,7 @@ export function Deck() {
         <CardStack />
       ) : (
         <View className="flex-1 items-center justify-center">
-          <Text className="text-lg text-center text-gray-500">
+          <Text className="text-lg text-center text-white">
             No challenges selected. Please select some challenges to play with.
           </Text>
         </View>

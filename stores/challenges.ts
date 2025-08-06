@@ -24,7 +24,7 @@ export type Doha = {
 
 export interface ChallengeStoreState {
   sortOrder: string; // Sort order for the challenges
-  language: 'hi' | 'hi_trans'; // Language of the challenges
+  language: 'hindi' | 'english'; // Language of the challenges
   challengesData: Challenge[]; // Array of selected challenge data
   selectedChallenges: Challenge[]; // Array of selected challenges
   dohas: Doha[]; // Array of dohas associated with the challenges
@@ -39,7 +39,7 @@ export interface ChallengeStoreState {
 
 export interface ChallengeStoreActions {
   goBackwards: VoidFunction; // Function to go backwards in the deck
-  setLanguage: (language: 'hi' | 'hi_trans') => void; // Function to toggle the language between Hindi and English
+  setLanguage: (language: ChallengeStoreState['language']) => void; // Function to toggle the language between Hindi and English
   toggleSort: () => void; // Function to sort challenges by ID
   setDataIndexOne: (index: number) => void; // Function to set the index for the first data item
   setDataIndexTwo: (index: number) => void; // Function to set the index for the second data item
@@ -48,6 +48,7 @@ export interface ChallengeStoreActions {
   setMode: (mode: 'quiz' | 'default') => void; // Function to set the mode of the deck
   setRandomized: (randomized: boolean) => void; // Function to set the randomized flag
   fetchRemoteChallenges: () => Promise<void>; // Function to fetch challenges from a remote source
+  initializeChallenges: () => Promise<void>; // Function to initialize challenges from local storage or default data
 }
 
 export type ChallengeStore = ChallengeStoreState & ChallengeStoreActions;
@@ -55,7 +56,7 @@ export type ChallengeStore = ChallengeStoreState & ChallengeStoreActions;
 export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
   return createStore(
     subscribeWithSelector<ChallengeStore>((set, get) => ({
-      language: 'hi', // Default language
+      language: 'hindi', // Default language
       sortOrder: 'asc', // Default sort order
       challengesData: hindiChallenges,
       selectedChallenges: hindiChallenges, // Initialize with an empty array
@@ -108,7 +109,7 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         });
       },
       async setLanguage(language) {
-        const updatedState = await updateChallengesData(language, get().selectedChallenges, get().dohas);
+        const updatedState = await loadChallengesData(language, get().sortOrder, get().filterString);
         set({ language, ...updatedState });
       },
 
@@ -135,9 +136,13 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         set((state) => ({
           dataIndexThree: index % state.dohas.length
         })),
+      initializeChallenges: async () => {
+        const updatedState = await loadChallengesData(get().language, get().sortOrder, get().filterString);
+        set(updatedState);
+      },
       fetchRemoteChallenges: async () => {
-        const currentLang = get().language === 'hi' ? 'hindi' : 'english';
-        let challengesData: Challenge[] = [];
+        let englishChallengesData: Challenge[] = [];
+        let hindiChallengesData: Challenge[] = [];
         let sanityApiToken, sanityProjectId, sanityDataset, sanityApiVersion;
         if (process.env.EXPO_PUBLIC_ENV) {
           sanityApiToken = process.env.EXPO_PUBLIC_SANITY_API_TOKEN;
@@ -152,49 +157,57 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         }
         try {
           set({ isFetchingChallenges: true });
-          const challengesResponse = await fetch(
-            `https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`,
-            {
+          // Fetch both English and Hindi challenges in parallel
+          const queries = {
+            english: `*[_type == 'english']|order(id){id,title,dohas,category,book}`,
+            hindi: `*[_type == 'hindi']|order(id){id,title,dohas,category,book}`
+          };
+
+          const fetchChallenge = (lang: 'english' | 'hindi') =>
+            fetch(`https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`, {
               headers: {
                 Authorization: `Bearer ${sanityApiToken}`,
                 'Content-Type': 'application/json',
                 Accept: 'application/json'
               },
               method: 'POST',
-              body: JSON.stringify({
-                query: `*[_type == '${currentLang}']|order(id){id,title,dohas,category,book}`
-              })
-            }
-          );
-          console.log('Challenges fetched from remote:', challengesResponse.status);
+              body: JSON.stringify({ query: queries[lang] })
+            }).then((res) => res.json());
+
+          const [englishJson, hindiJson] = await Promise.all([fetchChallenge('english'), fetchChallenge('hindi')]);
+
           Toast.show({
             type: 'success',
-            text1: 'Challenges fetched successfully from remote.'
+            text1: 'Successfully updated challenges!'
           });
 
-          const json = await challengesResponse.json();
-          challengesData = json.result;
+          if (englishJson.result) {
+            englishChallengesData = englishJson.result;
+          } else {
+            console.error('No English challenges found in the response.');
+          }
+          if (hindiJson.result) {
+            hindiChallengesData = hindiJson.result;
+          } else {
+            console.error('No Hindi challenges found in the response.');
+          }
         } catch (error) {
           Toast.show({
             type: 'error',
             text1: 'Failed to fetch challenges from remote.'
           });
           console.error('Failed to fetch challenges from remote:', error);
-          challengesData = get().challengesData;
         } finally {
           set({ isFetchingChallenges: false });
         }
 
         try {
-          await AsyncStorage.setItem(`challengesData_${currentLang}`, JSON.stringify(challengesData));
+          await AsyncStorage.setItem(`challengesData_hindi`, JSON.stringify(hindiChallengesData));
+          await AsyncStorage.setItem(`challengesData_english`, JSON.stringify(englishChallengesData));
         } catch (error) {
           console.error('Failed to save challenges data to AsyncStorage:', error);
         }
-        const updatedChallengesState = await updateChallengesData(
-          get().language,
-          get().selectedChallenges,
-          get().dohas
-        );
+        const updatedChallengesState = await loadChallengesData(get().language, get().sortOrder, get().filterString);
 
         set(updatedChallengesState);
       }
@@ -202,10 +215,10 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
   );
 };
 
-export const updateChallengesData = async (
+export const loadChallengesData = async (
   language: ChallengeStore['language'],
-  selectedChallenges: Challenge[],
-  selectedDohas: Doha[]
+  sortOrder: ChallengeStore['sortOrder'] = 'asc',
+  filterString: string = ''
 ) => {
   let challengesData: Challenge[] = [];
   let storedChallenges: Challenge[] | null = null;
@@ -217,9 +230,9 @@ export const updateChallengesData = async (
   }
   if (storedChallenges) {
     challengesData = storedChallenges;
-  } else if (language === 'hi_trans') {
+  } else if (language === 'english') {
     challengesData = englishChallenges;
-  } else if (language === 'hi') {
+  } else if (language === 'hindi') {
     challengesData = hindiChallenges;
   }
 
@@ -228,28 +241,18 @@ export const updateChallengesData = async (
     return {};
   }
 
-  let currentSelectedChallenges = selectedChallenges;
+  let currentSelectedChallenges = challengesData;
 
-  currentSelectedChallenges = currentSelectedChallenges.length ? currentSelectedChallenges : challengesData;
-  const newSelectedChallenges = currentSelectedChallenges.map((challenge) => {
-    const newChallenge = challengesData.find((c) => c.id === challenge.id);
-    return newChallenge ? { ...newChallenge } : challenge;
-  });
+  if (filterString) {
+    currentSelectedChallenges = filterChallenges(currentSelectedChallenges, filterString);
+  }
 
-  let currentDohas = selectedDohas;
-
-  currentDohas = currentDohas.length ? currentDohas : currentSelectedChallenges.flatMap((challenge) => challenge.dohas);
-
-  const newDohas = currentDohas.map((doha) => {
-    const newDoha = newSelectedChallenges
-      .find((c) => c.id === doha.challengeId)
-      ?.dohas.find((newDoha) => newDoha.sequence === doha.sequence);
-    return newDoha ? { ...newDoha } : doha;
-  });
+  let newDohas = currentSelectedChallenges.flatMap((challenge) => challenge.dohas);
+  let newDohasSorted = sortDohas(newDohas, sortOrder);
 
   return {
     challengesData: [...challengesData],
-    selectedChallenges: newSelectedChallenges,
-    dohas: newDohas
+    selectedChallenges: [...currentSelectedChallenges],
+    dohas: newDohasSorted
   };
 };
