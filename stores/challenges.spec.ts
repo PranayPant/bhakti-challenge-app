@@ -1,5 +1,5 @@
 import { createChallengeStore, loadChallengesData } from './challenges';
-import { sortDohas, filterChallenges } from './utils';
+import { sortDohas, sortChallenges, sortChallengesAndFlattenDohas, filterChallenges } from './utils';
 import defaultHindiChallenges from '@/data/hindi-challenges.json';
 import defaultEnglishChallenges from '@/data/english-challenges.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -54,7 +54,7 @@ describe('Challenge Store', () => {
     expect(filteredChallenges[2].id).toBe(3);
   });
 
-  it('should toggle sort order and update dohas', () => {
+  it('should toggle sort order and sort challenges while maintaining dohas sequence', () => {
     const store = createChallengeStore();
     const initialSortOrder = store.getState().sortOrder;
     const initialDohas = [...store.getState().dohas];
@@ -66,6 +66,21 @@ describe('Challenge Store', () => {
 
     expect(newSortOrder).toBe(initialSortOrder === 'asc' ? 'desc' : 'asc');
     expect(newDohas).not.toEqual(initialDohas);
+
+    // Verify that dohas within each challenge maintain their sequential order
+    let currentChallengeId = newDohas[0]?.challengeId;
+    let lastSequence = 0;
+
+    for (const doha of newDohas) {
+      if (doha.challengeId === currentChallengeId) {
+        expect(doha.sequence).toBeGreaterThan(lastSequence);
+        lastSequence = doha.sequence;
+      } else {
+        // New challenge, reset sequence tracking
+        currentChallengeId = doha.challengeId;
+        lastSequence = doha.sequence;
+      }
+    }
   });
 
   it('should set mode correctly', () => {
@@ -425,7 +440,10 @@ describe('Challenge LoadChallengesData Function', () => {
 
     const challenges = await loadChallengesData(language, 'asc', filterString);
 
-    const expectedIds = defaultHindiChallenges.filter((c) => c.id >= 5).map((c) => c.id);
+    const expectedIds = defaultHindiChallenges
+      .filter((c) => c.id >= 5)
+      .map((c) => c.id)
+      .sort((a, b) => a - b);
     expect(challenges.selectedChallenges?.map((c) => c.id)).toEqual(expectedIds);
   });
 
@@ -750,6 +768,91 @@ describe('Challenge Store Utils', () => {
       const result = filterChallenges(mockChallenges, 'abc,def,xyz');
       expect(result).toHaveLength(mockChallenges.length);
       expect(result).toEqual(mockChallenges);
+    });
+  });
+
+  describe('sortChallenges', () => {
+    const mockChallenges = [
+      { id: 3, title: 'Challenge 3', dohas: [] },
+      { id: 1, title: 'Challenge 1', dohas: [] },
+      { id: 2, title: 'Challenge 2', dohas: [] }
+    ];
+
+    it('should sort challenges by ID in ascending order', () => {
+      const result = sortChallenges(mockChallenges, 'asc');
+      expect(result.map((c) => c.id)).toEqual([1, 2, 3]);
+    });
+
+    it('should sort challenges by ID in descending order', () => {
+      const result = sortChallenges(mockChallenges, 'desc');
+      expect(result.map((c) => c.id)).toEqual([3, 2, 1]);
+    });
+
+    it('should not mutate original array', () => {
+      const original = [...mockChallenges];
+      const originalCopy = [...mockChallenges];
+
+      sortChallenges(original, 'asc');
+
+      expect(original).toEqual(originalCopy);
+    });
+  });
+
+  describe('sortChallengesAndFlattenDohas', () => {
+    const mockChallenges = [
+      {
+        id: 2,
+        title: 'Challenge 2',
+        dohas: [
+          { id: 201, line1: 'Line 1', line2: 'Line 2', challengeId: 2, sequence: 1 },
+          { id: 202, line1: 'Line 3', line2: 'Line 4', challengeId: 2, sequence: 2 }
+        ]
+      },
+      {
+        id: 1,
+        title: 'Challenge 1',
+        dohas: [
+          { id: 101, line1: 'Line A', line2: 'Line B', challengeId: 1, sequence: 1 },
+          { id: 102, line1: 'Line C', line2: 'Line D', challengeId: 1, sequence: 2 }
+        ]
+      }
+    ];
+
+    it('should sort challenges in ascending order and flatten dohas while maintaining sequence', () => {
+      const result = sortChallengesAndFlattenDohas(mockChallenges, 'asc');
+
+      expect(result).toHaveLength(4);
+      expect(result[0].challengeId).toBe(1);
+      expect(result[0].sequence).toBe(1);
+      expect(result[1].challengeId).toBe(1);
+      expect(result[1].sequence).toBe(2);
+      expect(result[2].challengeId).toBe(2);
+      expect(result[2].sequence).toBe(1);
+      expect(result[3].challengeId).toBe(2);
+      expect(result[3].sequence).toBe(2);
+    });
+
+    it('should sort challenges in descending order and flatten dohas while maintaining sequence', () => {
+      const result = sortChallengesAndFlattenDohas(mockChallenges, 'desc');
+
+      expect(result).toHaveLength(4);
+      expect(result[0].challengeId).toBe(2);
+      expect(result[0].sequence).toBe(1);
+      expect(result[1].challengeId).toBe(2);
+      expect(result[1].sequence).toBe(2);
+      expect(result[2].challengeId).toBe(1);
+      expect(result[2].sequence).toBe(1);
+      expect(result[3].challengeId).toBe(1);
+      expect(result[3].sequence).toBe(2);
+    });
+
+    it('should not mutate original challenges array', () => {
+      const original = [...mockChallenges];
+      const originalCopy = JSON.parse(JSON.stringify(mockChallenges));
+
+      sortChallengesAndFlattenDohas(original, 'asc');
+
+      expect(original).toEqual(originalCopy);
     });
   });
 });
