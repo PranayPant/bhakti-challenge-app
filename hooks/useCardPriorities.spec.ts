@@ -1,9 +1,9 @@
-import { renderHook, act } from "@testing-library/react-native";
-import { useCardPriorities } from "./useCardPriorities";
-import { ChallengeStoreProvider } from "@/stores/challenge-provider";
+import { renderHook, act } from '@testing-library/react-native';
+import { useCardPriorities } from './useCardPriorities';
+import { ChallengeStoreProvider } from '@/stores/challenge-provider';
 
-describe("useCardPriorities", () => {
-  it("should initialize card priorities correctly", () => {
+describe('useCardPriorities', () => {
+  it('should initialize card priorities correctly', () => {
     const { result } = renderHook(() => useCardPriorities(), {
       wrapper: ChallengeStoreProvider
     });
@@ -15,7 +15,7 @@ describe("useCardPriorities", () => {
     expect(result.current.dataIndexThree.value).toBe(2);
   });
 
-  it("should update card priorities on shuffle", () => {
+  it('should update card priorities on shuffle', () => {
     const { result } = renderHook(() => useCardPriorities(), {
       wrapper: ChallengeStoreProvider
     });
@@ -50,7 +50,7 @@ describe("useCardPriorities", () => {
     expect(result.current.dataIndexThree.value).toBe(5);
   });
 
-  it("should update data indices correctly", () => {
+  it('should update data indices correctly', () => {
     const { result } = renderHook(() => useCardPriorities(), {
       wrapper: ChallengeStoreProvider
     });
