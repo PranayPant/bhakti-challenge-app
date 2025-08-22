@@ -1,7 +1,7 @@
 import Toast from 'react-native-toast-message';
 import { createStore } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { filterChallenges, sortDohas, sortChallengesAndFlattenDohas } from './utils';
+import { filterChallenges, sortDohas } from './utils';
 import englishChallenges from '@/data/english-challenges.json';
 import hindiChallenges from '@/data/hindi-challenges.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -59,8 +59,8 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
       language: 'hindi', // Default language
       sortOrder: 'asc', // Default sort order
       challengesData: hindiChallenges,
-      selectedChallenges: hindiChallenges, // Initialize with an empty array
-      dohas: hindiChallenges.flatMap((challenge) => challenge.dohas), // Initialize with an empty array
+      selectedChallenges: hindiChallenges,
+      dohas: hindiChallenges.flatMap((challenge) => challenge.dohas),
       dataIndexOne: 0, // Default index for the first data item
       dataIndexTwo: 1, // Default index for the second data item
       dataIndexThree: 2, // Default index for the third data item
@@ -87,7 +87,7 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
           if (randomized) {
             dohas.sort(() => Math.random() - 0.5);
           } else {
-            dohas = sortChallengesAndFlattenDohas(state.selectedChallenges, state.sortOrder);
+            dohas = sortDohas(dohas, state.sortOrder);
           }
           return {
             randomized,
@@ -98,10 +98,11 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
       setFilterString: (filter: string) => {
         set((state) => {
           const filteredChallenges = filterChallenges(state.challengesData, filter);
-          const dohas: Doha[] = sortChallengesAndFlattenDohas(filteredChallenges, state.sortOrder);
+          const dohas: Doha[] = filteredChallenges.flatMap((challenge) => challenge.dohas);
+          const sortedDohas = sortDohas(dohas, state.sortOrder);
           return {
             selectedChallenges: filteredChallenges,
-            dohas: dohas,
+            dohas: sortedDohas,
             filterString: filter,
             randomized: false
           };
@@ -115,11 +116,21 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
       toggleSort: () => {
         set((state) => {
           const newSortOrder = state.sortOrder === 'asc' ? 'desc' : 'asc';
-          const sortedDohas = sortChallengesAndFlattenDohas(state.selectedChallenges, newSortOrder);
+
+          // Sort challenges by ID
+          const sortedChallenges = [...state.selectedChallenges].sort((a, b) => {
+            return newSortOrder === 'asc' ? a.id - b.id : b.id - a.id;
+          });
+
+          // Generate dohas from sorted challenges, keeping each challenge's dohas in sequence order
+          const newDohas = sortedChallenges.flatMap((challenge) =>
+            [...challenge.dohas].sort((a, b) => a.sequence - b.sequence)
+          );
 
           return {
             sortOrder: newSortOrder,
-            dohas: sortedDohas
+            selectedChallenges: sortedChallenges,
+            dohas: newDohas
           };
         });
       },
@@ -224,6 +235,10 @@ export const loadChallengesData = async (
   try {
     const storedChallengesString = await AsyncStorage.getItem(`challengesData_${language}`);
     storedChallenges = storedChallengesString ? JSON.parse(storedChallengesString) : null;
+    console.log(
+      'Stored challenges from AsyncStorage:',
+      storedChallenges?.map((challenge) => challenge.id)
+    );
   } catch (error) {
     console.error('Failed to get challenges data from AsyncStorage:', error);
   }
@@ -246,11 +261,12 @@ export const loadChallengesData = async (
     currentSelectedChallenges = filterChallenges(currentSelectedChallenges, filterString);
   }
 
-  let newDohas = sortChallengesAndFlattenDohas(currentSelectedChallenges, sortOrder);
+  let newDohas = currentSelectedChallenges.flatMap((challenge) => challenge.dohas);
+  let newDohasSorted = sortDohas(newDohas, sortOrder);
 
   return {
     challengesData: [...challengesData],
     selectedChallenges: [...currentSelectedChallenges],
-    dohas: newDohas
+    dohas: newDohasSorted
   };
 };
