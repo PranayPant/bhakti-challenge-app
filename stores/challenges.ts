@@ -101,7 +101,7 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
           const filteredChallenges = filterChallenges(state.challengesData, filter);
           const sorted = sortChallenges(filteredChallenges, state.sortOrder);
           return {
-            selectedChallenges: filteredChallenges,
+            selectedChallenges: sorted.challenges,
             dohas: sorted.dohas,
             filterString: filter,
             randomized: false

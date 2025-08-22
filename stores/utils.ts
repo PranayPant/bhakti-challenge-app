@@ -15,22 +15,6 @@ export const sortChallenges = (challenges: Challenge[], sortOrder: string) => {
   };
 };
 
-export const sortChallenges = (challenges: Challenge[], sortOrder: string) => {
-  const sortedChallenges = [...challenges].sort((a, b) => {
-    if (sortOrder === 'asc') {
-      return a.id - b.id;
-    } else {
-      return b.id - a.id;
-    }
-  });
-  return sortedChallenges;
-};
-
-export const sortChallengesAndFlattenDohas = (challenges: Challenge[], sortOrder: string) => {
-  const sortedChallenges = sortChallenges(challenges, sortOrder);
-  return sortedChallenges.flatMap((challenge) => [...challenge.dohas].sort((a, b) => a.sequence - b.sequence));
-};
-
 export const filterChallenges = (challengeData: Challenge[], filterString: string) => {
   let filteredChallenges: Challenge[] = [...challengeData];
   if (filterString.match(/^\d+(-\d+)?(\+)?(,\d+(-\d+)?(\+)?)*$/)) {
