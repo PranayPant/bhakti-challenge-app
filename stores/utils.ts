@@ -1,36 +1,18 @@
-import { Challenge, Doha } from './challenges';
-
-export const sortDohas = (dohas: Doha[], sortOrder: string) => {
-  const sortedDohas = dohas.sort((a, b) => {
-    if (sortOrder === 'asc') {
-      if (a.challengeId !== b.challengeId) {
-        return a.challengeId - b.challengeId;
-      }
-      return a.sequence - b.sequence;
-    } else {
-      if (a.challengeId !== b.challengeId) {
-        return b.challengeId - a.challengeId;
-      }
-      return b.sequence - a.sequence;
-    }
-  });
-  return [...sortedDohas];
-};
+import { Challenge } from './challenges';
 
 export const sortChallenges = (challenges: Challenge[], sortOrder: string) => {
+  // Sort challenges by ID
   const sortedChallenges = [...challenges].sort((a, b) => {
-    if (sortOrder === 'asc') {
-      return a.id - b.id;
-    } else {
-      return b.id - a.id;
-    }
+    return sortOrder === 'asc' ? a.id - b.id : b.id - a.id;
   });
-  return sortedChallenges;
-};
 
-export const sortChallengesAndFlattenDohas = (challenges: Challenge[], sortOrder: string) => {
-  const sortedChallenges = sortChallenges(challenges, sortOrder);
-  return sortedChallenges.flatMap((challenge) => [...challenge.dohas].sort((a, b) => a.sequence - b.sequence));
+  // Generate dohas from sorted challenges, keeping each challenge's dohas in sequence order
+  const dohas = sortedChallenges.flatMap((challenge) => [...challenge.dohas].sort((a, b) => a.sequence - b.sequence));
+
+  return {
+    challenges: sortedChallenges,
+    dohas
+  };
 };
 
 export const filterChallenges = (challengeData: Challenge[], filterString: string) => {

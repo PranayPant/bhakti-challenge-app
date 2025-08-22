@@ -1,5 +1,5 @@
 import { createChallengeStore, loadChallengesData } from './challenges';
-import { sortDohas, sortChallenges, sortChallengesAndFlattenDohas, filterChallenges } from './utils';
+import { sortChallenges, filterChallenges } from './utils';
 import defaultHindiChallenges from '@/data/hindi-challenges.json';
 import defaultEnglishChallenges from '@/data/english-challenges.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -562,58 +562,6 @@ describe('Challenge LoadChallengesData Function', () => {
 });
 
 describe('Challenge Store Utils', () => {
-  describe('sortDohas', () => {
-    const mockDohas = [
-      { id: 1, line1: 'Line 1', line2: 'Line 2', sequence: 2, challengeId: 1 },
-      { id: 2, line1: 'Line 3', line2: 'Line 4', sequence: 1, challengeId: 1 },
-      { id: 3, line1: 'Line 5', line2: 'Line 6', sequence: 1, challengeId: 2 },
-      { id: 4, line1: 'Line 7', line2: 'Line 8', sequence: 2, challengeId: 2 },
-      { id: 5, line1: 'Line 9', line2: 'Line 10', sequence: 1, challengeId: 3 }
-    ];
-
-    it('should sort dohas in ascending order by challengeId then sequence', () => {
-      const result = sortDohas([...mockDohas], 'asc');
-
-      expect(result[0]).toEqual(mockDohas[1]); // challengeId: 1, sequence: 1
-      expect(result[1]).toEqual(mockDohas[0]); // challengeId: 1, sequence: 2
-      expect(result[2]).toEqual(mockDohas[2]); // challengeId: 2, sequence: 1
-      expect(result[3]).toEqual(mockDohas[3]); // challengeId: 2, sequence: 2
-      expect(result[4]).toEqual(mockDohas[4]); // challengeId: 3, sequence: 1
-    });
-
-    it('should sort dohas in descending order by challengeId then sequence', () => {
-      const result = sortDohas([...mockDohas], 'desc');
-
-      expect(result[0]).toEqual(mockDohas[4]); // challengeId: 3, sequence: 1
-      expect(result[1]).toEqual(mockDohas[3]); // challengeId: 2, sequence: 2
-      expect(result[2]).toEqual(mockDohas[2]); // challengeId: 2, sequence: 1
-      expect(result[3]).toEqual(mockDohas[0]); // challengeId: 1, sequence: 2
-      expect(result[4]).toEqual(mockDohas[1]); // challengeId: 1, sequence: 1
-    });
-
-    it('should handle empty array', () => {
-      const result = sortDohas([], 'asc');
-      expect(result).toEqual([]);
-    });
-
-    it('should handle single doha', () => {
-      const singleDoha = [mockDohas[0]];
-      const result = sortDohas([...singleDoha], 'asc');
-      expect(result).toEqual(singleDoha);
-    });
-
-    it('should mutate original array (current behavior)', () => {
-      const original = [...mockDohas];
-      const originalCopy = [...mockDohas];
-
-      const result = sortDohas(original, 'desc');
-
-      // Current implementation mutates the original array
-      expect(original).not.toEqual(originalCopy);
-      expect(original).toEqual(result);
-    });
-  });
-
   describe('filterChallenges', () => {
     const mockChallenges = [
       { id: 1, title: 'Challenge 1', dohas: [], category: 'test', book: 'test' },
@@ -780,12 +728,12 @@ describe('Challenge Store Utils', () => {
 
     it('should sort challenges by ID in ascending order', () => {
       const result = sortChallenges(mockChallenges, 'asc');
-      expect(result.map((c) => c.id)).toEqual([1, 2, 3]);
+      expect(result.challenges.map((c) => c.id)).toEqual([1, 2, 3]);
     });
 
     it('should sort challenges by ID in descending order', () => {
       const result = sortChallenges(mockChallenges, 'desc');
-      expect(result.map((c) => c.id)).toEqual([3, 2, 1]);
+      expect(result.challenges.map((c) => c.id)).toEqual([3, 2, 1]);
     });
 
     it('should not mutate original array', () => {
@@ -793,64 +741,6 @@ describe('Challenge Store Utils', () => {
       const originalCopy = [...mockChallenges];
 
       sortChallenges(original, 'asc');
-
-      expect(original).toEqual(originalCopy);
-    });
-  });
-
-  describe('sortChallengesAndFlattenDohas', () => {
-    const mockChallenges = [
-      {
-        id: 2,
-        title: 'Challenge 2',
-        dohas: [
-          { id: 201, line1: 'Line 1', line2: 'Line 2', challengeId: 2, sequence: 1 },
-          { id: 202, line1: 'Line 3', line2: 'Line 4', challengeId: 2, sequence: 2 }
-        ]
-      },
-      {
-        id: 1,
-        title: 'Challenge 1',
-        dohas: [
-          { id: 101, line1: 'Line A', line2: 'Line B', challengeId: 1, sequence: 1 },
-          { id: 102, line1: 'Line C', line2: 'Line D', challengeId: 1, sequence: 2 }
-        ]
-      }
-    ];
-
-    it('should sort challenges in ascending order and flatten dohas while maintaining sequence', () => {
-      const result = sortChallengesAndFlattenDohas(mockChallenges, 'asc');
-
-      expect(result).toHaveLength(4);
-      expect(result[0].challengeId).toBe(1);
-      expect(result[0].sequence).toBe(1);
-      expect(result[1].challengeId).toBe(1);
-      expect(result[1].sequence).toBe(2);
-      expect(result[2].challengeId).toBe(2);
-      expect(result[2].sequence).toBe(1);
-      expect(result[3].challengeId).toBe(2);
-      expect(result[3].sequence).toBe(2);
-    });
-
-    it('should sort challenges in descending order and flatten dohas while maintaining sequence', () => {
-      const result = sortChallengesAndFlattenDohas(mockChallenges, 'desc');
-
-      expect(result).toHaveLength(4);
-      expect(result[0].challengeId).toBe(2);
-      expect(result[0].sequence).toBe(1);
-      expect(result[1].challengeId).toBe(2);
-      expect(result[1].sequence).toBe(2);
-      expect(result[2].challengeId).toBe(1);
-      expect(result[2].sequence).toBe(1);
-      expect(result[3].challengeId).toBe(1);
-      expect(result[3].sequence).toBe(2);
-    });
-
-    it('should not mutate original challenges array', () => {
-      const original = [...mockChallenges];
-      const originalCopy = JSON.parse(JSON.stringify(mockChallenges));
-
-      sortChallengesAndFlattenDohas(original, 'asc');
 
       expect(original).toEqual(originalCopy);
     });
