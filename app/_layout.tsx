@@ -5,6 +5,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
+import * as Updates from 'expo-updates';
+import LogRocket from '@logrocket/react-native';
 import 'react-native-reanimated';
 import '../global.css';
 
@@ -29,6 +31,13 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  useEffect(() => {
+    LogRocket.init('e7cpvf/bhakti-challenge-app', {
+      updateId: Updates.isEmbeddedLaunch ? null : Updates.updateId,
+      expoChannel: Updates.channel
+    });
+  }, []);
 
   if (!loaded) {
     return null;
