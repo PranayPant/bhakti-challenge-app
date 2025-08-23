@@ -22,9 +22,7 @@
       },
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.punch.up.bhaktichallengeapp",
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+      "permissions": ["android.permission.RECORD_AUDIO", "android.permission.RECORD_AUDIO"]
     },
     "web": {
       "bundler": "metro",
@@ -45,20 +43,25 @@
       [
         "expo-asset",
         {
-          "assets": [
-            "./assets/images/"
-          ]
+          "assets": ["./assets/images/"]
         }
       ],
       [
         "expo-font",
         {
-          "fonts": [
-            "./assets/fonts/NotoSansDevanagari-Regular.ttf"
-          ]
+          "fonts": ["./assets/fonts/NotoSansDevanagari-Regular.ttf"]
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 25
+          }
+        }
+      ],
+      "@logrocket/react-native"
     ],
     "experiments": {
       "typedRoutes": true
@@ -70,6 +73,12 @@
       "eas": {
         "projectId": "9c69e482-db65-44a4-ac77-7b2273852cdd"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/9c69e482-db65-44a4-ac77-7b2273852cdd"
     }
   }
 }
