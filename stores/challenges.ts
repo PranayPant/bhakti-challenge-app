@@ -144,20 +144,11 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
       fetchRemoteChallenges: async () => {
         let englishChallengesData: Challenge[] = [];
         let hindiChallengesData: Challenge[] = [];
-        let sanityApiToken, sanityProjectId, sanityDataset, sanityApiVersion;
-        console.log('process.env.EXPO_PUBLIC_ENV:', process.env.EXPO_PUBLIC_ENV);
-        console.log('process.env:', process.env);
-        if (process.env.EXPO_PUBLIC_ENV) {
-          sanityApiToken = process.env.EXPO_PUBLIC_SANITY_API_TOKEN;
-          sanityProjectId = process.env.EXPO_PUBLIC_SANITY_PROJECT_ID;
-          sanityDataset = process.env.EXPO_PUBLIC_SANITY_DATASET;
-          sanityApiVersion = process.env.EXPO_PUBLIC_SANITY_API_VERSION;
-        } else {
-          sanityApiToken = process.env.SANITY_API_TOKEN;
-          sanityProjectId = process.env.SANITY_PROJECT_ID;
-          sanityDataset = process.env.SANITY_DATASET;
-          sanityApiVersion = process.env.SANITY_API_VERSION;
-        }
+        const sanityApiToken = process.env.EXPO_PUBLIC_SANITY_API_TOKEN;
+        const sanityProjectId = process.env.EXPO_PUBLIC_SANITY_PROJECT_ID;
+        const sanityDataset = process.env.EXPO_PUBLIC_SANITY_DATASET;
+        const sanityApiVersion = process.env.EXPO_PUBLIC_SANITY_API_VERSION;
+
         try {
           set({ isFetchingChallenges: true });
           // Fetch both English and Hindi challenges in parallel
