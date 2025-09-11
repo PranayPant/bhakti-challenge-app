@@ -1,14 +1,22 @@
 const { createClient } = require('@sanity/client');
+const { parseArgs } = require('util');
 const hindiChallenges = require('../../data/hindi-challenges.json');
 const englishChallenges = require('../../data/english-challenges.json');
 
 const client = createClient({
-  projectId: process.env.SANITY_PROJECT_ID,
-  dataset: process.env.SANITY_DATASET,
-  useCdn: true, // set to `false` to bypass the edge cache
-  apiVersion: process.env.SANITY_API_VERSION, // use current date (YYYY-MM-DD) to target the latest API version. Note: this should always be hard coded. Setting API version based on a dynamic value (e.g. new Date()) may break your application at a random point in the future.
-  token: process.env.SANITY_API_TOKEN // Needed for certain operations like updating content, accessing drafts or using draft perspectives
+  projectId: process.env.EXPO_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.EXPO_PUBLIC_SANITY_DATASET,
+  useCdn: true,
+  apiVersion: process.env.EXPO_PUBLIC_SANITY_API_VERSION,
+  token: process.env.EXPO_PUBLIC_SANITY_API_TOKEN
 });
+
+const options = {
+  count: { type: 'string', short: 'c' },
+  delete: { type: 'boolean', short: 'd' }
+};
+
+const args = parseArgs({ options });
 
 const createOrReplaceDocuments = async (docs, type) => {
   try {
@@ -30,8 +38,10 @@ const createOrReplaceDocuments = async (docs, type) => {
 };
 
 const main = async () => {
-  const args = process.argv.slice(2);
-  if (args.includes('delete')) {
+  if (args.values.count) {
+    const type = args.values.count || 'hindi';
+    await getDocumentsCount(type);
+  } else if (args.values.delete) {
     console.log('Deleting Hindi challenges...');
     await deleteDocuments('hindi');
     console.log('Deleting English challenges...');
@@ -57,6 +67,16 @@ const deleteDocuments = async (type) => {
     }
   } catch (error) {
     console.error('Error deleting documents:', error);
+  }
+};
+
+const getDocumentsCount = async (type = 'hindi') => {
+  try {
+    const query = `count(*[_type == "${type}"])`;
+    const count = await client.fetch(query);
+    console.log(`Total documents of type ${type}: ${count}`);
+  } catch (error) {
+    console.error('Error fetching document count:', error);
   }
 };
 
