@@ -2,7 +2,7 @@
   "expo": {
     "name": "bhakti-challenge-app",
     "slug": "bhakti-challenge-app",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "orientation": "portrait",
     "icon": "./assets/images/murali.png",
     "scheme": "myapp",
