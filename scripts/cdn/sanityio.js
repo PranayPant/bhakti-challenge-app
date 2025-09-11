@@ -39,7 +39,7 @@ const createOrReplaceDocuments = async (docs, type) => {
 
 const main = async () => {
   if (args.values.count) {
-    const type = args.values.count || 'hindi';
+    const type = args.values.count;
     await getDocumentsCount(type);
   } else if (args.values.delete) {
     console.log('Deleting Hindi challenges...');
