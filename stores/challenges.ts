@@ -157,16 +157,24 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
             hindi: `*[_type == 'hindi']|order(id){id,title,dohas,category,book}`
           };
 
-          const fetchChallenge = (lang: 'english' | 'hindi') =>
-            fetch(`https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`, {
-              headers: {
-                Authorization: `Bearer ${sanityApiToken}`,
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-              },
-              method: 'POST',
-              body: JSON.stringify({ query: queries[lang] })
-            }).then((res) => res.json());
+          const fetchChallenge = async (lang: 'english' | 'hindi') => {
+            const response = await fetch(
+              `https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${sanityApiToken}`,
+                  'Content-Type': 'application/json',
+                  Accept: 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({ query: queries[lang] })
+              }
+            );
+            if (!response.ok) {
+              throw new Error(`Failed to fetch ${lang} challenges: ${response.statusText}`);
+            }
+            return await response.json();
+          };
 
           const [englishJson, hindiJson] = await Promise.all([fetchChallenge('english'), fetchChallenge('hindi')]);
 
