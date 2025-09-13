@@ -228,10 +228,12 @@ describe('Challenge Store', () => {
       global.fetch = jest
         .fn()
         .mockResolvedValueOnce({
+          ok: true,
           json: () => Promise.resolve({ result: mockEnglishChallenges }),
           status: 200
         } as Response)
         .mockResolvedValueOnce({
+          ok: true,
           json: () => Promise.resolve({ result: mockHindiChallenges }),
           status: 200
         } as Response);
@@ -259,7 +261,7 @@ describe('Challenge Store', () => {
 
       const store = createChallengeStore();
 
-      await store.getState().fetchRemoteChallenges();
+      await expect(store.getState().fetchRemoteChallenges()).rejects.toThrow('Network error');
 
       expect(store.getState().isFetchingChallenges).toBe(false);
       expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch challenges from remote:', expect.any(Error));
@@ -275,7 +277,8 @@ describe('Challenge Store', () => {
             setTimeout(
               () =>
                 resolve({
-                  json: () => Promise.resolve({ result: [] }),
+                  ok: true,
+                  json: () => Promise.resolve({ result: [{ id: 1, title: 'Test Challenge', dohas: [] }] }),
                   status: 200
                 } as Response),
               100
@@ -299,11 +302,13 @@ describe('Challenge Store', () => {
       global.fetch = jest
         .fn()
         .mockResolvedValueOnce({
-          json: () => Promise.resolve({ result: [] }),
+          ok: true,
+          json: () => Promise.resolve({ result: [{ id: 1, title: 'English Challenge', dohas: [] }] }),
           status: 200
         } as Response)
         .mockResolvedValueOnce({
-          json: () => Promise.resolve({ result: [] }),
+          ok: true,
+          json: () => Promise.resolve({ result: [{ id: 1, title: 'Hindi Challenge', dohas: [] }] }),
           status: 200
         } as Response);
 
@@ -314,7 +319,9 @@ describe('Challenge Store', () => {
 
       const store = createChallengeStore();
 
-      await store.getState().fetchRemoteChallenges();
+      await expect(store.getState().fetchRemoteChallenges()).rejects.toThrow(
+        'Failed to save challenges data to local storage'
+      );
 
       expect(consoleSpy).toHaveBeenCalledWith('Failed to save challenges data to AsyncStorage:', expect.any(Error));
 
@@ -329,14 +336,22 @@ describe('Challenge Store', () => {
       process.env.EXPO_PUBLIC_SANITY_DATASET = 'expo-dataset';
       process.env.EXPO_PUBLIC_SANITY_API_VERSION = '2023-02-01';
 
+      // Mock AsyncStorage for this test
+      const mockSetItem = jest.fn().mockResolvedValue(undefined);
+      const mockGetItem = jest.fn().mockResolvedValue(null);
+      (AsyncStorage.setItem as jest.Mock) = mockSetItem;
+      (AsyncStorage.getItem as jest.Mock) = mockGetItem;
+
       global.fetch = jest
         .fn()
         .mockResolvedValueOnce({
-          json: () => Promise.resolve({ result: [] }),
+          ok: true,
+          json: () => Promise.resolve({ result: [{ id: 1, title: 'English Challenge', dohas: [] }] }),
           status: 200
         } as Response)
         .mockResolvedValueOnce({
-          json: () => Promise.resolve({ result: [] }),
+          ok: true,
+          json: () => Promise.resolve({ result: [{ id: 1, title: 'Hindi Challenge', dohas: [] }] }),
           status: 200
         } as Response);
 
@@ -365,10 +380,12 @@ describe('Challenge Store', () => {
       global.fetch = jest
         .fn()
         .mockResolvedValueOnce({
+          ok: true,
           json: () => Promise.resolve({ result: null }),
           status: 200
         } as Response)
         .mockResolvedValueOnce({
+          ok: true,
           json: () => Promise.resolve({}),
           status: 200
         } as Response);
@@ -377,10 +394,12 @@ describe('Challenge Store', () => {
 
       const store = createChallengeStore();
 
-      await store.getState().fetchRemoteChallenges();
+      await expect(store.getState().fetchRemoteChallenges()).rejects.toThrow(
+        'Failed to fetch English challenges: Empty or invalid response'
+      );
 
       expect(consoleSpy).toHaveBeenCalledWith('No English challenges found in the response.');
-      expect(consoleSpy).toHaveBeenCalledWith('No Hindi challenges found in the response.');
+      expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch challenges from remote:', expect.any(Error));
 
       consoleSpy.mockRestore();
     });

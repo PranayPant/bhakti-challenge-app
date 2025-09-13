@@ -149,61 +149,80 @@ export const createChallengeStore = (initProps?: Partial<ChallengeStore>) => {
         const sanityDataset = process.env.EXPO_PUBLIC_SANITY_DATASET;
         const sanityApiVersion = process.env.EXPO_PUBLIC_SANITY_API_VERSION;
 
+        set({ isFetchingChallenges: true });
+
         try {
-          set({ isFetchingChallenges: true });
           // Fetch both English and Hindi challenges in parallel
           const queries = {
             english: `*[_type == 'english']|order(id){id,title,dohas,category,book}`,
             hindi: `*[_type == 'hindi']|order(id){id,title,dohas,category,book}`
           };
 
-          const fetchChallenge = (lang: 'english' | 'hindi') =>
-            fetch(`https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`, {
-              headers: {
-                Authorization: `Bearer ${sanityApiToken}`,
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-              },
-              method: 'POST',
-              body: JSON.stringify({ query: queries[lang] })
-            }).then((res) => res.json());
+          const fetchChallenge = async (lang: 'english' | 'hindi') => {
+            const response = await fetch(
+              `https://${sanityProjectId}.api.sanity.io/v${sanityApiVersion}/data/query/${sanityDataset}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${sanityApiToken}`,
+                  'Content-Type': 'application/json',
+                  Accept: 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({ query: queries[lang] })
+              }
+            );
+            if (!response.ok) {
+              throw new Error(`Failed to fetch ${lang} challenges: ${response.statusText}`);
+            }
+            return await response.json();
+          };
 
           const [englishJson, hindiJson] = await Promise.all([fetchChallenge('english'), fetchChallenge('hindi')]);
+
+          if (englishJson.result && englishJson.result.length > 0) {
+            englishChallengesData = englishJson.result;
+          } else {
+            console.error('No English challenges found in the response.');
+            throw new Error('Failed to fetch English challenges: Empty or invalid response');
+          }
+          if (hindiJson.result && hindiJson.result.length > 0) {
+            hindiChallengesData = hindiJson.result;
+          } else {
+            console.error('No Hindi challenges found in the response.');
+            throw new Error('Failed to fetch Hindi challenges: Empty or invalid response');
+          }
 
           Toast.show({
             type: 'success',
             text1: 'Successfully updated challenges!'
           });
-
-          if (englishJson.result) {
-            englishChallengesData = englishJson.result;
-          } else {
-            console.error('No English challenges found in the response.');
-          }
-          if (hindiJson.result) {
-            hindiChallengesData = hindiJson.result;
-          } else {
-            console.error('No Hindi challenges found in the response.');
-          }
         } catch (error) {
           Toast.show({
             type: 'error',
             text1: 'Failed to fetch challenges from remote.'
           });
           console.error('Failed to fetch challenges from remote:', error);
+          throw error; // Re-throw the error so callers can handle it
         } finally {
           set({ isFetchingChallenges: false });
         }
 
-        try {
-          await AsyncStorage.setItem(`challengesData_hindi`, JSON.stringify(hindiChallengesData));
-          await AsyncStorage.setItem(`challengesData_english`, JSON.stringify(englishChallengesData));
-        } catch (error) {
-          console.error('Failed to save challenges data to AsyncStorage:', error);
-        }
-        const updatedChallengesState = await loadChallengesData(get().language, get().sortOrder, get().filterString);
+        if (hindiChallengesData.length > 0 && englishChallengesData.length > 0) {
+          try {
+            await AsyncStorage.setItem(`challengesData_hindi`, JSON.stringify(hindiChallengesData));
+            await AsyncStorage.setItem(`challengesData_english`, JSON.stringify(englishChallengesData));
 
-        set(updatedChallengesState);
+            const updatedChallengesState = await loadChallengesData(
+              get().language,
+              get().sortOrder,
+              get().filterString
+            );
+            set(updatedChallengesState);
+          } catch (error) {
+            console.error('Failed to save challenges data to AsyncStorage:', error);
+            throw new Error('Failed to save challenges data to local storage');
+          }
+        }
       }
     }))
   );
